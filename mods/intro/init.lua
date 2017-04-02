@@ -98,11 +98,7 @@ function intro.teleport_on_sneak(player)
 		local tz = math.ceil(math.random(-20000, 20000))
 	
 		minetest.forceload_block({x=tx, y=0, z=tz}, true)
-		player:set_pos({x=tx, y=30, z=tz})
-		
-		yz = intro.find_safe_y(tx, tz)
-		
-		minetest.after(2, player:set_pos {x=tx, y=yz, z=tz})		
+		player:set_pos({x=tx, y=30, z=tz})	
 		
 	elseif intro.use_random_spawn_point == false then
 		player:set_pos({x=intro.spawn_x, y=intro.spawn_y, z=intro.spawn_z})
