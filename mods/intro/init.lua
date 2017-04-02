@@ -2,15 +2,17 @@
 
 intro = {}
 
--- set to true to enable non-random spawn points for medium to large servers
+-- set to true to enable non-random spawn points for medium to large servers - stops people build mega lag cities;
 
 -- alternatively, use "true" to
 
-intro.use_random_spawn_point = false
+intro.use_random_spawn_point = true
 
 -- hardcoded, feel free to change them as you please
 
 intro.audiofile = "solar_plains_intro"
+
+intro.volume_level = 0.75
 
 intro.spawn_x = 0
 intro.spawn_y = 20
@@ -91,12 +93,17 @@ minetest.register_entity("intro:title", title_entity)
 
 function intro.teleport_on_sneak(player)
 	
-	local tx = math.random(-20000, 20000) -- make area load before teleporting and consistent;
-	local tz = math.random(-20000, 20000)
-	
 	if intro.use_random_spawn_point == true then
-		minetest.forceload_block({x=tx, y=30000, z=tz}, true)
-		player:set_pos({x=tx, y=20, z=tz})
+		local tx = math.ceil(math.random(-20000, 20000)) -- make area load before teleporting and consistent;
+		local tz = math.ceil(math.random(-20000, 20000))
+	
+		minetest.forceload_block({x=tx, y=0, z=tz}, true)
+		player:set_pos({x=tx, y=30, z=tz})
+		
+		yz = intro.find_safe_y(tx, tz)
+		
+		minetest.after(2, player:set_pos {x=tx, y=yz, z=tz})		
+		
 	elseif intro.use_random_spawn_point == false then
 		player:set_pos({x=intro.spawn_x, y=intro.spawn_y, z=intro.spawn_z})
 	end
@@ -190,7 +197,7 @@ minetest.register_on_joinplayer(function(player)
 			local intro_music = minetest.sound_play(intro.audiofile, {
 			
 				to_player = pname,
-				gain = 1,
+				gain = intro.volume_level,
 			
 			})
 			
