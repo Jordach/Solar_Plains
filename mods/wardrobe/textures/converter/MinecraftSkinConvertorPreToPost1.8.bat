@@ -1,0 +1,1 @@
+java -jar "%~dp0MinecraftSkinConvertorPreToPost1.8.jar" %*
