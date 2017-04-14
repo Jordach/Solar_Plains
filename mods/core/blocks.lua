@@ -192,28 +192,29 @@ minetest.register_node("core:water_source", {
 	drawtype = "liquid",
 	tiles = {
 		{
-			name = "core_water_source_anim.png",
+			name = "core_water_source_animated.png",
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 16,
 				aspect_h = 16,
-				length = 3,
+				length = 2,
 			},
 		},
 	},
 	special_tiles = {
 		{
-			name = "core_water_source_anim.png",
+			name = "core_water_source_animated.png",
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 16,
 				aspect_h = 16,
-				length = 3,
+				length = 2,
 			},
 			backface_culling = false,
 		},
 	},
-	alpha = 153,
+	--alpha = 153,
+	use_texture_alpha = true,
 	paramtype = "light",
 	walkable = false,
 	pointable = false,
@@ -236,27 +237,28 @@ minetest.register_node("core:water_flowing", {
 	tiles = {"core_water.png"},
 	special_tiles = {
 		{
-			name = "core_water_source_anim.png",
+			name = "core_water_flowing_animated.png",
 			backface_culling = false,
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 16,
 				aspect_h = 16,
-				length = 2,
+				length = 0.8,
 			},
 		},
 		{
-			name = "core_water_source_anim.png",
+			name = "core_water_flowing_animated.png",
 			backface_culling = true,
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 16,
 				aspect_h = 16,
-				length = 2,
+				length = 0.8,
 			},
 		},
 	},
-	alpha = 153,
+	--alpha = 153,
+	use_texture_alpha = true,
 	paramtype = "light",
 	paramtype2 = "flowingliquid",
 	walkable = false,
@@ -555,7 +557,7 @@ minetest.register_node("core:birch_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = minetest.rotate_node
+	on_place = minetest.rotate_node,
 	--sounds = {todo},
 })
 
