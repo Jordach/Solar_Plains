@@ -33,12 +33,12 @@ skybox.set = function(player, number)
 	local sky = skies[number]
 	player:override_day_night_ratio(sky[3])
 	player:set_sky(sky[2], "skybox", {
-		sky[1] .. "Up.jpg",
-		sky[1] .. "Down.jpg",
-		sky[1] .. "Front.jpg",
-		sky[1] .. "Back.jpg",
-		sky[1] .. "Left.jpg",
-		sky[1] .. "Right.jpg",
+		sky[1] .. "Up2.jpg",
+		sky[1] .. "Down2.jpg",
+		sky[1] .. "Front2.jpg",
+		sky[1] .. "Back2.jpg",
+		sky[1] .. "Left2.jpg",
+		sky[1] .. "Right2.jpg",
 	})
 	player:set_attribute("skybox:skybox", sky[1])
 end

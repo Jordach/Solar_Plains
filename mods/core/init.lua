@@ -95,3 +95,46 @@ end
 give_initial_stuff.add_from_csv(stuff_string)
 
 minetest.register_on_newplayer(give_initial_stuff.give)
+
+-- utility;
+
+-- special entity tester
+
+local mob = {
+
+	visual = "mesh",
+	mesh = "entity.x",
+	textures = {
+		
+	},
+	visual_size = {x=1, y=1},
+	anim_type = 1,
+}
+
+local mob_anim = {}
+
+mob_anim[1] = {x=263, y=282}
+mob_anim[2] = {x=121, y=151}
+mob_anim[3] = {x=166, y=191}
+mob_anim[4] = {x=201, y=231}
+
+function mob:on_rightclick(clicker)
+
+	if not clicker or not clicker:is_player() then
+		return
+	end
+		
+	if self.anim_type == #mob_anim then
+	
+		self.anim_type = 1
+	
+	else
+	
+		self.anim_type = self.anim_type + 1
+		
+	end
+	
+	self.object:set_animation(mob_anim[self.anim_type], 30, 0, false)
+end
+
+minetest.register_entity("core:tester", mob)

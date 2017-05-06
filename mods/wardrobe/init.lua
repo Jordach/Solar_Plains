@@ -215,8 +215,6 @@ wardrobe.pupils = 1
 	wardrobe.mouth_parts = wardrobe.mouth_parts - 1
 	print ("[Wardrobe]: "..wardrobe.mouth_parts.." Mouth Overlays detected")
 	
-	
-	
 -- test dummy 
 
 minetest.register_entity("wardrobe:dummy", {
