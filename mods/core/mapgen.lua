@@ -103,7 +103,7 @@ local c_mg_grass = minetest.get_content_id("core:mg_grass")
 local c_mg_grass_snowy = minetest.get_content_id("core:mg_grass_snowy")
 
 minetest.register_on_generated(function(minp, maxp, seed)
-	--local timer = os.clock()
+	local timer = os.clock()
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local data = vm:get_data()
 	local area = VoxelArea:new{MinEdge=emin, MaxEdge=emax}
@@ -140,8 +140,8 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			end
 		end
 	end
-	--local geninfo = string.format(" trees grown after: %.2fs", os.clock() - timer)
-	--print (trees_grown..geninfo)
+	local geninfo = string.format(" trees grown after: %.2fs", os.clock() - timer)
+	print (trees_grown..geninfo)
 	
 	vm:set_data(data)
 	vm:calc_lighting()
