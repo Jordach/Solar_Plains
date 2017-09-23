@@ -150,6 +150,11 @@ minetest.register_on_joinplayer(function(player)
 	-- anim: stand, sit, lay, walk, mine, walk and mine
 	player:hud_set_hotbar_image("hud_hotbar.png")
 	player:hud_set_hotbar_selected_image("hud_hotbar_selected.png")
+	player:set_properties({
+		visual_size = {x=1, y=1},
+		collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},
+		stepheight = 0.6,
+	})
 end)
 
 minetest.register_on_leaveplayer(function(player)
