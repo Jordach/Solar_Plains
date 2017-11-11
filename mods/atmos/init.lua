@@ -179,7 +179,11 @@ end
 
 function atmos.sync_skybox()
 
+	-- sync skyboxes to all players connected to the server.
+
 	for _, player in ipairs(minetest.get_connected_players()) do
+	
+		-- do not sync the current weather to players under -32 depth.
 	
 		if player:get_pos().y <= -32 then
 		
@@ -197,6 +201,8 @@ function atmos.sync_skybox()
 			player:override_day_night_ratio(atmos.weather_light_level[15])
 		
 		else
+		
+			-- sync weather to players that are above -32, lightning effects (and flashes) only affects players above -16
 		
 			atmos.set_skybox(player)
 		
@@ -220,6 +226,8 @@ end
 -- 9 = snowing (13 and 14 on the atmos.weather_type chart)
 
 function atmos.get_weather_skybox()
+	
+	-- let's get the skybox we want depending on the time and day, as well as the current weather
 	
 	local ctime = minetest.get_timeofday()
 	
@@ -306,6 +314,8 @@ end
 function atmos.weatherchange()
 
 	atmos.current_weather = atmos.current_weather + math.random(-1,1)
+	
+	-- don't let current_weather become a silly value that crashes clients :^)
 	
 	if atmos.current_weather == 0 then
 	

@@ -133,9 +133,6 @@ minetest.register_on_generated(function(minp, maxp, seed)
 				elseif content_id == c_mg_pine_snowy_sap then
 					mcore.grow_pine({x=x, y=y, z=z}, true)
 					trees_grown = trees_grown + 1
-				
-				else
-					-- literally do nothing :)
 				end
 			end
 		end
@@ -295,7 +292,7 @@ end
 --standard trees
 
 local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
-		height, size, iters, is_apple_tree)
+		height, size, iters, is_apple_tree, log_grass)
 	local x, y, z = pos.x, pos.y, pos.z
 	local c_air = minetest.get_content_id("air")
 	local c_ignore = minetest.get_content_id("ignore")
@@ -306,10 +303,18 @@ local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 	for y_dist = 0, height - 1 do
 		local vi = a:index(x, y + y_dist, z)
 		local node_id = data[vi]
-		if y_dist == 0 or node_id == c_air or node_id == c_ignore
+		
+		if y_dist == 0 then
+		
+			data[vi] = log_grass
+		
+		elseif node_id == c_air or node_id == c_ignore
 		or node_id == leaves_cid then
+			
 			data[vi] = tree_cid
+			
 		end
+		
 	end
 
 	-- Force leaves near the trunk
@@ -394,9 +399,10 @@ function mcore.grow_tree(pos, is_apple_tree, trunk_node, leaves_node, fallen_lea
 	end
 	
 	local x, y, z = pos.x, pos.y, pos.z
-	local height = random(4, 5)
+	local height = random(4, 6)
 	local c_tree = minetest.get_content_id(trunk_node)
 	local c_leaves = minetest.get_content_id(leaves_node)
+	local log_grass = minetest.get_content_id(trunk_node .. "_grassy")
 	
 	local vm = minetest.get_voxel_manip()
 	local minp, maxp = vm:read_from_map(
@@ -406,7 +412,7 @@ function mcore.grow_tree(pos, is_apple_tree, trunk_node, leaves_node, fallen_lea
 	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
 	local data = vm:get_data()
 	
-	add_trunk_and_leaves(data, a, pos, c_tree, c_leaves, height, 2, 8, is_apple_tree)
+	add_trunk_and_leaves(data, a, pos, c_tree, c_leaves, height, 2, 8, is_apple_tree, log_grass)
 	
 	vm:set_data(data)
 	vm:calc_lighting()
