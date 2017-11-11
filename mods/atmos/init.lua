@@ -317,7 +317,7 @@ function atmos.weatherchange()
 	
 	end
 	
-	minetest.after(10--[[+math.random(1,59)*math.random(1,5)--]], atmos.weatherchange)
+	minetest.after(60+math.random(1,59)*math.random(1,5), atmos.weatherchange)
 end
 
 function atmos.thunderstrike()
@@ -337,7 +337,7 @@ function atmos.thunderstrike()
 end
 
 minetest.after(1, atmos.sync_skybox)
-minetest.after(10--[[+math.random(1,59)*math.random(1,5)--]], atmos.weatherchange)
+minetest.after(60+math.random(1,59)*math.random(1,5), atmos.weatherchange)
 minetest.after(2, atmos.thunderstrike)
 
 lightning.light_level = atmos.weather_light_level
