@@ -465,12 +465,12 @@ minetest.register_node("wardrobe:node", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	
-	on_dig = function(pos)
+	after_dig_node = function(pos)
 	
 		local entity = minetest.get_objects_inside_radius({x=pos.x, y=pos.y+0.5, z=pos.z}, 0.1)
 		
 		entity[1]:remove()
-	
+		
 	end,
 	
 	on_punch = function(pos, node, puncher)
@@ -492,7 +492,7 @@ minetest.register_node("wardrobe:node", {
 		
 		meta:set_string("formspec",	wardrobe.formspec_meta(wardrobe.formspec_selections[pname], wardrobe.formspec_selections_rgb[pname]))
 		
-		wardrobe.update_dummy(pos, puncher)
+		wardrobe.update_dummy(pos, placer)
 
 	end,
 	
@@ -786,13 +786,13 @@ function wardrobe.update_dummy(pos, player)
 			
 		entity = minetest.get_objects_inside_radius({x=pos.x, y=pos.y+0.5, z=pos.z}, 0.1)
 				
-		entity[1]:set_animation({x=0, y=1339}, 30, 0)	
+		entity[1]:set_animation({x=0, y=1339}, 60, 0)	
 	end
 		
 	entity = minetest.get_objects_inside_radius({x=pos.x, y=pos.y+0.5, z=pos.z}, 0.1)
 			
 	if entity[1] then
-		entity[1]:set_animation({x=0, y=1339}, 30, 0)			
+		entity[1]:set_animation({x=0, y=1339}, 60, 0)			
 		entity[1]:set_properties({
 			textures = {
 				"ptextures_transparent.png", 

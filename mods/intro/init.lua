@@ -6,7 +6,7 @@ intro = {}
 
 -- alternatively, use "true" to
 
-intro.use_random_spawn_point = true
+intro.use_random_spawn_point = false
 
 -- hardcoded, feel free to change them as you please
 
@@ -78,7 +78,6 @@ function title_entity:on_step(dtime)
 		intro.teleport_on_sneak(self.player_id)
 		hudclock.display_bg(self.player_id)
 		self.object:remove()
-		self.timer = 0
 	end
 	
 end
@@ -140,29 +139,11 @@ function intro.hud_bg(player)
 	})
 end
 
-minetest.register_on_joinplayer(function(player)
-	-- start checks at 0, +30k, 0
-	-- y is a static value so that doesn't need to be played with or incremented
-	
-	--player:set_attribute("intro_completed", "true")
-	
-	if player:get_attribute("intro_completed") == "true" then 
-	
-		intro.hud_bg(player)
-		hud.custom_hud(player)
-		player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
-		player:set_attribute("core_display_hud", "true")
-		player:set_attribute("intro_completed", "true")
-		
-		hudclock.display_bg(player)
-	
-		return
-	
-	end
-	
+function intro.spawn_title(player)
+
 	local x = 0
 	local z = 0
-	
+	minetest.forceload_block({x=x, y=30000, z=z}) --ensure it tries to load the area
 	local found_intro_position = nil
 	
 	repeat
@@ -204,7 +185,41 @@ minetest.register_on_joinplayer(function(player)
 		
 	
 	until found_intro_position == true
+
+end
+
+function intro.reset_hud(player)
+
+	intro.hud_bg(player)
+	hud.custom_hud(player)
+	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
+	player:set_attribute("core_display_hud", "true")
+	hudclock.display_bg(player)
+
+end
+
+minetest.register_on_newplayer(function(player)
+	intro.spawn_title(player)
 end)
+
+minetest.register_on_joinplayer(function(player)
+	-- start checks at 0, +30k, 0
+	-- y is a static value so that doesn't need to be played with or incremented
+	
+	--player:set_attribute("intro_completed", "true")
+	
+	if player:get_attribute("intro_completed") == "true" then 
+		
+		minetest.after(1, function()
+			intro.reset_hud(player)
+		end)
+		return
+	
+	end
+	
+end)
+
+
 
 -- somtimes intro fails to teleport the player; use this command if you get stuck.
 
@@ -215,15 +230,17 @@ minetest.register_chatcommand("intro_warp", {
 		
 		player = minetest.get_player_by_name(name)
 		
-		if player:get_attribute("intro_warp") == nil then
-		
+		--if player:get_attribute("intro_warp") == nil then
+				
+			player:set_attribute("intro_completed", "true")
+			
+			intro.reset_hud(player)
+			
 			intro.teleport_on_sneak(player)
 			
-			player:set_attribute("intro_warp", "true")
+			print ("[Intro]: Player '"..name.."' used their spawn teleport.")
 			
-			print ("[Intro]: Player '"..name.."' used their only intro to spawn teleport.")
-			
-		end
+		--end
 	
 	end,
 })
