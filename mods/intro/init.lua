@@ -106,6 +106,7 @@ function intro.teleport_on_sneak(player)
 end
 
 function intro.hud_bg(player)
+	
 	player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=1},
@@ -113,6 +114,7 @@ function intro.hud_bg(player)
 		scale = {x=1, y=1},
 		text = "hud_stat_bg.png",
 	})
+	
 	
 	player:hud_add({
 		hud_elem_type = "image",
@@ -210,7 +212,7 @@ minetest.register_on_joinplayer(function(player)
 	
 	if player:get_attribute("intro_completed") == "true" then 
 		
-		minetest.after(1, function()
+		minetest.after(0.1, function()
 			intro.reset_hud(player)
 		end)
 		return

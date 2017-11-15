@@ -26,7 +26,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:grass"},
-	interval = 120,
+	interval = 1,
 	chance = 2,
 	action = function(pos)
 		pos.y = pos.y + 1
@@ -34,7 +34,7 @@ minetest.register_abm({
 			return
 		end
 		
-		if minetest.get_node_light(pos) < 1 then
+		if minetest.get_node_light(pos) < 1 and minetest.get_item_group(minetest.get_node(pos).name, "nodec") ~= 1  then
 			pos.y = pos.y - 1
 			minetest.add_node(pos,{name="core:dirt"})
 		end
@@ -81,7 +81,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:birch_sapling"},
-	interval = 2, --90
+	interval = 90, --90
 	chance = 3,
 	action = function(pos, node)
 		
@@ -99,7 +99,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:cherry_sapling"},
-	interval = 2, --80
+	interval = 85, --80
 	chance = 3,
 	action = function(pos, node)
 		

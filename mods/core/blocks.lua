@@ -388,7 +388,7 @@ minetest.register_node("core:pine_log_grassy", {
 	tiles = {"core_pine_log_top.png", "core_pine_log_top.png", "core_pine_log.png^core_long_grass_1.png"},
 	paramtype2 = "facedir",
 	is_ground_content = false,
-	groups = {tree=1, choppy=3, flammable=2, solid=1},
+	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node
 	--sounds = {todo},
 })
@@ -469,7 +469,7 @@ minetest.register_node("core:oak_log_grassy", {
 	tiles = {"core_oak_log_top.png", "core_oak_log_top.png", "core_oak_log.png^core_long_grass_1.png"},
 	paramtype2 = "facedir",
 	is_ground_content = false,
-	groups = {tree=1, choppy=3, flammable=2, solid=1},
+	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node
 	--sounds = {todo},
 })
@@ -524,7 +524,7 @@ minetest.register_node("core:cherry_log_grassy", {
 	tiles = {"core_cherry_log_top.png", "core_cherry_log_top.png", "core_cherry_log.png^core_long_grass_1.png"},
 	paramtype2 = "facedir",
 	is_ground_content = false,
-	groups = {tree=1, choppy=3, flammable=2, solid=1},
+	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node
 	--sounds = {todo},
 })
@@ -596,7 +596,7 @@ minetest.register_node("core:birch_log_grassy", {
 	tiles = {"core_birch_log_top.png", "core_birch_log_top.png", "core_birch_log.png^core_long_grass_1.png"},
 	paramtype2 = "facedir",
 	is_ground_content = false,
-	groups = {tree=1, choppy=3, flammable=2, solid=1},
+	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node,
 	--sounds = {todo},
 })

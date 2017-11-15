@@ -56,7 +56,7 @@ minetest.register_node("core:mg_oak_sapling", {
 	description = "Impossible to get node.",
 	drawtype = "airlike",
 	paramtype = "light",
-	tiles = {"xfences_space.png"},
+	--tiles = {"xfences_space.png"},
 	groups = {not_in_creative_inventory=1},
 })
 
@@ -64,7 +64,7 @@ minetest.register_node("core:mg_pine_sapling", {
 	description = "Impossible to get node.",
 	drawtype = "airlike",
 	paramtype = "light",
-	tiles = {"xfences_space.png"},
+	--tiles = {"xfences_space.png"},
 	groups = {not_in_creative_inventory=1},
 })
 
@@ -72,7 +72,7 @@ minetest.register_node("core:mg_pine_snowy_sapling", {
 	description = "Impossible to get node.",
 	drawtype = "airlike",
 	paramtype = "light",
-	tiles = {"xfences_space.png"},
+	--tiles = {"xfences_space.png"},
 	groups = {not_in_creative_inventory=1},
 })
 
@@ -80,7 +80,7 @@ minetest.register_node("core:mg_birch_sapling", {
 	description = "Impossible to get node.",
 	drawtype = "airlike",
 	paramtype = "light",
-	tiles = {"xfences_space.png"},
+	--tiles = {"xfences_space.png"},
 	groups = {not_in_creative_inventory=1},
 })
 
@@ -88,7 +88,7 @@ minetest.register_node("core:mg_cherry_sapling", {
 	description = "Impossible to get node.",
 	drawtype = "airlike",
 	paramtype = "light",
-	tiles = {"xfences_space.png"},
+	--tiles = {"xfences_space.png"},
 	groups = {not_in_creative_inventory=1},
 })
 
@@ -399,7 +399,7 @@ function mcore.grow_tree(pos, is_apple_tree, trunk_node, leaves_node, fallen_lea
 	end
 	
 	local x, y, z = pos.x, pos.y, pos.z
-	local height = random(4, 6)
+	local height = random(4, 7)
 	local c_tree = minetest.get_content_id(trunk_node)
 	local c_leaves = minetest.get_content_id(leaves_node)
 	local log_grass = minetest.get_content_id(trunk_node .. "_grassy")
@@ -660,7 +660,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_birch_sapling"},
 	sidelen = 8,
-	fill_ratio = 0.006,
+	fill_ratio = 0.003,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -680,7 +680,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_birch_sapling"},
 	sidelen = 4,
-	fill_ratio = 0.002,
+	fill_ratio = 0.001,
 	biomes = {"plains"},
 	height = 1,
 })
@@ -690,7 +690,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_cherry_sapling"},
 	sidelen = 4,
-	fill_ratio = 0.0005,
+	fill_ratio = 0.0001,
 	biomes = {"plains"},
 	height = 1,
 })
@@ -700,7 +700,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_oak_sapling"},
 	sidelen = 4,
-	fill_ratio = 0.0005,
+	fill_ratio = 0.0003,
 	biomes = {"plains"},
 	height = 1,
 })

@@ -118,7 +118,14 @@ minetest.register_on_joinplayer(function(player)
 end)
 
 function hudclock.display_bg(player)
-
+	
+	player:hud_add({
+		hud_elem_type = "image",
+		position = {x=0.5, y=0.5},
+		scale = {x=-100, y=-100},
+		text = "hud_vignette.png"
+	})
+	
 	player:hud_add({
 		hud_elem_type = "image",
 		position = {x=positionx, y=positiony},

@@ -351,3 +351,6 @@ minetest.after(60+math.random(1,59)*math.random(1,5), atmos.weatherchange)
 minetest.after(2, atmos.thunderstrike)
 
 lightning.light_level = atmos.weather_light_level
+
+-- abm to remove fires when it's raining, snowing or hailing?
+

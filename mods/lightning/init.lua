@@ -170,7 +170,7 @@ lightning.strike = function(pos)
 			end
 			-- very rarely, potentially cause a fire
 			if fire and rng:next(1,1000) == 1 then
-				--minetest.set_node(pos2, {name = "fire:basic_flame"})
+				minetest.set_node(pos2, {name = "fire:basic_flame"})
 			else
 				minetest.set_node(pos2, {name = "lightning:dying_flame"})
 			end

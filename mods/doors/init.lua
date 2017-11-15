@@ -816,41 +816,33 @@ function doors.register_fencegate(name, def)
 	})
 end
 
-doors.register_fencegate("doors:gate_wood", {
-	description = "Wooden Fence Gate",
-	texture = "default_wood.png",
-	material = "default:wood",
+doors.register_fencegate("doors:gate_oak", {
+	description = "Oak Fence Gate",
+	texture = "core_oak_planks.png",
+	material = "core:oak_planks",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 
-doors.register_fencegate("doors:gate_acacia_wood", {
-	description = "Acacia Fence Gate",
-	texture = "default_acacia_wood.png",
-	material = "default:acacia_wood",
+doors.register_fencegate("doors:gate_birch", {
+	description = "Birch Fence Gate",
+	texture = "core_birch_planks.png",
+	material = "core:birch_planks",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 
-doors.register_fencegate("doors:gate_junglewood", {
-	description = "Junglewood Fence Gate",
-	texture = "default_junglewood.png",
-	material = "default:junglewood",
+doors.register_fencegate("doors:gate_cherry", {
+	description = "Cherry Fence Gate",
+	texture = "core_cherry_planks.png",
+	material = "core:cherry_planks",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 
 doors.register_fencegate("doors:gate_pine_wood", {
 	description = "Pine Fence Gate",
-	texture = "default_pine_wood.png",
-	material = "default:pine_wood",
+	texture = "core_pine_planks.png",
+	material = "core:pine_planks",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
-
-doors.register_fencegate("doors:gate_aspen_wood", {
-	description = "Aspen Fence Gate",
-	texture = "default_aspen_wood.png",
-	material = "default:aspen_wood",
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
-})
-
 
 ----fuels----
 

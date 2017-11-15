@@ -52,7 +52,8 @@ if dump(minetest.hud_replace_builtin) ~= "nil" then
 end
 
 HUD_TICK = 0.25
-HUD_HUNGER_TICK = 300
+HUD_HUNGER_TICK = 180
+HUD_HEAL_TICK = 8
 
 HUD_ENABLE_HUNGER = minetest.setting_getbool("hud_hunger_enable")
 if HUD_ENABLE_HUNGER == nil then
@@ -264,28 +265,44 @@ function hud.update_cycle()
 
 	for _,player in ipairs(minetest.get_connected_players()) do
 		local name = player:get_player_name()
-
-		-- only proceed if damage is enabled
-		if minetest.setting_getbool("enable_damage") then
-		 local h = tonumber(hud.hunger[name])
-		 local hp = player:get_hp()
-		 if HUD_ENABLE_HUNGER then
-			-- heal player by 1 hp if not dead and saturation is > 15 (of 30)
-			if h > 15 and hp > 0 and hud.air[name] > 0 then
-				player:set_hp(hp+1)
-			-- or damage player by 1 hp if saturation is < 2 (of 30)
-			elseif h <= 1 and minetest.setting_getbool("enable_damage") then
-				if hp-1 >= 0 then player:set_hp(hp-1) end
-			end
-		 end	
+			
 	 -- update all hud elements
 				
 		update_hud(player)
-		end
+		
 	end
 
 	minetest.after(HUD_TICK, hud.update_cycle)
 
+end
+
+function hud.healing()
+
+	for _,player in ipairs(minetest.get_connected_players()) do
+		local name = player:get_player_name()
+		local h = tonumber(hud.hunger[name])
+		local hp = player:get_hp()
+		
+			-- heal player by 1 hp if not dead and saturation is > 15 (of 30)
+			if h > 15 and hp > 0 and hud.air[name] > 0 then
+				
+				player:set_hp(hp+1)
+				update_hud(player)
+			-- or damage player by 1 hp if saturation is < 2 (of 30)
+			
+			elseif h <= 1 and minetest.setting_getbool("enable_damage") then
+				
+				if hp-1 >= 0 then 
+				
+					player:set_hp(hp-1) 
+					update_hud(player)
+				end
+				
+			end		
+		
+	end
+	
+	minetest.after(HUD_HEAL_TICK, hud.healing)
 end
 
 function hud.change_hunger()
@@ -295,19 +312,21 @@ function hud.change_hunger()
 		local h = tonumber(hud.hunger[name])
 		local hp = player:get_hp()
 	 -- lower saturation by 1 point after xx seconds
+	 
 		 if HUD_ENABLE_HUNGER then
 			if h > 0 then
 				h = h-1
 				hud.hunger[name] = h
 				hud.set_hunger(player)
+				update_hud(player)
 			end
 			
-			update_hud(player)
 		 end
 	end
 	
 	minetest.after(HUD_HUNGER_TICK, hud.change_hunger)
 end
 
-minetest.after(1, hud.update_cycle)
-minetest.after(2, hud.change_hunger)
+minetest.after(0.1, hud.update_cycle)
+minetest.after(HUD_HUNGER_TICK, hud.change_hunger)
+minetest.after(HUD_HEAL_TICK, hud.healing)

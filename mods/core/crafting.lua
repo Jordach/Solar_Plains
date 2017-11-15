@@ -158,7 +158,7 @@ minetest.register_craft({
 -- mese tier;
 
 minetest.register_craft({
-	output = "core:mese_pickaxe",
+	output = "core:mese_pickaxe_1 1 65535",
 	recipe = {
 		{"core:mese_crystal", "core:mese_crystal", "core:mese_crystal"},
 		{"", "group:stick", ""},
@@ -167,7 +167,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "core:mese_shovel",
+	output = "core:mese_shovel_1 1 65535",
 	recipe = {
 		{"", "core:mese_crystal", ""},
 		{"", "group:stick", ""},
@@ -176,7 +176,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "core:mese_axe",
+	output = "core:mese_axe_1 1 65535",
 	recipe = {
 		{"core:mese_crystal", "core:mese_crystal", ""},
 		{"core:mese_crystal", "group:stick", ""},
@@ -185,7 +185,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "core:mese_sword",
+	output = "core:mese_sword_1 1 65535",
 	recipe = {
 		{"", "core:mese_crystal", ""},
 		{"", "core:mese_crystal", ""},

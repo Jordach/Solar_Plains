@@ -1,9 +1,183 @@
+-- functions
+
+mcore.mese_wear_level = {}
+
+mcore.mese_wear_level[1] = 2 --2048
+mcore.mese_wear_level[2] = 4 --4096
+mcore.mese_wear_level[3] = 6 -- 8192
+mcore.mese_wear_level[4] = 8 -- 16384
+mcore.mese_wear_level[5] = 0 -- no change
+
+mcore.mese_dig_spd_pick = {}
+
+mcore.mese_dig_spd_pick[1] = { cracky = {times={[1]=9.00, [2]=4.00, [3]=1.50}, uses=mcore.mese_wear_level[1], maxlevel=0} }
+mcore.mese_dig_spd_pick[2] = { cracky = {times={[1]=6.00, [2]=2.00, [3]=0.75}, uses=mcore.mese_wear_level[2], maxlevel=0} }
+mcore.mese_dig_spd_pick[3] = { cracky = {times={[1]=3.00, [2]=1.00, [3]=0.50}, uses=mcore.mese_wear_level[3], maxlevel=0} }
+mcore.mese_dig_spd_pick[4] = { cracky = {times={[1]=1.50, [2]=0.50, [3]=0.25}, uses=mcore.mese_wear_level[4], maxlevel=0} }
+mcore.mese_dig_spd_pick[5] = { cracky = {times={[1]=1.00, [2]=0.25, [3]=0.12}, uses=mcore.mese_wear_level[5], maxlevel=0} }
+
+mcore.mese_dig_spd_shovel = {}
+
+mcore.mese_dig_spd_shovel[1] = { crumbly = {times={[1]=4.00, [2]=2.00, [3]=1.00}, uses=mcore.mese_wear_level[1], maxlevel=0} }
+mcore.mese_dig_spd_shovel[2] = { crumbly = {times={[1]=2.00, [2]=1.00, [3]=0.50}, uses=mcore.mese_wear_level[2], maxlevel=0} }
+mcore.mese_dig_spd_shovel[3] = { crumbly = {times={[1]=1.00, [2]=0.50, [3]=0.25}, uses=mcore.mese_wear_level[3], maxlevel=0} }
+mcore.mese_dig_spd_shovel[4] = { crumbly = {times={[1]=0.50, [2]=0.25, [3]=0.25}, uses=mcore.mese_wear_level[4], maxlevel=0} }
+mcore.mese_dig_spd_shovel[5] = { crumbly = {times={[1]=0.25, [2]=0.25, [3]=0.12}, uses=mcore.mese_wear_level[5], maxlevel=0} }
+
+mcore.mese_dig_spd_axe = {}
+
+mcore.mese_dig_spd_axe[1] = {
+							choppy = {times={[1]=4.00, [2]=2.00, [3]=1.00}, uses=mcore.mese_wear_level[1], maxlevel=0},
+							snappy = {times={[1]=4.00, [2]=2.00, [3]=1.00}, uses=mcore.mese_wear_level[1], maxlevel=0},
+						   }
+						   
+mcore.mese_dig_spd_axe[2] = {
+							choppy = {times={[1]=2.00, [2]=1.00, [3]=0.50}, uses=mcore.mese_wear_level[2], maxlevel=0},
+							snappy = {times={[1]=2.00, [2]=1.00, [3]=0.50}, uses=mcore.mese_wear_level[2], maxlevel=0},
+						   }
+						   
+mcore.mese_dig_spd_axe[3] = {
+							choppy = {times={[1]=1.00, [2]=0.50, [3]=0.50}, uses=mcore.mese_wear_level[3], maxlevel=0},
+							snappy = {times={[1]=1.00, [2]=0.50, [3]=0.50}, uses=mcore.mese_wear_level[3], maxlevel=0},
+						   }
+						   
+mcore.mese_dig_spd_axe[4] = {
+							choppy = {times={[1]=0.50, [2]=0.25, [3]=1.00}, uses=mcore.mese_wear_level[4], maxlevel=0},
+							snappy = {times={[1]=0.25, [2]=0.12, [3]=0.12}, uses=mcore.mese_wear_level[4], maxlevel=0},
+						   }
+						   
+mcore.mese_dig_spd_axe[5] = {
+							choppy = {times={[1]=0.25, [2]=0.25, [3]=0.25}, uses=mcore.mese_wear_level[5], maxlevel=0},
+							snappy = {times={[1]=0.25, [2]=0.12, [3]=0.12}, uses=mcore.mese_wear_level[5], maxlevel=0},
+						   }
+						   
+mcore.mese_dig_spd_sword = {}
+						   
+mcore.mese_dig_spd_sword[1] = { snappy = {times={[1]=4.00, [2]=2.00, [3]=1.00}, uses=mcore.mese_wear_level[1], maxlevel=0} }
+mcore.mese_dig_spd_sword[2] = { snappy = {times={[1]=2.00, [2]=1.00, [3]=0.50}, uses=mcore.mese_wear_level[2], maxlevel=0} }
+mcore.mese_dig_spd_sword[3] = { snappy = {times={[1]=1.00, [2]=0.50, [3]=0.25}, uses=mcore.mese_wear_level[3], maxlevel=0} }
+mcore.mese_dig_spd_sword[4] = { snappy = {times={[1]=0.25, [2]=0.12, [3]=0.12}, uses=mcore.mese_wear_level[4], maxlevel=0} }
+mcore.mese_dig_spd_sword[5] = { snappy = {times={[1]=0.25, [2]=0.12, [3]=0.12}, uses=mcore.mese_wear_level[5], maxlevel=0} }
+
+-- calculating damage (for mese only);
+
+-- pickaxe = sword damage / 2
+-- shovel = sword damage / 2 - 2
+-- axe = sword damage - 2
+
+mcore.mese_dmg_sword = {}
+
+mcore.mese_dmg_sword[1] = 4
+mcore.mese_dmg_sword[2] = 4
+mcore.mese_dmg_sword[3] = 6
+mcore.mese_dmg_sword[4] = 8
+mcore.mese_dmg_sword[5] = 10
+
+-- calculating swing speeds (for mese only);
+
+-- pickaxe = sword speed + 0.75
+-- shovel = sword speed + 1.5
+-- axe = sword speed + 0.5
+
+mcore.mese_swing_speed = {}
+
+mcore.mese_swing_speed[1] = 1.75
+mcore.mese_swing_speed[2] = 1.25
+mcore.mese_swing_speed[3] = 1.0
+mcore.mese_swing_speed[4] = 0.75
+mcore.mese_swing_speed[5] = 0.375
+
+function mcore.give_mese_exp(itemstack, user, node, digparams)
+	
+	if itemstack:get_name() == "core:mese_pickaxe_5" or itemstack:get_name() == "core:mese_shovel_5" or itemstack:get_name() == "core:mese_axe_5" or itemstack:get_name() == "core:mese_sword_5" then
+		
+		itemstack:add_wear(digparams.wear)
+        return itemstack
+
+	end
+	
+	for i=1, 4 do
+
+		if itemstack:get_name() == "core:mese_pickaxe_" .. i and itemstack:get_wear() == 0 then
+			
+			itemstack:set_name("core:mese_pickaxe_" .. i+1)
+			
+			if i ~= 4 then
+			
+				itemstack:set_wear(65535)
+				
+				minetest.sound_play("core_tool_levelling", {
+				
+					to_player = user:get_player_name(),
+					gain = 6.0,
+				
+				})
+				
+			else
+			
+				--......
+			
+			end
+		
+			return itemstack
+		
+		elseif itemstack:get_name() == "core:mese_pickaxe_" .. i then
+	
+			local add_to = -65535 / mcore.mese_wear_level[i]
+
+			itemstack:add_wear(add_to)
+	
+			return itemstack
+		
+		end
+	
+	end
+end
+
+function mcore.diamonds_are_forever(itemstack, user, node, digparams)
+
+	print("meme")
+
+end
+
+local function register_mese_toolsets()
+
+	for i=1, 5 do
+	
+		minetest.register_tool("core:mese_pickaxe_" .. i, {
+		
+			description = "MESE Pickaxe (Level " .. i .. ")",
+			inventory_image = "core_mese_pickaxe_".. i .. ".png",
+			tool_capabilities = {
+			
+				full_punch_interval = mcore.mese_swing_speed[i] + 0.75,
+				
+				max_drop_level = 0,
+				
+				groupcaps = mcore.mese_dig_spd_pick[i],
+				
+				damage_groups = mcore.mese_dmg_sword[i] / 2,
+			},
+			
+			after_use = function(itemstack, user, node, digparams)
+			
+				mcore.give_mese_exp(itemstack, user, node, digparams)
+			
+			end,
+		})
+	
+	end
+
+end
+
+register_mese_toolsets()
+
 minetest.register_item(":", {
 	type = "none",
 	wield_image = "wieldhand.png",
 	wield_scale = {x=1,y=3,z=4},
 	tool_capabilities = {
-		full_punch_interval = 0.9,
+		full_punch_interval = 0.25,
 		max_drop_level = 0,
 		groupcaps = {
 			crumbly = {times={[1]=6.00, [2]=3.00, [3]=1.50}, uses=0, maxlevel=1},
@@ -13,6 +187,7 @@ minetest.register_item(":", {
 		},
 		damage_groups = {fleshy=1},
 	}
+	
 })
 
 -- items
@@ -31,9 +206,7 @@ minetest.register_tool("core:wooden_pickaxe", {
 	tool_capabilities = {
 		full_punch_interval = 0.5,
 		max_drop_level = 0,
-		groupcaps = {
-			cracky = {times={[1]=9.00, [2]=4.00, [3]=1.50}, uses=0, maxlevel=1}
-		},
+		
 		damage_groups = {fleshy=1},
 	}
 })
@@ -257,65 +430,6 @@ minetest.register_tool("core:ironze_sword", {
 	
 })
 
--- mese tier;
-
-minetest.register_tool("core:mese_pickaxe", {
-	description = "MESE Pickaxe",
-	inventory_image = "core_mese_pickaxe.png",
-	tool_capabilities = {
-		full_punch_interval = 3.0,
-		max_drop_level = 0,
-		groupcaps = {
-			cracky = {times={[1]=1.50, [2]=0.50, [3]=0.25}, uses=2048, maxlevel=0},
-		},
-		damage_groups = {fleshy=4},
-	},
-	
-})
-
-minetest.register_tool("core:mese_shovel", {
-	description = "MESE Shovel",
-	inventory_image = "core_mese_shovel.png^[transformR90",
-	tool_capabilities = {
-		full_punch_interval = 4.0,
-		max_drop_level = 0,
-		groupcaps = {
-			crumbly = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=2048, maxlevel=0},
-		},
-		damage_groups = {fleshy=3},
-	},
-	
-})
-
-minetest.register_tool("core:mese_axe", {
-	description = "MESE Axe",
-	inventory_image = "core_mese_axe.png",
-	tool_capabilities = {
-		full_punch_interval = 2.0,
-		max_drop_level = 0,
-		groupcaps = {
-			choppy = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=2048, maxlevel=0},
-			snappy = {times={[1]=0.25, [2]=0.12, [3]=0.06}, uses=2048*2, maxlevel=0},
-		},
-		damage_groups = {fleshy=5},
-	},
-	
-})
-
-minetest.register_tool("core:mese_sword", {
-	description = "MESE Sword",
-	inventory_image = "core_mese_sword.png",
-	tool_capabilities = {
-		full_punch_interval = 2.5,
-		max_drop_level = 0,
-		groupcaps = {
-			snappy = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=2048, maxlevel=0},
-		},
-		damage_groups = {fleshy=8},
-	},
-	
-})
-
 -- diamond tier
 
 minetest.register_tool("core:diamond_pickaxe", {
@@ -325,7 +439,7 @@ minetest.register_tool("core:diamond_pickaxe", {
 		full_punch_interval = 3.0,
 		max_drop_level = 0,
 		groupcaps = {
-			cracky = {times={[1]=1.50, [2]=0.50, [3]=0.25}, uses=4096, maxlevel=0},
+			cracky = {times={[1]=1.50, [2]=0.50, [3]=0.25}, uses=8192, maxlevel=0},
 		},
 		damage_groups = {fleshy=4},
 	},
@@ -339,7 +453,7 @@ minetest.register_tool("core:diamond_shovel", {
 		full_punch_interval = 4.0,
 		max_drop_level = 0,
 		groupcaps = {
-			crumbly = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=4096, maxlevel=0},
+			crumbly = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=8192, maxlevel=0},
 		},
 		damage_groups = {fleshy=3},
 	},
@@ -353,8 +467,8 @@ minetest.register_tool("core:diamond_axe", {
 		full_punch_interval = 2.0,
 		max_drop_level = 0,
 		groupcaps = {
-			choppy = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=4096, maxlevel=0},
-			snappy = {times={[1]=0.25, [2]=0.12, [3]=0.06}, uses=4096*2, maxlevel=0},
+			choppy = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=8192, maxlevel=0},
+			snappy = {times={[1]=0.25, [2]=0.12, [3]=0.06}, uses=8192*2, maxlevel=0},
 		},
 		damage_groups = {fleshy=5},
 	},
@@ -368,7 +482,7 @@ minetest.register_tool("core:diamond_sword", {
 		full_punch_interval = 2.5,
 		max_drop_level = 0,
 		groupcaps = {
-			snappy = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=4096, maxlevel=0},
+			snappy = {times={[1]=0.50, [2]=0.25, [3]=0.12}, uses=8192, maxlevel=0},
 		},
 		damage_groups = {fleshy=8},
 	},
