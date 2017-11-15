@@ -26,7 +26,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:grass"},
-	interval = 1,
+	interval = 120,
 	chance = 2,
 	action = function(pos)
 		pos.y = pos.y + 1
@@ -99,7 +99,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:cherry_sapling"},
-	interval = 85, --80
+	interval = 85, --85
 	chance = 3,
 	action = function(pos, node)
 		
