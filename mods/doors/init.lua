@@ -429,7 +429,8 @@ doors.register("door_wood", {
 			{"core:oak_planks", "core:oak_planks"},
 			{"core:oak_planks", "core:oak_planks"},
 			{"core:oak_planks", "core:oak_planks"},
-		}
+		},
+		sounds = mcore.sound_wood,
 })
 
 --[[
@@ -636,6 +637,7 @@ doors.register_trapdoor("doors:trapdoor", {
 	tile_front = "doors_trapdoor.png",
 	tile_side = "doors_trapdoor_side.png",
 	groups = { choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, door = 1 },
+	sounds = mcore.sound_wood,
 })
 
 doors.register_trapdoor("doors:trapdoor_steel", {
@@ -648,6 +650,7 @@ doors.register_trapdoor("doors:trapdoor_steel", {
 	sound_open = "doors_steel_door_open",
 	sound_close = "doors_steel_door_close",
 	groups = { cracky = 1, level = 2, door = 1 },
+	sounds = mcore.sound_metallic,
 })
 
 minetest.register_craft({
@@ -820,6 +823,7 @@ doors.register_fencegate("doors:gate_oak", {
 	description = "Oak Fence Gate",
 	texture = "core_oak_planks.png",
 	material = "core:oak_planks",
+	sounds = mcore.sound_wood,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 
@@ -827,6 +831,7 @@ doors.register_fencegate("doors:gate_birch", {
 	description = "Birch Fence Gate",
 	texture = "core_birch_planks.png",
 	material = "core:birch_planks",
+	sounds = mcore.sound_wood,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 
@@ -834,6 +839,7 @@ doors.register_fencegate("doors:gate_cherry", {
 	description = "Cherry Fence Gate",
 	texture = "core_cherry_planks.png",
 	material = "core:cherry_planks",
+	sounds = mcore.sound_wood,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 
@@ -841,6 +847,7 @@ doors.register_fencegate("doors:gate_pine_wood", {
 	description = "Pine Fence Gate",
 	texture = "core_pine_planks.png",
 	material = "core:pine_planks",
+	sounds = mcore.sound_wood,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 

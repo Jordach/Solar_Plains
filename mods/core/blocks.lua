@@ -6,7 +6,7 @@ minetest.register_node("core:dirt", {
 	is_ground_content = true,
 	drop = "core:dirt",
 	groups = {crumbly=3, soil=1, solid=1},
-	--sounds = todo,
+	sounds = mcore.sound_gravel,
 })
 
 minetest.register_node("core:mud", {
@@ -15,7 +15,7 @@ minetest.register_node("core:mud", {
 	is_ground_content = true,
 	drop = "core:dirt",
 	groups = {crumbly=3, soil=1},
-	--sounds = todo,
+	sounds = mcore.sound_gravel,
 })
 
 minetest.register_node("core:grass", {
@@ -24,7 +24,7 @@ minetest.register_node("core:grass", {
 	is_ground_content = true,
 	drop = "core:dirt",
 	groups = {crumbly=3, soil=1, solid=1},
-	--sounds = todo,
+	sounds = mcore.sound_grass,
 })
 
 minetest.register_node("core:grasstest", {
@@ -33,7 +33,7 @@ minetest.register_node("core:grasstest", {
 	is_ground_content = true,
 	drop = "core:dirt",
 	groups = {crumbly=3, soil=1},
-	--sounds = todo,
+	sounds = mcore.sound_grass,
 })
 
 minetest.register_node("core:stone", {
@@ -42,7 +42,7 @@ minetest.register_node("core:stone", {
 	is_ground_content = true,
 	drop = "core:cobble",
 	groups = {cracky=3, solid=1, stone=1},
-	--sounds = todo,
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:firestone", {
@@ -53,7 +53,7 @@ minetest.register_node("core:firestone", {
 	groups = {cracky=2, stone=1},
 	light_source = 8,
 	paramtype = "light",
-	--sounds = todo,
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:icestone", {
@@ -64,7 +64,7 @@ minetest.register_node("core:icestone", {
 	is_ground_content = true,
 	drop = "core:icestone",
 	groups = {cracky=2, solid=1, stone=1},
-	--sounds = todo,
+	sounds = mcore.sound_glass,
 })
 
 minetest.register_node("core:gstone", {
@@ -75,7 +75,7 @@ minetest.register_node("core:gstone", {
 	groups = {cracky=3}, -- for now it's unobtainable other than creative, which isn't even working yet.
 	paramtype = "light",
 	light_source = 14,
-	--sounds = todo,
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:cobble", {
@@ -84,7 +84,7 @@ minetest.register_node("core:cobble", {
 	is_ground_content = true,
 	drop = "core:cobble",
 	groups = {cracky=2, solid=1, stone=1},
-	--sounds = todo,
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:mossycobble", {
@@ -93,7 +93,7 @@ minetest.register_node("core:mossycobble", {
 	is_ground_content = true,
 	drop = "core:mossycobble",
 	groups = {cracky=2, solid=1, stone=1},
-	--sounds = todo,
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:sand", {
@@ -102,7 +102,7 @@ minetest.register_node("core:sand", {
 	is_ground_content = true,
 	drop = "core:sand",
 	groups = {crumbly=3},
-	--sounds = todo,
+	sounds = mcore.sound_sand,
 })
 
 minetest.register_node("core:gravel", {
@@ -111,7 +111,7 @@ minetest.register_node("core:gravel", {
 	is_ground_content = true,
 	drop = "core:gravel",
 	groups = {crumbly=2, falling_node=1},
-	--sounds = todo,
+	sounds = mcore.sound_sand,
 })
 
 minetest.register_node("core:clay", {
@@ -120,7 +120,7 @@ minetest.register_node("core:clay", {
 	is_ground_content = true,
 	drop = "core:clay_lump 4",
 	groups = {crumbly=2, falling_node=1},
-	--sounds = todo,
+	sounds = mcore.sound_sand,
 })
 
 minetest.register_node("core:sandstone", {
@@ -129,7 +129,7 @@ minetest.register_node("core:sandstone", {
 	is_ground_content = true,
 	drop = "core:cobble",
 	groups = {cracky=2, solid=1, stone=1},
-	--sounds = todo,
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:grass_snow", {
@@ -138,7 +138,7 @@ minetest.register_node("core:grass_snow", {
 	is_ground_content = true,
 	drop = "core:dirt",
 	groups = {crumbly=3, solid=1, soil=1},
-	--sounds = todo,
+	sounds = mcore.sound_snow,
 })
 
 minetest.register_node("core:snow", {
@@ -157,7 +157,7 @@ minetest.register_node("core:snow", {
 	},
 	groups = {crumbly = 3, falling_node = 1, puts_out_fire = 1},
 	
-	--sounds = todo;
+	sounds = mcore.sound_snow;
 	
 	on_construct = function(pos)
 		pos.y = pos.y - 1
@@ -173,7 +173,7 @@ minetest.register_node("core:snowblock", {
 	is_ground_content = true,
 	paramtype = "light",
 	groups = {crumbly=3, puts_out_fire=1, solid=1},
-	--sounds = todo,
+	sounds = mcore.sound_snow,
 })
 
 minetest.register_node("core:ice", {
@@ -182,7 +182,7 @@ minetest.register_node("core:ice", {
 	is_ground_content = true,
 	paramtype = "light",
 	groups = {cracky=2, puts_out_fire=1, solid=1},
-	--sounds = todo;
+	sounds = mcore.sound_glass;
 })
 
 -- liquids
@@ -379,8 +379,8 @@ minetest.register_node("core:pine_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = minetest.rotate_node
-	--sounds = {todo},
+	on_place = minetest.rotate_node,
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:pine_log_grassy", {
@@ -389,8 +389,8 @@ minetest.register_node("core:pine_log_grassy", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
-	on_place = minetest.rotate_node
-	--sounds = {todo},
+	on_place = minetest.rotate_node,
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:pine_needles", {
@@ -415,8 +415,8 @@ minetest.register_node("core:pine_needles", {
 			}
 		}
 	},
-	after_place_node = core.after_place_leaves,
-	--sounds = todo(),
+	after_place_node = mcore.after_place_leaves,
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:pine_needles_snowy", {
@@ -441,15 +441,15 @@ minetest.register_node("core:pine_needles_snowy", {
 			}
 		}
 	},
-	after_place_node = core.after_place_leaves,
-	--sounds = todo(),
+	after_place_node = mcore.after_place_leaves,
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:pine_planks", {
 	description = "Pine Planks",
 	tiles = {"core_pine_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	--sounds = {todo},
+	sounds = mcore.sounds_plants,
 })
 
 -- oak
@@ -460,8 +460,8 @@ minetest.register_node("core:oak_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = minetest.rotate_node
-	--sounds = {todo},
+	on_place = minetest.rotate_node,
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:oak_log_grassy", {
@@ -470,8 +470,8 @@ minetest.register_node("core:oak_log_grassy", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
-	on_place = minetest.rotate_node
-	--sounds = {todo},
+	on_place = minetest.rotate_node,
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:oak_leaves", {
@@ -496,15 +496,15 @@ minetest.register_node("core:oak_leaves", {
 			}
 		}
 	},
-	after_place_node = core.after_place_leaves,
-	--sounds = todo(),
+	after_place_node = mcore.after_place_leaves,
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:oak_planks", {
 	description = "Oak Planks",
 	tiles = {"core_oak_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	--sounds = {todo},
+	sounds = mcore.sounds_wood,
 })
 
 -- cherry
@@ -515,8 +515,8 @@ minetest.register_node("core:cherry_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = minetest.rotate_node
-	--sounds = {todo},
+	on_place = minetest.rotate_node,
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:cherry_log_grassy", {
@@ -525,8 +525,8 @@ minetest.register_node("core:cherry_log_grassy", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
-	on_place = minetest.rotate_node
-	--sounds = {todo},
+	on_place = minetest.rotate_node,
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:cherry_leaves", {
@@ -551,15 +551,15 @@ minetest.register_node("core:cherry_leaves", {
 			}
 		}
 	},
-	after_place_node = core.after_place_leaves,
-	--sounds = todo(),
+	after_place_node = mcore.after_place_leaves,
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:cherry_planks", {
 	description = "Cherry Planks",
 	tiles = {"core_cherry_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	--sounds = {todo},
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:fallen_cherry_leaves", {
@@ -576,7 +576,7 @@ minetest.register_node("core:fallen_cherry_leaves", {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 	},
-	--sounds = todo(),
+	sounds = mcore.sounds_plants,
 })
 
 -- birch
@@ -588,7 +588,7 @@ minetest.register_node("core:birch_log", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
 	on_place = minetest.rotate_node,
-	--sounds = {todo},
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:birch_log_grassy", {
@@ -598,7 +598,7 @@ minetest.register_node("core:birch_log_grassy", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node,
-	--sounds = {todo},
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:birch_leaves", {
@@ -623,15 +623,15 @@ minetest.register_node("core:birch_leaves", {
 			}
 		}
 	},
-	after_place_node = core.after_place_leaves,
-	--sounds = todo(),
+	after_place_node = mcore.after_place_leaves,
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:birch_planks", {
 	description = "Birch Planks",
 	tiles = {"core_birch_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	--sounds = {todo},
+	sounds = mcore.sounds_wood,
 })
 
 -- saplings
@@ -644,7 +644,7 @@ minetest.register_node("core:oak_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	-- sounds = todo(),
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:pine_sapling", {
@@ -655,7 +655,7 @@ minetest.register_node("core:pine_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	-- sounds = todo(),
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:birch_sapling", {
@@ -666,7 +666,7 @@ minetest.register_node("core:birch_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	-- sounds = todo(),
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:cherry_sapling", {
@@ -677,7 +677,7 @@ minetest.register_node("core:cherry_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	-- sounds = todo(),
+	sounds = mcore.sounds_plants,
 })
 
 
@@ -693,7 +693,7 @@ minetest.register_node("core:cactus", {
 	paramtype = "light",
 	mesh = "core_cactus.b3d",
 	groups = {choppy=3, flammable=2},
-	--sounds = {todo},
+	sounds = mcore.sounds_wood,
 })
 
 minetest.register_node("core:grass_1", {
@@ -712,7 +712,7 @@ minetest.register_node("core:grass_1", {
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 	},
-	--sounds = todo(),
+	sounds = mcore.sounds_plants,
 	on_place = function(itemstack, placer, pointed_thing)
 		local nname = "core:grass_" .. math.random(1,3)
 		local stack = ItemStack(nname)
@@ -741,7 +741,7 @@ for i=2, 3 do
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 		},
-		--sounds = todo(),
+		sounds = mcore.sounds_plants,
 	})
 end
 
@@ -759,7 +759,7 @@ minetest.register_node("core:papyrus", {
 			type = "fixed",
 			fixed = {-0.35, -0.5, -0.35, 0.35, 0.5, 0.35},
 	},
-	--sounds = todo(),
+	sounds = mcore.sounds_plants,
 })
 
 minetest.register_node("core:bamboo", {
@@ -775,7 +775,7 @@ minetest.register_node("core:bamboo", {
 			type = "fixed",
 			fixed = {-0.35, -0.5, -0.35, 0.35, 0.5, 0.35},
 	},
-	--sounds = todo(),
+	sounds = mcore.sounds_plants,
 })
 
 -- ores
@@ -784,7 +784,7 @@ minetest.register_node("core:coal_ore", {
 	description = "Coal Ore",
 	tiles = {"core_ore_coal.png"},
 	groups = {cracky=3, solid=1},
-	--sounds = todo(),
+	sounds = mcore.sound_stone,
 	drop = {
 		max_items = 3,
 		items = {
@@ -799,42 +799,42 @@ minetest.register_node("core:copper_ore", {
 	description = "Copper Ore",
 	tiles = {"core_ore_copper.png"},
 	groups = {cracky=3, solid=1},
-	--sounds = todo(),
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:iron_ore", {
 	description = "Iron Ore",
 	tiles = {"core_ore_iron.png"},
 	groups = {cracky=2, solid=1},
-	--sounds = todo();
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:silver_ore", {
 	description = "Silver Ore",
 	tiles = {"core_ore_silver.png"},
 	groups = {cracky=2, solid=1},
-	--sounds = todo(),
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:gold_ore", {
 	description = "Gold Ore",
 	tiles = {"core_ore_gold.png"},
 	groups = {cracky=1, solid=1},
-	--sounds = todo(),
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:mese_ore", {
 	description = "Mese Ore",
 	tiles = {"core_ore_mese.png"},
 	groups = {cracky=1, solid=1},
-	--sounds = todo(),
+	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:mese", {
 	description = "Mese Block",
 	tiles = {"core_mese.png"},
 	groups = {cracky=1, solid=1},
-	--sounds = todo(),
+	sounds = mcore.sound_stone,
 })
 
 
@@ -842,7 +842,7 @@ minetest.register_node("core:diamond_ore", {
 	description = "Diamond Ore",
 	tiles = {"core_ore_diamond.png"},
 	groups = {cracky=1, solid=1},
-	--sounds = todo(),
+	sounds = mcore.sound_stone,
 })
 
 -- torches and light sources
@@ -866,7 +866,7 @@ minetest.register_node("core:torch", {
 	},
 	groups = {choppy=2,dig_immediate=3,flammable=1,attached_node=1,hot=2},
 	legacy_wallmounted = true,
-	--sounds = default.node_sound_defaults(),
+	sounds = mcore.sound_wood,
 	node_box = {
 		type = "wallmounted",
 		wall_top = {-0.0625, 0.5, -0.0625, 0.0625, -0.0625, 0.0625},
@@ -878,7 +878,7 @@ minetest.register_node("core:torch", {
 
 -- metadata nodes
 
-core.chest_formspec = 
+mcore.chest_formspec = 
 	"size[8,9]" ..
 	"list[current_name;main;0,0;8,4;]" ..
 	"list[current_player;main;0,4.5;8,1;]" ..
@@ -907,11 +907,11 @@ minetest.register_node("core:chest", {
 		}
 	},
 	
-	--sounds = default.node_sound_wood_defaults(),
+	sounds = mcore.sound_wood,
 
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", core.chest_formspec)
+		meta:set_string("formspec", mcore.chest_formspec)
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 	end,
@@ -937,7 +937,7 @@ minetest.register_node("core:chest", {
 	end,
 })
 
-function core.get_locked_chest_formspec(pos)
+function mcore.get_locked_chest_formspec(pos)
 	local spos = pos.x .. "," .. pos.y .. "," .. pos.z
 	local formspec =
 		"size[8,9]" ..
@@ -950,7 +950,7 @@ function core.get_locked_chest_formspec(pos)
  return formspec
 end
 
-function core.has_locked_chest_privilege(meta, player)
+function mcore.has_locked_chest_privilege(meta, player)
 	if player then
 		if minetest.check_player_privs(player, "protection_bypass") then
 			return true
@@ -983,7 +983,7 @@ minetest.register_node("core:chest_locked", {
 		}
 	},
 	
-	--sounds = default.node_sound_wood_defaults(),
+	sounds = mcore.sound_wood,
 
 	after_place_node = function(pos, placer)
 		local meta = minetest.get_meta(pos)
@@ -1000,26 +1000,26 @@ minetest.register_node("core:chest_locked", {
 	can_dig = function(pos,player)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
-		return inv:is_empty("main") and core.has_locked_chest_privilege(meta, player)
+		return inv:is_empty("main") and mcore.has_locked_chest_privilege(meta, player)
 	end,
 	allow_metadata_inventory_move = function(pos, from_list, from_index,
 			to_list, to_index, count, player)
 		local meta = minetest.get_meta(pos)
-		if not core.has_locked_chest_privilege(meta, player) then
+		if not mcore.has_locked_chest_privilege(meta, player) then
 			return 0
 		end
 		return count
 	end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
-		if not core.has_locked_chest_privilege(meta, player) then
+		if not mcore.has_locked_chest_privilege(meta, player) then
 			return 0
 		end
 		return stack:get_count()
 	end,
     allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
-		if not core.has_locked_chest_privilege(meta, player) then
+		if not mcore.has_locked_chest_privilege(meta, player) then
 			return 0
 		end
 		return stack:get_count()
@@ -1036,11 +1036,11 @@ minetest.register_node("core:chest_locked", {
 	end,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
-		if core.has_locked_chest_privilege(meta, clicker) then
+		if mcore.has_locked_chest_privilege(meta, clicker) then
 			minetest.show_formspec(
 				clicker:get_player_name(),
 				"core:chest_locked",
-				core.get_locked_chest_formspec(pos)
+				mcore.get_locked_chest_formspec(pos)
 			)
 		end
 		return itemstack
@@ -1320,7 +1320,7 @@ minetest.register_node("core:furnace", {
 	groups = {cracky=2},
 	legacy_facedir_simple = true,
 	is_ground_content = false,
-	--sounds = default.node_sound_stone_defaults(),
+	sounds = mcore.sound_stone,
 
 	can_dig = mcore.furnace.can_dig,
 
@@ -1361,7 +1361,7 @@ minetest.register_node("core:furnace_active", {
 	groups = {cracky=2, not_in_creative_inventory=1},
 	legacy_facedir_simple = true,
 	is_ground_content = false,
-	--sounds = default.node_sound_stone_defaults(),
+	sounds = mcore.sound_stone,
 	on_timer = mcore.furnace.furnace_node_timer,
 
 	can_dig = mcore.furnace.can_dig,
@@ -1374,7 +1374,7 @@ minetest.register_node("core:furnace_active", {
 
 -- utility functions
 
-core.after_place_leaves = function(pos, placer, itemstack, pointed_thing)
+mcore.after_place_leaves = function(pos, placer, itemstack, pointed_thing)
 	if placer and not placer:get_player_control().sneak then
 		local node = minetest.get_node(pos)
 		node.param2 = 1
@@ -1382,7 +1382,7 @@ core.after_place_leaves = function(pos, placer, itemstack, pointed_thing)
 	end
 end
 
-function core.register_fence(name, def)
+function mcore.register_fence(name, def)
 	minetest.register_craft({
 		output = name .. " 4",
 		recipe = {
@@ -1434,12 +1434,12 @@ end
 
 -- fences
 
-core.register_fence("core:fence_oak", {
+mcore.register_fence("core:fence_oak", {
 	description = "Oak Fence",
 	texture = "core_oak_planks.png",
 	inventory_image = "core_fence_oak.png",
 	wield_image = "core_fence_oak.png",
 	material = "core:oak_planks",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
-	--sounds = default.node_sound_wood_defaults()
+	sounds = mcore.sound_wood,
 })

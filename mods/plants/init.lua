@@ -12,7 +12,7 @@ minetest.register_node("plants:daisy", {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 	},
-	--sounds = todo(),
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("plants:daisy2", {
@@ -29,6 +29,6 @@ minetest.register_node("plants:daisy2", {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 	},
-	--sounds = todo(),
+	sounds = mcore.sound_plants,
 })
 

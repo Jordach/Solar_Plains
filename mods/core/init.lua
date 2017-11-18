@@ -1,5 +1,7 @@
 --configuration options
 
+mcore = {}
+
 give_initial_stuff = {}
 
 -- dofiles for loading files required by "core"

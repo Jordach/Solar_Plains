@@ -8,7 +8,7 @@ minetest.register_node("flowerbeds:flowerbed", {
 
 	description = "Flowerbed",
 	tiles = {"flowerbeds_bed.png", "core_dirt.png", "core_dirt.png^core_grass_side.png"},
-	
+	sounds = mcore.sound_grass,
 })
 
 function flowerbeds.register_flower(texture, desc, node_name, sound_table, dye_colour)
@@ -36,7 +36,7 @@ function flowerbeds.register_flower(texture, desc, node_name, sound_table, dye_c
 		drawtype = "plantlike",
 		paramtype = "light",
 		paramtype2 = "meshoptions",
-		--sounds = sound_table
+		sounds = mcore.sound_plants,
 		waving = 1,
 		on_place = function(itemstack, placer, pointed_thing)
 			local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))

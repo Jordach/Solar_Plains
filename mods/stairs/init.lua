@@ -230,4 +230,4 @@ If you want to skip certain parts, like the recipe item, just use nil.
 
 ]]
 
-stairs.register_stair_and_slab("cobble", "core:cobble", {cracky = 3}, {"core_cobble.png"}, "Cobble Stair", "Cobble Slab", {})
+stairs.register_stair_and_slab("cobble", "core:cobble", {cracky = 3}, {"core_cobble.png"}, "Cobble Stair", "Cobble Slab", mcore.sound_stone)

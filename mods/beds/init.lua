@@ -405,6 +405,7 @@ minetest.register_node("beds:red_active", {
 	groups = {snappy=3},
 	drop = "beds:red",
 	paramtype2 = "facedir",
+	sounds = mcore.sound_wood,
 	collision_box = {
 		type = "fixed",
 		fixed = {
