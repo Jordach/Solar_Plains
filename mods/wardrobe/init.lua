@@ -368,7 +368,7 @@ function wardrobe.formspec_meta(texture_table, rgb_table )
 		
 		-- Trousers Layer 1
 		"label[5,2;Trousers]"..
-		"label[5,2.38;Layer 2:]"..
+		"label[5,2.38;Layer 1:]"..
 		"button[6.7,2;1,1;troudown;<-]".. --\\
 		"field[7.75,2.32;1.75,1;trousers;;"..rgb_table[13].."]".. --//
 		"button[8.97,2;1,1;trouup;->]"..  --\\
