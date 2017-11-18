@@ -2,10 +2,10 @@
 
 mcore.mese_wear_level = {}
 
-mcore.mese_wear_level[1] = 1024 --1024
-mcore.mese_wear_level[2] = 2048 --2048
-mcore.mese_wear_level[3] = 4096 -- 4096
-mcore.mese_wear_level[4] = 8192 -- 8192
+mcore.mese_wear_level[1] = 512 --512
+mcore.mese_wear_level[2] = 1024 --1024
+mcore.mese_wear_level[3] = 2048 -- 2048
+mcore.mese_wear_level[4] = 4096 -- 4096
 mcore.mese_wear_level[5] = 0 -- no change
 
 mcore.mese_dig_spd_pick = {}
