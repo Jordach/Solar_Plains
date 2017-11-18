@@ -206,7 +206,11 @@ minetest.register_tool("core:wooden_pickaxe", {
 	tool_capabilities = {
 		full_punch_interval = 0.5,
 		max_drop_level = 0,
+		groupcaps = {
 		
+			cracky = {times={[1]=9.00, [2]=4.00, [3]=1.50}, uses=0, maxlevel=0}
+		
+		},
 		damage_groups = {fleshy=1},
 	}
 })
