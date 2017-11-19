@@ -201,14 +201,14 @@ function intro.reset_hud(player)
 end
 
 minetest.register_on_newplayer(function(player)
-	intro.spawn_title(player)
+	--intro.spawn_title(player)
 end)
 
 minetest.register_on_joinplayer(function(player)
 	-- start checks at 0, +30k, 0
 	-- y is a static value so that doesn't need to be played with or incremented
 	
-	--player:set_attribute("intro_completed", "true")
+	player:set_attribute("intro_completed", "true")
 	
 	if player:get_attribute("intro_completed") == "true" then 
 		
