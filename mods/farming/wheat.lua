@@ -31,7 +31,7 @@ minetest.register_node("farming:straw", {
 	tiles = {"farming_straw.png"},
 	is_ground_content = false,
 	groups = {snappy = 3, flammable = 4},
-	--sounds = default.node_sound_leaves_defaults(),
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_craft({

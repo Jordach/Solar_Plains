@@ -84,8 +84,8 @@ mcore.sound_wood = {
 
 	footstep = {name = "core_wood_footstep", gain = 0.12},
 
-	dug = {name = "core_wood_dug", gain = 0.15},
+	dug = {name = "core_wood_dug", gain = 0.3},
 	
-	place = {name = "core_wood_dug", gain = 0.15},
+	place = {name = "core_wood_dug", gain = 0.3},
 
 }

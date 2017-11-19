@@ -25,7 +25,7 @@ minetest.register_node("farming:drinking_cup", {
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.25, 0.25}
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
-	--sounds = default.node_sound_glass_defaults(),
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_craft( {
@@ -51,7 +51,7 @@ minetest.register_node("farming:coffee_cup", {
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
 	on_use = minetest.item_eat(2, "farming:drinking_cup"),
-	--sounds = default.node_sound_glass_defaults(),
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_craft( {
@@ -84,7 +84,7 @@ minetest.register_node("farming:coffee_cup_hot", {
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
 	on_use = minetest.item_eat(3, "farming:drinking_cup"),
-	--sounds = default.node_sound_glass_defaults(),
+	sounds = mcore.sound_plants,
 })
 
 -- coffee definition
@@ -103,7 +103,7 @@ local crop_def = {
 		snappy = 3, flammable = 2, plant = 1, attached_node = 1,
 		not_in_creative_inventory = 1, growing = 1
 	},
-	--sounds = default.node_sound_leaves_defaults()
+	sounds = mcore.sound_plants,
 }
 
 -- stage 1

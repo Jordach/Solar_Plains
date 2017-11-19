@@ -7,7 +7,7 @@ minetest.register_node("farming:soil", {
 	tiles = {"core_dirt.png^farming_soil.png", "core_dirt.png"},
 	drop = "core:dirt",
 	groups = {crumbly = 3, not_in_creative_inventory = 1, soil = 2},
-	--sounds = default.node_sound_dirt_defaults(),
+	sounds = mcore.sound_gravel,
 })
 
 -- wet soil
@@ -16,7 +16,7 @@ minetest.register_node("farming:soil_wet", {
 	tiles = {"core_dirt.png^farming_soil_wet.png", "core_dirt.png^farming_soil_wet_side.png"},
 	drop = "core:dirt",
 	groups = {crumbly = 3, not_in_creative_inventory = 1, soil = 3},
-	-- sounds = default.node_sound_dirt_defaults(),
+	sounds = mcore.sound_gravel,
 })
 
 -- if water near soil then change to wet soil

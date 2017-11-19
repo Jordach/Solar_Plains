@@ -12,5 +12,5 @@ minetest.register_craft({
 	type = "cooking",
 	cooktime = 3,
 	output = "farming:sugar 2",
-	recipe = "default:papyrus",
+	recipe = "core:papyrus",
 })

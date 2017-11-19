@@ -66,7 +66,7 @@ minetest.register_node("farming:trellis", {
 	drop = "farming:trellis",
 	selection_box = farming.select,
 	groups = {snappy = 3, flammable = 2, attached_node = 1},
-	--sounds = default.node_sound_leaves_defaults(),
+	sounds = mcore.sound_plants,
 
 	on_place = function(itemstack, placer, pointed_thing)
 
@@ -137,7 +137,7 @@ local crop_def = {
 		snappy = 3, flammable = 3, not_in_creative_inventory = 1,
 		attached_node = 1, growing = 1
 	},
-	--sounds = default.node_sound_leaves_defaults()
+	sounds = mcore.sound_plants,
 }
 
 -- stage 1
@@ -202,5 +202,5 @@ minetest.register_node("farming:grapebush", {
 		snappy = 3, flammable = 2, plant = 1, attached_node = 1,
 		not_in_creative_inventory=1
 	},
-	--sounds = default.node_sound_leaves_defaults(),
+	sounds = mcore.sound_plants,
 })

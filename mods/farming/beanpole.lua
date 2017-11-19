@@ -23,7 +23,7 @@ minetest.register_craftitem("farming:beans", {
 		if nodename == "farming:beanpole" then
 			minetest.set_node(pointed_thing.under, {name = "farming:beanpole_1", param2=mcore.options("croplike", false, false, false)})
 
-			minetest.sound_play("default_place_node", {pos = pointed_thing.above, gain = 1.0})
+			--minetest.sound_play("default_place_node", {pos = pointed_thing.above, gain = 1.0})
 		else
 			return
 		end
@@ -71,7 +71,7 @@ minetest.register_node("farming:beanpole", {
 	drop = "farming:beanpole",
 	selection_box = farming.select,
 	groups = {snappy = 3, flammable = 2, attached_node = 1},
-	--sounds = default.node_sound_leaves_defaults(),
+	sounds = mcore.sound_plants,
 
 	on_place = function(itemstack, placer, pointed_thing)
 
@@ -195,5 +195,5 @@ minetest.register_node("farming:beanbush", {
 		snappy = 3, flammable = 2, plant = 1, attached_node = 1,
 		not_in_creative_inventory=1
 	},
-	--sounds = default.node_sound_leaves_defaults(),
+	sounds = mcore.sound_plants,
 })

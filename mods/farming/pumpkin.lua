@@ -22,7 +22,7 @@ minetest.register_node("farming:pumpkin", {
 			{items = {'farming:pumpkin_slice 9'}, rarity = 1},
 		}
 	},
-	--sounds = default.node_sound_wood_defaults(),
+	sounds = mcore.sound_wood,
 })
 
 -- pumpkin slice
@@ -64,7 +64,7 @@ minetest.register_node("farming:jackolantern", {
 	},
 	paramtype2 = "facedir",
 	groups = {choppy = 1, oddly_breakable_by_hand = 1, flammable = 2},
-	--sounds = default.node_sound_wood_defaults(),
+	sounds = mcore.sound_wood,
 	on_punch = function(pos, node, puncher)
 		node.name = "farming:jackolantern_on"
 		minetest.swap_node(pos, node)
@@ -86,7 +86,7 @@ minetest.register_node("farming:jackolantern_on", {
 		choppy = 1, oddly_breakable_by_hand = 1, flammable = 2,
 		not_in_creative_inventory = 1
 	},
-	--sounds = default.node_sound_wood_defaults(),
+	sounds = mcore.sound_wood,
 	drop = "farming:jackolantern",
 	on_punch = function(pos, node, puncher)
 		node.name = "farming:jackolantern"
@@ -144,7 +144,7 @@ local crop_def = {
 		snappy = 3, flammable = 2, plant = 1, attached_node = 1,
 		not_in_creative_inventory = 1, growing = 1
 	},
-	--sounds = default.node_sound_leaves_defaults()
+	sounds = mcore.sound_plants,
 }
 
 -- stage 1

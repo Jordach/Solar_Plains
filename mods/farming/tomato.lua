@@ -32,7 +32,7 @@ local crop_def = {
 		snappy = 3, flammable = 2, plant = 1, attached_node = 1,
 		not_in_creative_inventory = 1, growing = 1
 	},
-	--sounds = default.node_sound_leaves_defaults()
+	sounds = mcore.sound_plants,
 }
 
 -- stage 1

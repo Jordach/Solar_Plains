@@ -380,7 +380,7 @@ minetest.register_node("core:pine_log", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:pine_log_grassy", {
@@ -390,7 +390,7 @@ minetest.register_node("core:pine_log_grassy", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:pine_needles", {
@@ -416,7 +416,7 @@ minetest.register_node("core:pine_needles", {
 		}
 	},
 	after_place_node = mcore.after_place_leaves,
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:pine_needles_snowy", {
@@ -442,14 +442,14 @@ minetest.register_node("core:pine_needles_snowy", {
 		}
 	},
 	after_place_node = mcore.after_place_leaves,
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:pine_planks", {
 	description = "Pine Planks",
 	tiles = {"core_pine_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_wood,
 })
 
 -- oak
@@ -461,7 +461,7 @@ minetest.register_node("core:oak_log", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:oak_log_grassy", {
@@ -471,7 +471,7 @@ minetest.register_node("core:oak_log_grassy", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:oak_leaves", {
@@ -497,14 +497,14 @@ minetest.register_node("core:oak_leaves", {
 		}
 	},
 	after_place_node = mcore.after_place_leaves,
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:oak_planks", {
 	description = "Oak Planks",
 	tiles = {"core_oak_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 -- cherry
@@ -516,7 +516,7 @@ minetest.register_node("core:cherry_log", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:cherry_log_grassy", {
@@ -526,7 +526,7 @@ minetest.register_node("core:cherry_log_grassy", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:cherry_leaves", {
@@ -552,14 +552,14 @@ minetest.register_node("core:cherry_leaves", {
 		}
 	},
 	after_place_node = mcore.after_place_leaves,
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:cherry_planks", {
 	description = "Cherry Planks",
 	tiles = {"core_cherry_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:fallen_cherry_leaves", {
@@ -576,7 +576,7 @@ minetest.register_node("core:fallen_cherry_leaves", {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 	},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 -- birch
@@ -588,7 +588,7 @@ minetest.register_node("core:birch_log", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:birch_log_grassy", {
@@ -598,7 +598,7 @@ minetest.register_node("core:birch_log_grassy", {
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
 	on_place = minetest.rotate_node,
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:birch_leaves", {
@@ -624,14 +624,14 @@ minetest.register_node("core:birch_leaves", {
 		}
 	},
 	after_place_node = mcore.after_place_leaves,
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:birch_planks", {
 	description = "Birch Planks",
 	tiles = {"core_birch_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 -- saplings
@@ -644,7 +644,7 @@ minetest.register_node("core:oak_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:pine_sapling", {
@@ -655,7 +655,7 @@ minetest.register_node("core:pine_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:birch_sapling", {
@@ -666,7 +666,7 @@ minetest.register_node("core:birch_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:cherry_sapling", {
@@ -677,7 +677,7 @@ minetest.register_node("core:cherry_sapling", {
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 
@@ -693,7 +693,7 @@ minetest.register_node("core:cactus", {
 	paramtype = "light",
 	mesh = "core_cactus.b3d",
 	groups = {choppy=3, flammable=2},
-	sounds = mcore.sounds_wood,
+	sounds = mcore.sound_wood,
 })
 
 minetest.register_node("core:grass_1", {
@@ -712,7 +712,7 @@ minetest.register_node("core:grass_1", {
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 	},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 	on_place = function(itemstack, placer, pointed_thing)
 		local nname = "core:grass_" .. math.random(1,3)
 		local stack = ItemStack(nname)
@@ -741,7 +741,7 @@ for i=2, 3 do
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 		},
-		sounds = mcore.sounds_plants,
+		sounds = mcore.sound_plants,
 	})
 end
 
@@ -759,7 +759,7 @@ minetest.register_node("core:papyrus", {
 			type = "fixed",
 			fixed = {-0.35, -0.5, -0.35, 0.35, 0.5, 0.35},
 	},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_plants,
 })
 
 minetest.register_node("core:bamboo", {
@@ -775,7 +775,7 @@ minetest.register_node("core:bamboo", {
 			type = "fixed",
 			fixed = {-0.35, -0.5, -0.35, 0.35, 0.5, 0.35},
 	},
-	sounds = mcore.sounds_plants,
+	sounds = mcore.sound_wood,
 })
 
 -- ores
