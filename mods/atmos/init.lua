@@ -313,7 +313,11 @@ end
 
 function atmos.weatherchange()
 
-	atmos.current_weather = atmos.current_weather + math.random(-1,1)
+	local rand = math.random(-1, 1)
+	
+	if rand == 0 then rand = -1 end
+	
+	atmos.current_weather = atmos.current_weather + rand
 	
 	-- don't let current_weather become a silly value that crashes clients :^)
 	
