@@ -6,7 +6,7 @@ minetest.register_node("core:dirt", {
 	is_ground_content = true,
 	drop = "core:dirt",
 	groups = {crumbly=3, soil=1, solid=1},
-	sounds = mcore.sound_gravel,
+	sounds = mcore.sound_dirt,
 })
 
 minetest.register_node("core:mud", {
@@ -15,7 +15,7 @@ minetest.register_node("core:mud", {
 	is_ground_content = true,
 	drop = "core:dirt",
 	groups = {crumbly=3, soil=1},
-	sounds = mcore.sound_gravel,
+	sounds = mcore.sound_dirt,
 })
 
 minetest.register_node("core:grass", {

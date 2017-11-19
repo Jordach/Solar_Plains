@@ -14,10 +14,20 @@ mcore.sound_grass = {
 
 	footstep = {name = "core_plants_dug", gain = 0.03},
 	
-	dug = {name = "core_grass_footstep", gain = 0.15},
+	dug = {name = "core_grass_dug", gain = 0.25},
 	
-	place = {name = "core_grass_footstep", gain = 0.15},
+	place = {name = "core_grass_dug", gain = 0.25},
 
+}
+
+mcore.sound_dirt = {
+
+	footstep = {name = "core_grass_dug", gain = 0.12},
+	
+	dug = {name = "core_grass_dug", gain = 0.25},
+	
+	place = {name = "core_grass_dug", gain = 0.25},
+	
 }
 
 mcore.sound_gravel = {
