@@ -293,9 +293,25 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
+	output = "core:oak_planks 6",
+	recipe = {
+		"core:oak_log_grassy",
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
 	output = "core:pine_planks 6",
 	recipe = {
 		"core:pine_log",
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:oak_planks 6",
+	recipe = {
+		"core:pine_log_grassy",
 	},
 })
 
@@ -309,9 +325,63 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
+	output = "core:oak_planks 6",
+	recipe = {
+		"core:birch_log_grassy",
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
 	output = "core:cherry_planks 6",
 	recipe = {
 		"core:cherry_log",
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:oak_planks 6",
+	recipe = {
+		"core:cherry_log_grassy",
+	},
+})
+
+-- craft some grassy versions of logs
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:oak_log_grassy 1",
+	recipe = {
+		"core:oak_log",
+		"core:grass_1"
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:pine_log_grassy 1",
+	recipe = {
+		"core:pine_log",
+		"core:grass_1"
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:birch_log_grassy 1",
+	recipe = {
+		"core:birch_log",
+		"core:grass_1"
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:cherry_log_grassy 1",
+	recipe = {
+		"core:cherry_log",
+		"core:grass_1"
 	},
 })
 
