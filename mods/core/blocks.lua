@@ -851,7 +851,7 @@ minetest.register_node("core:torch", {
 	description = "Torch",
 	drawtype = "nodebox",
 	tiles = {"core_torch_top.png", "core_torch_bottom.png", "core_torch_side.png"},
-	wield_scale = {x = 1, y = 1, z = 2},
+	wield_scale = {x = 1, y = 1, z = 1.25},
 	paramtype = "light",
 	paramtype2 = "wallmounted",
 	sunlight_propagates = true,
