@@ -8,7 +8,7 @@ minetest.register_craftitem("farming:melon_slice", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:melon_1", false)
 	end,
-	on_use = minetest.item_eat(2),
+	on_use = hud.item_eat(2),
 })
 
 minetest.register_craft({

@@ -5,7 +5,7 @@ local S = farming.intllib
 minetest.register_craftitem("farming:grapes", {
 	description = S("Grapes"),
 	inventory_image = "farming_grapes.png",
-	on_use = minetest.item_eat(2),
+	on_use = hud.item_eat(1),
 
 	on_place = function(itemstack, placer, pointed_thing)
 

@@ -13,7 +13,7 @@ minetest.register_craftitem("farming:cucumber", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:cucumber_1", true)
 	end,
-	on_use = minetest.item_eat(4),
+	on_use = hud.item_eat(2),
 })
 
 -- cucumber definition

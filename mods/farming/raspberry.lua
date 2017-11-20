@@ -8,14 +8,14 @@ minetest.register_craftitem("farming:raspberries", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:raspberry_1", true)
 	end,
-	on_use = minetest.item_eat(1),
+	on_use = hud.item_eat(1),
 })
 
 -- raspberry smoothie
 minetest.register_craftitem("farming:smoothie_raspberry", {
 	description = S("Raspberry Smoothie"),
 	inventory_image = "farming_raspberry_smoothie.png",
-	on_use = minetest.item_eat(2, "vessels:drinking_glass"),
+	on_use = hud.item_eat(2, "vessels:drinking_glass"),
 })
 
 minetest.register_craft({

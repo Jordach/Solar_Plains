@@ -32,7 +32,7 @@ minetest.register_craftitem("farming:pumpkin_slice", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:pumpkin_1", true)
 	end,
-	on_use = minetest.item_eat(2),
+	on_use = hud.item_eat(2),
 })
 
 minetest.register_craft({
@@ -107,7 +107,7 @@ minetest.register_craft({
 minetest.register_craftitem("farming:pumpkin_bread", {
 	description = S("Pumpkin Bread"),
 	inventory_image = "farming_pumpkin_bread.png",
-	on_use = minetest.item_eat(8)
+	on_use = hud.item_eat(8)
 })
 
 minetest.register_craftitem("farming:pumpkin_dough", {

@@ -10,7 +10,7 @@ local S = farming.intllib
 minetest.register_craftitem("farming:beans", {
 	description = S("Green Beans"),
 	inventory_image = "farming_beans.png",
-	on_use = minetest.item_eat(1),
+	on_use = hud.item_eat(1),
 
 	on_place = function(itemstack, placer, pointed_thing)
 

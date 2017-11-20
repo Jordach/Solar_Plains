@@ -8,7 +8,7 @@ minetest.register_craftitem("farming:blueberries", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:blueberry_1", true)
 	end,
-	on_use = minetest.item_eat(1),
+	on_use = hud.item_eat(1),
 })
 
 -- blueberry muffin (thanks to sosogirl123 @ deviantart.com for muffin image)
@@ -16,7 +16,7 @@ minetest.register_craftitem("farming:blueberries", {
 minetest.register_craftitem("farming:muffin_blueberry", {
 	description = S("Blueberry Muffin"),
 	inventory_image = "farming_blueberry_muffin.png",
-	on_use = minetest.item_eat(2),
+	on_use = hud.item_eat(3),
 })
 
 minetest.register_craft({

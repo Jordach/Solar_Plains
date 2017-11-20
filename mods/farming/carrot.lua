@@ -13,22 +13,22 @@ minetest.register_craftitem("farming:carrot", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:carrot_1", true)
 	end,
-	on_use = minetest.item_eat(4),
+	on_use = hud.item_eat(2),
 })
 
 -- golden carrot
 minetest.register_craftitem("farming:carrot_gold", {
 	description = S("Golden Carrot"),
 	inventory_image = "farming_carrot_gold.png",
-	on_use = minetest.item_eat(6),
+	on_use = hud.item_eat(6),
 })
 
 minetest.register_craft({
 	output = "farming:carrot_gold",
 	recipe = {
-		{"", "default:gold_lump", ""},
-		{"default:gold_lump", "farming:carrot", "default:gold_lump"},
-		{"", "default:gold_lump", ""},
+		{"", "core:gold_ingot", ""},
+		{"core:gold_ingot", "farming:carrot", "core:gold_ingot"},
+		{"", "core:gold_ingot", ""},
 	}
 })
 
