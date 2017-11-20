@@ -857,6 +857,7 @@ minetest.register_node("core:torch", {
 	sunlight_propagates = true,
 	is_ground_content = false,
 	wield_image = "core_torch_wield.png",
+	inventory_image = "core_torch_wield.png",
 	walkable = false,
 	light_source = 14,
 	selection_box = {
