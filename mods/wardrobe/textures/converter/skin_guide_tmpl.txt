@@ -1,0 +1,17 @@
+Dark Grey = Head Lower
+Light Grey = Head Upper
+
+Red = Body Lower
+Cyan = Body Upper
+
+Orange = Right Arm Lower
+Sky Blue = Right Arm Upper
+
+Yellow = Right Leg Lower
+Lapis Blue = Right Leg Upper
+
+Lime = Left Arm Lower
+Magenta = Left Arm Upper
+
+Mint? = Left Leg Lower
+Purple = Left Leg Upper
