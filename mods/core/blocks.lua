@@ -856,6 +856,7 @@ minetest.register_node("core:torch", {
 	paramtype2 = "wallmounted",
 	sunlight_propagates = true,
 	is_ground_content = false,
+	wield_image = "core_torch_wield.png"
 	walkable = false,
 	light_source = 14,
 	selection_box = {
