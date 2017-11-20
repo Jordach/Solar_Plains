@@ -56,7 +56,7 @@ or the 64x64 skin socket.
 
 -- Default player appearance
 default.player_register_model("character.x", {
-	animation_speed = 30,
+	animation_speed = 20,
 	textures = {
 				"ptextures_transparent.png", 
 				"(wardrobe_skin.png^[multiply:#ffffff)",
