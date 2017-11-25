@@ -1,0 +1,34 @@
+--solarinfuser, a neat and fancy energy mod
+
+-- namespacing, as per usual.
+
+solarinfuser = {}
+
+-- create the pipe nodeboxes
+
+solarinfuser.pipe_middle = {-0.125, -0.125, -0.125, 0.125, 0.125, 0.125}
+
+solarinfuser.pipe_up = {
+	{-0.1875, 0.3125, -0.1875, 0.1875, 0.375, 0.1875}, -- ring (will always be this format and )
+	{-0.125, 0.125, -0.125, }, -- pipe
+}
+
+solarinfuser.pipe_down = {
+
+}
+
+solarinfuser.pipe_left = {
+
+}
+
+solarinfuser.pipe_right = {
+
+}
+
+solarinfuser.pipe_front = {
+
+}
+
+solarinfuser.pipe_back = {
+
+}

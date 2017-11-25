@@ -694,6 +694,7 @@ minetest.register_node("core:cactus", {
 	mesh = "core_cactus.b3d",
 	groups = {choppy=3, flammable=2},
 	sounds = mcore.sound_wood,
+	damage_per_second = 1,
 })
 
 minetest.register_node("core:grass_1", {
