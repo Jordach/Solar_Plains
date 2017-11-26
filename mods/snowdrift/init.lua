@@ -132,15 +132,30 @@ minetest.register_globalstep(function(dtime)
 			
 			local hail = false
 			
-			if atmos.current_weather == 6 or atmos.current_weather == 7 or atmos.current_weather == 8 and nval_humid > 24 and nval_temp > 36 and nval_temp < 61 then
+			minetest.chat_send_player(player_name, "temp: " .. nval_temp)
+			minetest.chat_send_player(player_name, "humid: " ..nval_humid)
+			
+			if atmos.current_weather == 6 and nval_temp <= 40.5 then
 			
 				precip = true
 				
-				freeze = false
+				freeze = true
 			
 				hail = false
 			
-			elseif atmos.current_weather == 9 and nval_temp < 61 then
+			elseif atmos.current_weather == 6 or atmos.current_weather == 7 then
+				
+				if nval_humid > 25 and nval_temp < 74 then
+				
+					precip = true
+				
+					freeze = false
+				
+					hail = false
+				
+				end
+				
+			elseif atmos.current_weather == 9 and nval_humid > 25 and nval_temp < 74 then
 			
 				precip = true
 				
@@ -148,8 +163,8 @@ minetest.register_globalstep(function(dtime)
 				
 				hail = true
 			
-			elseif atmos.current_weather == 8 and nval_temp < 37 then
-			
+			elseif atmos.current_weather == 8 and nval_humid > 25 and nval_temp < 74 then
+				
 				precip = true
 				
 				freeze = true

@@ -14,17 +14,6 @@ minetest.register_chatcommand("ratio", {
 
 })
 
-minetest.register_chatcommand("change", {
-	
-	description = "debugs the current atmos based weather system",
-	func = function(name)
-	
-		atmos.weatherchange()
-	
-	end,
-
-})
-
 -- 
 
 atmos.weather_type = 1
@@ -49,7 +38,7 @@ atmos.weather_sky_colour[3] = "#8bb9f9"
 atmos.weather_sky_colour[4] = "#8bb9f9"
 atmos.weather_sky_colour[5] = "#9b9b9b"
 atmos.weather_sky_colour[6] = "#000409"
-atmos.weather_sky_colour[7] = "#5a697c"
+atmos.weather_sky_colour[7] = "#8b8b8b"
 atmos.weather_sky_colour[8] = "#000409"
 atmos.weather_sky_colour[9] = "#333b46"
 atmos.weather_sky_colour[10] = "#000409"
@@ -81,7 +70,7 @@ atmos.weather_light_level[3] = nil
 atmos.weather_light_level[4] = nil
 atmos.weather_light_level[5] = 0.8
 atmos.weather_light_level[6] = 0.175
-atmos.weather_light_level[7] = 0.7
+atmos.weather_light_level[7] = 0.775
 atmos.weather_light_level[8] = 0.175
 atmos.weather_light_level[9] = 0.6
 atmos.weather_light_level[10] = 0.175
@@ -114,7 +103,7 @@ atmos.weather_cloud_colour[3] = "#fff0f0e5"
 atmos.weather_cloud_colour[4] = "#fff0f0f5"
 atmos.weather_cloud_colour[5] = "#9b9b9bff"
 atmos.weather_cloud_colour[6] = "#797979ff"
-atmos.weather_cloud_colour[7] = "#75869bff"
+atmos.weather_cloud_colour[7] = "#93a2b3ff"
 atmos.weather_cloud_colour[8] = "#6b6b6bff"
 atmos.weather_cloud_colour[9] = "#4d5968ff"
 atmos.weather_cloud_colour[10] = "#6b6b6bff"
@@ -231,9 +220,9 @@ end
 -- 3 = default (uses default dynamic skybox)
 -- 4 = somewhat cloudy, not overcast enough (uses default dynamic skybox)
 -- 5 = cloudy, overcast? (5 and 6)
--- 6 = raining (7 and 8)
+-- 6 = raining (and snow in colder areas) (7 and 8)
 -- 7 = thunderstorm (9 and 10)
--- 8 = snowing (13 and 14 on the atmos.weather_type chart)
+-- 8 = snowing in all biomes exc. the desert (13 and 14 on the atmos.weather_type chart)
 -- 9 = hailstorm (11 and 12)
 
 function atmos.get_weather_skybox()
@@ -322,9 +311,9 @@ function atmos.get_weather_skybox()
 
 end
 
-function atmos.weatherchange()
+function atmos.weatherchange()	
 
-	local rand = 1 --math.random(-1, 1)
+	local rand = math.random(-1, 1)
 	
 	if rand == 0 then rand = -1 end
 
@@ -332,23 +321,39 @@ function atmos.weatherchange()
 	
 		atmos.current_weather = 5
 	
-	elseif atmos.current_weather + rand == 5 then
+	elseif atmos.current_weather + rand == 6 and atmos.current_weather == 5 then
+		
+		if hudclock.month == 1 or hudclock.month == 11 or hudclock.month == 12 then --is it winter months?
+		
+			if math.random(1,8) == 1 then --hail
+			
+				atmos.current_weather = 9
+			
+			elseif math.random(1,3) == 1 then --snow in cool and cold areas
+			
+				atmos.current_weather = 8
+				
+			end
+		
+		elseif hudclock.month == 5 or hudclock.month == 6 or hudclock.month == 7 then --is it summer?
+		
+			if math.random(1,7) == 1 then -- thunder + rain
 	
-		if math.random(1,4) == 1 then
+				atmos.current_weather = 7
+			
+			elseif math.random(1,3) == 1 then -- rain
+			
+				atmos.current_weather = 6
+				
+			end
 		
-			atmos.current_weather = 6
+		else -- other seasons just have rain.
 		
-		elseif math.random(1,5) == 1 then
-
-			atmos.current_weather = 8
-		
-		elseif math.random(1,7) == 1 then
-	
-			atmos.current_weather = 7
-		
-		elseif math.random(1,8) == 1 then	
-	
-			atmos.current_weather = 9
+			if math.random(1,3) == 1 then -- we rain, else if it's not the winter months, or summer thunder
+			
+				atmos.current_weather = 6
+			
+			end
 		
 		end
 	
@@ -361,8 +366,6 @@ function atmos.weatherchange()
 			atmos.current_weather = 1
 
 		end
-	
-	
 	
 	end	
 	
@@ -392,4 +395,3 @@ minetest.after(math.random(43, 156), atmos.thunderstrike)
 lightning.light_level = atmos.weather_light_level
 
 -- abm to remove fires when it's raining, snowing or hailing?
-

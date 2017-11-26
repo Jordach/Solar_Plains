@@ -88,9 +88,20 @@ function hudclock.update_calendar()
 	hudclock.day = totaldays
 	hudclock.month = totalmonths
 	hudclock.year = totalyears
-	
 	minetest.after(25, hudclock.update_calendar)
 end
+
+--[[
+
+	seasonal table;
+	
+	spring: 2, 3 and 4
+	summer: 5, 6 and 7
+	autumn: 8, 9 and 10
+	winter: 11, 12 and 1
+	
+
+]]--
 
 minetest.after(1, hudclock.update_calendar)
 
