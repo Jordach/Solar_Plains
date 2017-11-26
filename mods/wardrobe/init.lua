@@ -844,8 +844,8 @@ function wardrobe.close_eyes(player)
 			textures = {
 				"ptextures_transparent.png", 
 					"(wardrobe_skin"..                                                   ".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][1]..  ")^"..
-					"(beds_eyes_white_"..      wardrobe.formspec_selections[pname][1]  ..".png^[opacity:10^beds_eyes_white_".. wardrobe.formspec_selections[pname][1] .. "_ovl.png)^"..
-					"(beds_eyes_pupil_"..      wardrobe.formspec_selections[pname][2]  ..".png^[opacity:10)^"..
+					"(beds_eyes_white_"..      wardrobe.formspec_selections[pname][1]  ..".png^[opacity:0^beds_eyes_white_".. wardrobe.formspec_selections[pname][1] .. "_ovl.png)^"..
+					"(beds_eyes_pupil_"..      wardrobe.formspec_selections[pname][2]  ..".png^[opacity:0)^"..
 					"(wardrobe_hair_"..        wardrobe.formspec_selections[pname][3]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][4]..  ")^"..
 					"(wardrobe_mouth_"..       wardrobe.formspec_selections[pname][4]  ..".png)^"..
 					"(wardrobe_under_shirt_".. wardrobe.formspec_selections[pname][5]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][5]..  ")^"..

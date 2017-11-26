@@ -35,7 +35,7 @@ local percent_needed = 0.25
 -- by default this setting is true.
 -- set to false to disable it.
 
-beds.use_wardrobe_support = false
+beds.use_wardrobe_support = true
 
 -- enable waking players from their beds when the morning arrives
 -- after the sleep vote has completed
