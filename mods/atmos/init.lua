@@ -14,6 +14,17 @@ minetest.register_chatcommand("ratio", {
 
 })
 
+minetest.register_chatcommand("change", {
+	
+	description = "debugs the current atmos based weather system",
+	func = function(name)
+	
+		atmos.weatherchange()
+	
+	end,
+
+})
+
 -- 
 
 atmos.weather_type = 1
@@ -222,8 +233,8 @@ end
 -- 5 = cloudy, overcast? (5 and 6)
 -- 6 = raining (7 and 8)
 -- 7 = thunderstorm (9 and 10)
--- 8 = hailstorm (11 and 12)
--- 9 = snowing (13 and 14 on the atmos.weather_type chart)
+-- 8 = snowing (13 and 14 on the atmos.weather_type chart)
+-- 9 = hailstorm (11 and 12)
 
 function atmos.get_weather_skybox()
 	
@@ -283,7 +294,7 @@ function atmos.get_weather_skybox()
 		
 		end
 	
-	elseif atmos.current_weather == 8 then
+	elseif atmos.current_weather == 9 then
 	
 		if ctime >= 0.22 and ctime <= 0.77 then
 		
@@ -295,7 +306,7 @@ function atmos.get_weather_skybox()
 			
 		end
 	
-	elseif atmos.current_weather == 9 then
+	elseif atmos.current_weather == 8 then
 	
 		if ctime >= 0.22 and ctime <= 0.77 then
 		
@@ -313,23 +324,47 @@ end
 
 function atmos.weatherchange()
 
-	local rand = math.random(-1, 1)
+	local rand = 1 --math.random(-1, 1)
 	
 	if rand == 0 then rand = -1 end
+
+	if atmos.current_weather == 6 or atmos.current_weather == 7 or atmos.current_weather == 8 or atmos.current_weather == 9 and math.random(1,5) < 5 then
 	
-	atmos.current_weather = atmos.current_weather + rand
+		atmos.current_weather = 5
 	
-	-- don't let current_weather become a silly value that crashes clients :^)
+	elseif atmos.current_weather + rand == 5 then
 	
-	if atmos.current_weather == 0 then
+		if math.random(1,4) == 1 then
+		
+			atmos.current_weather = 6
+		
+		elseif math.random(1,5) == 1 then
+
+			atmos.current_weather = 8
+		
+		elseif math.random(1,7) == 1 then
 	
-		atmos.current_weather = 1
+			atmos.current_weather = 7
+		
+		elseif math.random(1,8) == 1 then	
 	
-	elseif atmos.current_weather == 10 then
+			atmos.current_weather = 9
+		
+		end
 	
-		atmos.current_weather = 9
+	elseif atmos.current_weather < 5 then
+
+		atmos.current_weather = atmos.current_weather + rand
+		
+		if atmos.current_weather == 0 then
 	
-	end
+			atmos.current_weather = 1
+
+		end
+	
+	
+	
+	end	
 	
 	minetest.after(60+math.random(1,59)*math.random(1,5), atmos.weatherchange)
 end

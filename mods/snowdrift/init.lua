@@ -130,23 +130,39 @@ minetest.register_globalstep(function(dtime)
 			
 			local freeze = false
 			
-			if atmos.current_weather == 6 or atmos.current_weather == 7 or atmos.current_weather == 8 or atmos.current_weather == 9 and nval_humid > 24 and nval_temp > 36 and nval_temp < 61 then
+			local hail = false
+			
+			if atmos.current_weather == 6 or atmos.current_weather == 7 or atmos.current_weather == 8 and nval_humid > 24 and nval_temp > 36 and nval_temp < 61 then
+			
+				precip = true
+				
+				freeze = false
+			
+				hail = false
+			
+			elseif atmos.current_weather == 9 and nval_temp < 61 then
 			
 				precip = true
 				
 				freeze = false
 				
-			elseif atmos.current_weather == 9 and nval_temp < 37 then
+				hail = true
+			
+			elseif atmos.current_weather == 8 and nval_temp < 37 then
 			
 				precip = true
 				
 				freeze = true
+				
+				hail = false
 				
 			else
 			
 				precip = false
 				
 				freeze = false
+				
+				hail = false
 			
 			end
 			
@@ -187,6 +203,32 @@ minetest.register_globalstep(function(dtime)
 							playername = player:get_player_name()
 						})
 					end
+				
+				elseif hail then
+				
+					for flake = 1, DROPS-48 do
+						minetest.add_particle({
+							pos = {
+								x = pposx - 8 + math.random(0, 16),
+								y = pposy + 8 + math.random(0, 5),
+								z = pposz - 8 + math.random(0, 16)
+							},
+							vel = {
+								x = 0.0,
+								y = -15.0,
+								z = 0.0
+							},
+							acc = {x = 0, y = 0, z = 0},
+							expirationtime = 2.1,
+							size = 2.8,
+							collisiondetection = COLLIDE,
+							collision_removal = true,
+							vertical = true,
+							texture = "snowdrift_hailstone.png",
+							playername = player:get_player_name()
+						})
+					end
+				
 				else
 					-- Rainfall
 					for flake = 1, DROPS do
