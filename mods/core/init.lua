@@ -5,6 +5,7 @@ mcore = {}
 give_initial_stuff = {}
 
 -- dofiles for loading files required by "core"
+dofile(minetest.get_modpath("core").."/util.lua")
 dofile(minetest.get_modpath("core").."/sounds.lua")
 dofile(minetest.get_modpath("core").."/mapgen.lua")
 dofile(minetest.get_modpath("core").."/blocks.lua")
