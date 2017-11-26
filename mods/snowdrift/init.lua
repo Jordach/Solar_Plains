@@ -132,8 +132,10 @@ minetest.register_globalstep(function(dtime)
 			
 			local hail = false
 			
-			minetest.chat_send_player(player_name, "temp: " .. nval_temp)
-			minetest.chat_send_player(player_name, "humid: " ..nval_humid)
+			-- debug info, uncomment to make use of for debugging temp and humidity scales for rain, snow and hail
+			
+			--minetest.chat_send_player(player_name, "temp: " .. nval_temp)
+			--minetest.chat_send_player(player_name, "humid: " ..nval_humid)
 			
 			if atmos.current_weather == 6 and nval_temp <= 40.5 then
 			
