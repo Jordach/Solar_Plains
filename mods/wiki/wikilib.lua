@@ -186,7 +186,7 @@ minetest.register_node("wiki:wiki", {
 		"core_mese_old.png"
 	},
 	groups = { choppy=3, oddly_breakable_by_hand=2, flammable=3 },
-	sounds = default.node_sound_wood_defaults(),
+	sounds = mcore.sound_wood,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", "Wiki")
