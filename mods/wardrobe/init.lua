@@ -30,12 +30,18 @@ wardrobe_acc_[number].png
 
 wardrobe = {}
 
+wardrobe.hand_textures = minetest.get_mod_storage()
+
 wardrobe.texture_path = minetest.get_modpath("wardrobe").."/textures/"
 
 wardrobe.player_materials = {}
 
 wardrobe.formspec_selections = {}
 wardrobe.formspec_selections_rgb = {}
+
+-- initalize the external hands module.
+
+dofile(minetest.get_modpath("wardrobe").."/hands.lua")
 
 --clothing
 
@@ -920,7 +926,7 @@ function wardrobe.apply_to_player(player)
 				"ptextures_transparent.png"
 			}
 		})
-		
+	
 	wardrobe.save_user_data(player)
 end
 	
@@ -996,8 +1002,10 @@ function wardrobe.load_user_data(player)
 	if player:get_attribute("wardrobe_choices") == nil then
 		wardrobe.formspec_selections[pname] = {2,2,2,1,2,1,2,1,2,1,2,1,1,1,2,1,1,1,1,1,1,1}
 		print ("[Wardrobe] Failed Loading Texture Data for Player: " .. pname)
-		player:set_attribute("wardrobe_choices", minetest.serialize(wardrobe.formspec_selections[pname]))
 		
+		player:set_attribute("wardrobe_choices", minetest.serialize(wardrobe.formspec_selections))
+		
+		wardrobe.hand_textures:set_string("c", minetest.serialize(wardrobe.formspec_selections[pname]))
 	else
 		wardrobe.formspec_selections[pname] = minetest.deserialize(player:get_attribute("wardrobe_choices"))
 		print ("[Wardrobe] Loaded Texture Data for Player: " .. pname)
@@ -1034,7 +1042,9 @@ function wardrobe.load_user_data(player)
 		
 		print ("[Wardrobe] Failed Loading RGB Data for Player: " .. pname)
 		player:set_attribute("wardrobe_rgb", minetest.serialize(wardrobe.formspec_selections_rgb[pname]))
-	
+		
+		wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
+		
 	else
 		wardrobe.formspec_selections_rgb[pname] = minetest.deserialize(player:get_attribute("wardrobe_rgb"))	
 		print ("[Wardrobe] Loaded RGB Data for Player: " .. pname)
@@ -1046,14 +1056,15 @@ end
 function wardrobe.save_user_data(player)
 	local pname = player:get_player_name()
 	
+	wardrobe.hand_textures:set_string("c", minetest.serialize(wardrobe.formspec_selections))
+	wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
+	
 	player:set_attribute("wardrobe_choices", minetest.serialize(wardrobe.formspec_selections[pname]))
 	player:set_attribute("wardrobe_rgb", minetest.serialize(wardrobe.formspec_selections_rgb[pname]))
 
 end
 
-minetest.register_on_joinplayer(function(player)
-	local pname = player:get_player_name()
-	
+minetest.register_on_joinplayer(function(player)	
 	wardrobe.load_user_data(player)
 	
 	wardrobe.apply_to_player(player)

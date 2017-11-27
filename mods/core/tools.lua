@@ -175,7 +175,7 @@ register_mese_toolsets()
 minetest.register_item(":", {
 	type = "none",
 	wield_image = "wieldhand.png",
-	wield_scale = {x=1,y=3,z=4},
+	--wield_scale = {x=1,y=3,z=4},
 	tool_capabilities = {
 		full_punch_interval = 0.25,
 		max_drop_level = 0,
@@ -186,7 +186,9 @@ minetest.register_item(":", {
 			choppy = {times={[3]=6.00}, uses=0}
 		},
 		damage_groups = {fleshy=1},
-	}
+	},
+	
+	range = 6,
 	
 })
 
