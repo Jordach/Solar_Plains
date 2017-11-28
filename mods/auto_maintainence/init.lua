@@ -12,7 +12,7 @@
 
 -- or by setting enable_auto_shutdown to false
 
-local enable_auto_shutdown = false
+local enable_auto_shutdown = true
 
 local is_shutting_down = false
 
@@ -21,6 +21,8 @@ local has_player_joined_yet = false
 local players_joined = 0
 
 local shutdown_delay = 60
+
+local auto_check_delay = 120
 
 local shutdown_message = "Server is shutting down to re-generate player hands and perform maintenance. Thank you for your patience."
 
@@ -101,7 +103,7 @@ local function check_for_players()
 	
 	end
 	
-	minetest.after(15, check_for_players)
+	minetest.after(auto_check_delay, check_for_players)
 end
 
 minetest.register_on_joinplayer(function(player)
@@ -118,4 +120,4 @@ minetest.register_on_leaveplayer(function(player)
 
 end)
 
-minetest.after(15, check_for_players)
+minetest.after(auto_check_delay, check_for_players)

@@ -1,0 +1,13 @@
+auto-start.sh must be placed into your Minetest's /bin/ directory if it's running in it's own folder, and *only* it's own folder.
+
+Replace Solar_Plains with any other subgame and ensure that it updates with git - otherwise, just remove && git pull .
+
+This shell script must be run exactly like this, and preferably under screen ot tmux or similar. But please not as root via sudo or sudo su.
+
+. auto-start.sh
+
+Otherwise, it will fail to change directories and git pull.
+
+Extra notes, this script was built in mind with auto_maintainence in mind.
+
+Shits WTFPL. Go ham - I really don't care.
