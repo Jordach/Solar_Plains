@@ -12,8 +12,8 @@ minetest.register_chatcommand("ratio", {
 			return false, "You are not allowed to control the weather, you scrub. \n \n This incident WILL be reported."
 		end
 		
-		atmos.current_weather = param
-	
+		atmos.current_weather = 0 + param
+		return true, "Current weather updated."
 	end,
 
 })
