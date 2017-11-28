@@ -20,18 +20,20 @@ else
 		
 		player_names[count] = k
 		
-		print("[Wardrobe] Hands Addon Loaded, name: " .. k)
-		
 		count = count + 1
 		
 		
 	end
 	
-	print(dump(p_choice))
-	print(dump(p_rgb))
+	print("[Wardrobe]: Hands Addon Loaded")
+	
+	--print(dump(p_choice))
+	--print(dump(p_rgb))
 	
 	for k, v in pairs(player_names) do
-
+		
+		--print(":newhand:" .. v)
+		
 		minetest.register_node(":newhand:" .. v, {
 			description = "",
 		
@@ -91,16 +93,14 @@ minetest.register_node(":newhand:_default_", {
 
 minetest.register_on_joinplayer(function(player)
 	
-	for k, v in pairs(player_names) do
+	player:get_inventory():set_stack("hand", 1, "newhand:_default_") -- normally we get a default hand if we don't have a custom appearance yet
 	
-		if v == player:get_player_name() then
+	for k, v in pairs(player_names) do -- iterate over the table to make sure the joining player has a skin
+	
+		if v == player:get_player_name() then -- and if they do -- we get to give them their custom arm.
 			
-			player:get_inventory():set_stack("hand", 1, "newhand:" .. v)
+			player:get_inventory():set_stack("hand", 1, "newhand:" .. v) -- we give the user their custom skin as an arm
 			
-		else
-		
-			player:get_inventory():set_stack("hand", 1, "newhand:_default_")
-		
 		end
 	
 	end
