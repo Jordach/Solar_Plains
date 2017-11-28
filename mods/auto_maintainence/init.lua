@@ -20,7 +20,7 @@ local has_player_joined_yet = false
 
 local players_joined = 0
 
-local shutdown_delay = 60
+local shutdown_delay = 240
 
 local auto_check_delay = 120
 
