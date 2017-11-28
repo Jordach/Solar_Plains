@@ -18,7 +18,7 @@ local is_shutting_down = false
 
 local has_player_joined_yet = false
 
-local players_joined = -1
+local players_joined = 0
 
 local shutdown_delay = 60
 
