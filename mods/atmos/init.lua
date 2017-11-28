@@ -7,8 +7,12 @@ minetest.register_chatcommand("ratio", {
 	description = "debugs the current atmos based weather system",
 	param = "use a number to select the weather type.",
 	func = function(name, param)
-	
-		atmos.current_weather = atmos.current_weather + param
+		
+		if not minetest.check_player_privs(name, "server") then
+			return false, "You are not allowed to control the weather, you scrub. \n \n This incident WILL be reported."
+		end
+		
+		atmos.current_weather = param
 	
 	end,
 
