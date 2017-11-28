@@ -69,10 +69,12 @@ local function check_for_players()
 			is_shutting_down = false
 			
 			minetest.cancel_shutdown_requests()
-		
+			
+			print("[Maintainence]: Player joined the server during shutdown, aborting shutdown.")
+			
 		end
 		
-		print("[Maintainence]: Server will not reboot until a player joins and leaves first.")
+		print("[Maintainence]: Players active on server, shutdown delayed by 2 minutes.")
 	
 	elseif players_joined == 0 then
 			
