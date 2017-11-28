@@ -36,8 +36,21 @@ wardrobe.texture_path = minetest.get_modpath("wardrobe").."/textures/"
 
 wardrobe.player_materials = {}
 
-wardrobe.formspec_selections = {}
-wardrobe.formspec_selections_rgb = {}
+if wardrobe.hand_textures:get_string("c") == "" then -- if serialized table data doesn't exist at all, create an empty table.
+
+	wardrobe.formspec_selections = {}
+	wardrobe.formspec_selections_rgb = {}
+
+else -- if the serialized data does exist, load it into memory
+
+	-- ensure the mod store of skin data is not lost to preserve custom hands
+
+	wardrobe.formspec_selections = minetest.deserialize(wardrobe.hand_textures:get_string("c"))
+	wardrobe.formspec_selections_rgb = minetest.deserialize(wardrobe.hand_textures:get_string("rgb"))
+	
+end
+
+
 
 -- initalize the external hands module.
 
@@ -515,48 +528,48 @@ minetest.register_node("wardrobe:node", {
 		-- eyes (1)
 		if (fields.eyedown) then
 			wardrobe.table_incrementer(1, false, sender, wardrobe.eyes)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.eyeup) then
 			wardrobe.table_incrementer(1, true, sender, wardrobe.eyes)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- pupils (2)
 		
 		if (fields.pupdown) then
 			wardrobe.table_incrementer(2, false, sender, wardrobe.pupils)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.pupup) then
 			wardrobe.table_incrementer(2, true, sender, wardrobe.pupils)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- hair (3)
 		
 		if (fields.hairdown) then
 			wardrobe.table_incrementer(3, false, sender, wardrobe.hair_styles)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.hairup) then
 			wardrobe.table_incrementer(3, true, sender, wardrobe.hair_styles)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- mouth (4)
 		
 		if (fields.mouthdown) then
 			wardrobe.table_incrementer(4, false, sender, wardrobe.mouth_parts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.mouthup) then
 			wardrobe.table_incrementer(4, true, sender, wardrobe.mouth_parts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 
 		end
 		
@@ -564,214 +577,214 @@ minetest.register_node("wardrobe:node", {
 		
 		if (fields.ushirtdown) then
 			wardrobe.table_incrementer(5, false, sender, wardrobe.undershirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.ushirtup) then
 			wardrobe.table_incrementer(5, true, sender, wardrobe.undershirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.ushirtdown2) then
 			wardrobe.table_incrementer(6, true, sender, wardrobe.undershirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.ushirtup2) then
 			wardrobe.table_incrementer(6, true, sender, wardrobe.undershirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- Leggings L1 + L2 (7, 8)
 		
 		if (fields.leggdown) then
 			wardrobe.table_incrementer(7, false, sender, wardrobe.under_trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.leggup) then
 			wardrobe.table_incrementer(7, true, sender, wardrobe.under_trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.leggdown2) then
 			wardrobe.table_incrementer(8, false, sender, wardrobe.under_trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.leggup2) then
 			wardrobe.table_incrementer(8, true, sender, wardrobe.under_trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- Socks L1 + L2 (9, 10)
 		
 		if (fields.sockdown) then
 			wardrobe.table_incrementer(9, false, sender, wardrobe.socks)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.sockup) then
 			wardrobe.table_incrementer(9, true, sender, wardrobe.socks)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.sockdown2) then
 			wardrobe.table_incrementer(10, false, sender, wardrobe.socks)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.sockup2) then
 			wardrobe.table_incrementer(10, true, sender, wardrobe.socks)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- Over Shirt L1 + L2 (11, 12)
 		
 		if (fields.topshirtdown) then
 			wardrobe.table_incrementer(11, false, sender, wardrobe.shirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.topshirtup) then
 			wardrobe.table_incrementer(11, true, sender, wardrobe.shirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.topshirtdown2) then
 			wardrobe.table_incrementer(12, false, sender, wardrobe.shirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.topshirtup2) then
 			wardrobe.table_incrementer(12, true, sender, wardrobe.shirts)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- Overalls / Trousers L1 + L2 (13, 14)
 		
 		if (fields.troudown) then
 			wardrobe.table_incrementer(13, false, sender, wardrobe.trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.trouup) then
 			wardrobe.table_incrementer(13, true, sender, wardrobe.trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.troudown2) then
 			wardrobe.table_incrementer(14, false, sender, wardrobe.trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.trouup2) then
 			wardrobe.table_incrementer(14, true, sender, wardrobe.trousers)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- Shoes L1 + L2 (15, 16)
 		
 		if (fields.shoedown) then
 			wardrobe.table_incrementer(15, false, sender, wardrobe.shoes)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.shoeup) then
 			wardrobe.table_incrementer(15, true, sender, wardrobe.shoes)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.shoedown2) then
 			wardrobe.table_incrementer(16, false, sender, wardrobe.shoes)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.shoeup2) then
 			wardrobe.table_incrementer(16, true, sender, wardrobe.shoes)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- Acessories L1 -> L6 (17, 18, 19, 20, 21, 22)
 		
 		if (fields.acc1down) then
 			wardrobe.table_incrementer(17, false, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.acc1up) then
 			wardrobe.table_incrementer(17, true, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		--
 		
 		if (fields.acc2down) then
 			wardrobe.table_incrementer(18, false, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.acc2up) then
 			wardrobe.table_incrementer(18, true, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		--
 		
 		if (fields.acc3down) then
 			wardrobe.table_incrementer(19, false, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.acc3up) then
 			wardrobe.table_incrementer(19, true, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		--
 		
 		if (fields.acc4down) then
 			wardrobe.table_incrementer(20, false, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.acc4up) then
 			wardrobe.table_incrementer(20, true, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		--
 		
 		if (fields.acc5down) then
 			wardrobe.table_incrementer(21, false, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.acc5up) then
 			wardrobe.table_incrementer(21, true, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		--
 		
 		if (fields.acc6down) then
 			wardrobe.table_incrementer(22, false, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.acc6up) then
 			wardrobe.table_incrementer(22, true, sender, wardrobe.accessories)
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		-- Apply current data to entity.
 		
 		if (fields.preview) then
-			wardrobe.update_dummy(pos, sender)
+			wardrobe.update_dummy(pos, sender, fields)
 		end
 		
 		if (fields.apply) then
-			wardrobe.apply_to_player(sender)
+			wardrobe.apply_to_player(sender, fields)
 		end
 	end,
 })
@@ -782,10 +795,16 @@ function wardrobe.update_player(player)
 
 end
 
-function wardrobe.update_dummy(pos, player)
+function wardrobe.update_dummy(pos, player, fields)
 	local pname = player:get_player_name()
 	local entity = minetest.get_objects_inside_radius({x=pos.x, y=pos.y+0.5, z=pos.z}, 0.1)
-			
+	
+	if fields ~= nil then
+	
+	wardrobe.save_text_fields(fields, pname)
+	
+	end
+	
 	if entity[1] == nil then
 				
 		minetest.add_entity({x=pos.x, y=pos.y+0.5, z=pos.z}, "wardrobe:dummy")
@@ -884,7 +903,7 @@ function wardrobe.close_eyes(player)
 
 end
 
-function wardrobe.apply_to_player(player)
+function wardrobe.apply_to_player(player, fields)
 	
 	-- We like being sane and not crashing
 	if player == nil then
@@ -892,6 +911,12 @@ function wardrobe.apply_to_player(player)
 	end
 	
 	local pname = player:get_player_name()
+	
+	if fields ~= nil then
+	
+	wardrobe.save_text_fields(fields, pname)
+	
+	end
 	
 	player:set_properties({
 			textures = {
@@ -1005,7 +1030,6 @@ function wardrobe.load_user_data(player)
 		
 		player:set_attribute("wardrobe_choices", minetest.serialize(wardrobe.formspec_selections))
 		
-		wardrobe.hand_textures:set_string("c", minetest.serialize(wardrobe.formspec_selections[pname]))
 	else
 		wardrobe.formspec_selections[pname] = minetest.deserialize(player:get_attribute("wardrobe_choices"))
 		print ("[Wardrobe] Loaded Texture Data for Player: " .. pname)
@@ -1015,6 +1039,7 @@ function wardrobe.load_user_data(player)
 	-- load RGB
 	
 	if player:get_attribute("wardrobe_rgb") == nil then
+		
 		wardrobe.formspec_selections_rgb[pname] = {}
 		
 		wardrobe.formspec_selections_rgb[pname][1] = "e3c0a3"
@@ -1043,7 +1068,7 @@ function wardrobe.load_user_data(player)
 		print ("[Wardrobe] Failed Loading RGB Data for Player: " .. pname)
 		player:set_attribute("wardrobe_rgb", minetest.serialize(wardrobe.formspec_selections_rgb[pname]))
 		
-		wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
+		--wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
 		
 	else
 		wardrobe.formspec_selections_rgb[pname] = minetest.deserialize(player:get_attribute("wardrobe_rgb"))	

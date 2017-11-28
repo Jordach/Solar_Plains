@@ -20,12 +20,16 @@ else
 		
 		player_names[count] = k
 		
-		--print("[Wardrobe] Hands Addon Loaded, name: " .. k)
+		print("[Wardrobe] Hands Addon Loaded, name: " .. k)
 		
 		count = count + 1
 		
+		
 	end
-
+	
+	print(dump(p_choice))
+	print(dump(p_rgb))
+	
 	for k, v in pairs(player_names) do
 
 		minetest.register_node(":newhand:" .. v, {
@@ -70,7 +74,7 @@ minetest.register_node(":newhand:_default_", {
 			"(wardrobe_under_shirt_1.png^[multiply:#ffffff)^"..
 			"(wardrobe_shirt_2.png^[multiply:#39881c)^"..
 			"(wardrobe_shirt_1.png^[multiply:#ffffff)",
-	
+
 	},
 	on_place = function(itemstack, placer, pointed_thing)
 		local stack = ItemStack(":")
@@ -87,28 +91,18 @@ minetest.register_node(":newhand:_default_", {
 
 minetest.register_on_joinplayer(function(player)
 	
-	--local has_hand = false
+	for k, v in pairs(player_names) do
 	
-	if wardrobe.hand_textures:get_string("c") == "" then
-	
-		player:get_inventory():set_stack("hand", 1, "newhand:_default_")
-	
-	else
-	
-		for k, v in pairs(player_names) do
+		if v == player:get_player_name() then
+			
+			player:get_inventory():set_stack("hand", 1, "newhand:" .. v)
+			
+		else
 		
-			if v == player:get_player_name() then
-				
-				player:get_inventory():set_stack("hand", 1, "newhand:" .. v)
-				
-			else
-			
-				player:get_inventory():set_stack("hand", 1, "newhand:_default_")
-			
-			end
+			player:get_inventory():set_stack("hand", 1, "newhand:_default_")
 		
 		end
-		
-	end
 	
+	end
+
 end)
