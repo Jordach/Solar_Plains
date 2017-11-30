@@ -119,20 +119,20 @@ atvomat.ore_sort = {
 
 atvomat.dye_sort = {
 
-	"dye:red"
-	"dye:orange"
-	"dye:yellow"
-	"dye:lime"
-	"dye:green"
-	"dye:dark_green"
-	"dye:cyan"
-	"dye:blue"
-	"dye:magenta"
-	"dye:purple"
-	"dye:violet"
-	"dye:white"
-	"dye:light_grey"
-	"dye:grey"
-	"dye:black"
+	"dye:red",
+	"dye:orange",
+	"dye:yellow",
+	"dye:lime",
+	"dye:green",
+	"dye:dark_green",
+	"dye:cyan",
+	"dye:blue",
+	"dye:magenta",
+	"dye:purple",
+	"dye:violet",
+	"dye:white",
+	"dye:light_grey",
+	"dye:grey",
+	"dye:black",
 
 }
