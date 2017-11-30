@@ -31,4 +31,3 @@ minetest.register_node("plants:daisy2", {
 	},
 	sounds = mcore.sound_plants,
 })
-
