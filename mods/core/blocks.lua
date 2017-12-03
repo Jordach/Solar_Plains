@@ -918,6 +918,7 @@ minetest.register_node("core:chest", {
 		meta:set_string("formspec", mcore.chest_formspec)
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
+		
 	end,
 	can_dig = function(pos,player)
 		local meta = minetest.get_meta(pos);

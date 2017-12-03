@@ -141,3 +141,116 @@ function mob:on_rightclick(clicker)
 end
 
 minetest.register_entity("core:tester", mob)
+
+-- get 3d facedir to simple axis; 
+-- 0 = y+    1 = z+    2 = z-    3 = x+    4 = x-    5 = y-
+
+function mcore.facedir_stripper(node)
+
+	local number = node.param2/4
+	
+	local chara = tostring(number)
+		
+	number = tonumber(chara:sub(1,1))
+	
+	return number
+	
+end
+
+function mcore.get_node_from_front(pos) 
+	--pos is the standard pos table provided by minetest, eg: pos = {x=int, y=int, z=int}
+	
+	local node = minetest.get_node_or_nil(pos)
+	
+	local facedir = mcore.facedir_stripper(node)
+	
+	local npos = pos
+	
+	if facedir == 0 then
+	
+		npos.y = npos.y + 1
+		
+		return npos
+	
+	elseif facedir == 1 then
+	
+		npos.z = npos.z + 1
+		
+		return npos
+		
+	elseif facedir == 2 then
+	
+		npos.z = npos.z - 1
+
+		return npos
+		
+	elseif facedir == 3 then
+	
+		npos.x = npos.x + 1
+	
+		return npos
+		
+	elseif facedir == 4 then
+	
+		npos.x = npos.x - 1
+		
+		return npos
+		
+	elseif facedir == 5 then
+	
+		npos.y = npos.y - 1
+
+		return npos
+		
+	end
+
+end
+
+function mcore.get_node_from_rear(pos) 
+	--pos is the standard pos table provided by minetest, eg: pos = {x=int, y=int, z=int}
+	
+	local node = minetest.get_node_or_nil(pos)
+	
+	local facedir = mcore.facedir_stripper(node)
+	
+	local npos = pos
+	
+	if facedir == 0 then
+	
+		npos.y = npos.y - 1
+		
+		return npos
+	
+	elseif facedir == 1 then
+	
+		npos.z = npos.z - 1
+		
+		return npos
+		
+	elseif facedir == 2 then
+	
+		npos.z = npos.z + 1
+	
+		return npos
+		
+	elseif facedir == 3 then
+	
+		npos.x = npos.x - 1
+		
+		return npos
+		
+	elseif facedir == 4 then
+	
+		npos.x = npos.x + 1
+		
+		return npos
+		
+	elseif facedir == 5 then
+	
+		npos.y = npos.y + 1
+		
+		return npos
+		
+	end
+
+end
