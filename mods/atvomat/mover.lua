@@ -158,6 +158,12 @@ minetest.register_node("atvomat:mover",{
 		
 		local mover_inv = minetest.get_meta(pos):get_inventory()
 		
+		-- sanity checks to prevent crashes now.
+		
+		if front_node == nil then return true end
+		
+		if rear_node == nil then return true end
+		
 		-- take items from rear first;
 		
 		for k, v in pairs(atvomat.mover_input) do

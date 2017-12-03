@@ -185,6 +185,16 @@ minetest.register_node("core:ice", {
 	sounds = mcore.sound_glass;
 })
 
+--
+
+minetest.register_node("core:glass", {
+	tiles = {"core_glass.png"},
+	description = "Glass",
+	groups = {oddly_breakable_by_hand = 3},
+	sounds = mcore.sound_glass,
+	drawtype = "glasslike",
+})
+
 -- liquids
 
 minetest.register_node("core:water_source", {
