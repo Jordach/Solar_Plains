@@ -1,6 +1,23 @@
 -- avtomat - (automatico, automation)
 -- part of solar plains, by jordach
 
+-- table of nodes not to dig or collect;
+
+atvomat.do_not_mine = {}
+
+--
+
+atvomat.do_not_mine["core:chest"] = ""
+atvomat.do_not_mine["core:chest_locked"] = ""
+atvomat.do_not_mine["core:lava_source"] = ""
+atvomat.do_not_mine["core:lava_flowing"] = ""
+atvomat.do_not_mine["core:water_source"] = ""
+atvomat.do_not_mine["core:water_flowing"] = ""
+atvomat.do_not_mine["core:furnace"] = ""
+atvomat.do_not_mine["core:furnace_active"] = ""
+atvomat.do_not_mine["air"] = ""
+atvomat.do_not_mine["ignore"] = ""
+
 local atbreaker = 
 
 	"size[8,9]" ..
@@ -68,7 +85,11 @@ minetest.register_node("atvomat:breaker_1", {
 		
 			local front_node = minetest.get_node_or_nil(fpos)
 			
-			if front_node.name == "air" or front_node.name == "ignore" then return true end
+			for k, v in pairs(atvomat.do_not_mine) do
+	
+				if front_node.name == k then return true end
+	
+			end
 			
 			minetest.remove_node(fpos)
 			
@@ -110,7 +131,7 @@ minetest.register_node("atvomat:breaker_2", {
 		local inv = meta:get_inventory()
 		inv:set_size("main", 1)
 		meta:set_string("active", "false")
-		meta:set_string("infotext", "Auto Block Breaker (Dropless), Disabled.")
+		meta:set_string("infotext", "Automatic Block Collector (Gently collects blocks), Disabled.")
 	end,
 	
 	on_place = minetest.rotate_and_place,
@@ -124,13 +145,13 @@ minetest.register_node("atvomat:breaker_2", {
 			meta:set_string("active", "true")
 			minetest.get_node_timer(pos):start(1.125)
 			
-			meta:set_string("infotext", "Auto Block Breaker (Dropless), Enabled.")
+			meta:set_string("infotext", "Auto Block Collector (Gently collects blocks), Enabled.")
 			
 		else
 		
 			meta:set_string("active", "false")
 			
-			meta:set_string("infotext", "Auto Block Breaker (Dropless), Disabled.")
+			meta:set_string("infotext", "Auto Block Collector (Gently collects blocks), Disabled.")
 			
 		end		
 	
@@ -148,7 +169,11 @@ minetest.register_node("atvomat:breaker_2", {
 		
 			local front_node = minetest.get_node_or_nil(fpos)
 			
-			if front_node.name == "air" or front_node.name == "ignore" then return true end
+			for k, v in pairs(atvomat.do_not_mine) do
+	
+				if front_node.name == k then return true end
+	
+			end
 			
 			minetest.remove_node(fpos)
 					
