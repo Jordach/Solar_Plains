@@ -3,20 +3,24 @@
 
 -- table of nodes not to dig or collect;
 
-atvomat.do_not_mine = {}
+atvomat.breaker_blacklist = {}
 
 --
 
-atvomat.do_not_mine["core:chest"] = ""
-atvomat.do_not_mine["core:chest_locked"] = ""
-atvomat.do_not_mine["core:lava_source"] = ""
-atvomat.do_not_mine["core:lava_flowing"] = ""
-atvomat.do_not_mine["core:water_source"] = ""
-atvomat.do_not_mine["core:water_flowing"] = ""
-atvomat.do_not_mine["core:furnace"] = ""
-atvomat.do_not_mine["core:furnace_active"] = ""
-atvomat.do_not_mine["air"] = ""
-atvomat.do_not_mine["ignore"] = ""
+atvomat.breaker_blacklist["core:chest"] = ""
+atvomat.breaker_blacklist["core:chest_locked"] = ""
+atvomat.breaker_blacklist["core:lava_source"] = ""
+atvomat.breaker_blacklist["core:lava_flowing"] = ""
+atvomat.breaker_blacklist["core:water_source"] = ""
+atvomat.breaker_blacklist["core:water_flowing"] = ""
+atvomat.breaker_blacklist["core:furnace"] = ""
+atvomat.breaker_blacklist["core:furnace_active"] = ""
+atvomat.breaker_blacklist["air"] = ""
+atvomat.breaker_blacklist["ignore"] = ""
+atvomat.breaker_blacklist["atvomat:breaker_1"] = ""
+atvomat.breaker_blacklist["atvomat:breaker_2"] = ""
+atvomat.breaker_blacklist["atvomat:sorter"] = ""
+atvomat.breaker_blacklist["atvomat:mover"] = ""
 
 local atbreaker = 
 
@@ -85,7 +89,7 @@ minetest.register_node("atvomat:breaker_1", {
 		
 			local front_node = minetest.get_node_or_nil(fpos)
 			
-			for k, v in pairs(atvomat.do_not_mine) do
+			for k, v in pairs(atvomat.breaker_blacklist) do
 	
 				if front_node.name == k then return true end
 	
@@ -169,7 +173,7 @@ minetest.register_node("atvomat:breaker_2", {
 		
 			local front_node = minetest.get_node_or_nil(fpos)
 			
-			for k, v in pairs(atvomat.do_not_mine) do
+			for k, v in pairs(atvomat.breaker_blacklist) do
 	
 				if front_node.name == k then return true end
 	
