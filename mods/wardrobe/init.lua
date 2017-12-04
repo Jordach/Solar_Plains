@@ -492,15 +492,15 @@ minetest.register_node("wardrobe:node", {
 		
 	end,
 	
-	on_punch = function(pos, node, puncher)
-		
+	on_rightclick = function(pos, node, clicker)
+	
 		local meta = minetest.get_meta(pos)
 		local pchoices = {}
-		local pname = puncher:get_player_name()
+		local pname = clicker:get_player_name()
 		
 		meta:set_string("formspec",	wardrobe.formspec_meta(wardrobe.formspec_selections[pname], wardrobe.formspec_selections_rgb[pname]))
 		
-		wardrobe.update_dummy(pos, puncher)
+		wardrobe.update_dummy(pos, clicker)
 	
 	end,
 	
