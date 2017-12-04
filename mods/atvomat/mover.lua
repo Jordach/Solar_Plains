@@ -72,6 +72,13 @@ atvomat.mover_input["core:furnace_active"] = {
 
 }
 
+atvomat.mover_input["atvomat:breaker_1"] = {
+
+	1,
+	"main"
+
+}
+
 -- registration of insertable containers:
 
 atvomat.mover_output["core:chest"] = {
