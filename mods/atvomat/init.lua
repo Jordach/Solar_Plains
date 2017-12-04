@@ -21,14 +21,6 @@ atvomat.crusher_recipes = {}
 
 atvomat.logger_control = {}
 
-atvomat.ingot_sort = {}
-
-atvomat.ingot_block_sort = {}
-
-atvomat.ore_sort = {}
-
-atvomat.dye_sort = {}
-
 -- items that can be compressed, format is input, amount -> output, amount
 
 atvomat.compressor_recipes["iron"] =    {"core:iron_ingot",   9,  "core:iron_block",    1}

@@ -37,7 +37,7 @@ function hudclock.update_time()
 				position = {x=positionx, y=positiony},
 				text = "Time: " .. get_time() .. "\n\n" .. "Day: " .. hudclock.day .. "\nMonth: " .. hudclock.month .. "\nYear: " .. hudclock.year,
 				number = 0xFFFFFF,
-				offset = {x=46, y=-46},
+				offset = {x=48, y=-48},
 			});
 		
 		
@@ -140,8 +140,8 @@ function hudclock.display_bg(player)
 	player:hud_add({
 		hud_elem_type = "image",
 		position = {x=positionx, y=positiony},
-		offset = {x=64, y=-48},
-		scale = {x=1, y=1},
+		offset = {x=128-54, y=-48},
+		scale = {x=1.333, y=1.333},
 		text = "mthudclock.png",
 	})
 

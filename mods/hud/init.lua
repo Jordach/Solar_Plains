@@ -22,13 +22,13 @@ HUD_SIZE = ""
 
  -- statbar positions
 HUD_HEALTH_POS = {x=0.5,y=0.9}
-HUD_HEALTH_OFFSET = {x=-175, y=2}
+HUD_HEALTH_OFFSET = {x=-134, y=2}
 
 HUD_HUNGER_POS = {x=0.5,y=0.9}
-HUD_HUNGER_OFFSET = {x=-175, y=-15}
+HUD_HUNGER_OFFSET = {x=-134, y=-15}
 
 HUD_AIR_POS =    {x=0.5,y=0.9}
-HUD_AIR_OFFSET =    {x=-175,y=-24}
+HUD_AIR_OFFSET =    {x=-134,y=-24}
 
 --HUD_ARMOR_POS = {x=0.5,y=0.9}
 --HUD_ARMOR_OFFSET = {x=-175, y=-15}
@@ -36,16 +36,16 @@ HUD_AIR_OFFSET =    {x=-175,y=-24}
 -- dirty way to check for new statbars
 if dump(minetest.hud_replace_builtin) ~= "nil" then
 	HUD_SCALEABLE = false
-	HUD_SIZE = {x=46.5, y=46.5}
+	HUD_SIZE = {x=46.5*0.91, y=46.5*0.9}
 	
 	HUD_HEALTH_POS = {x=0.5,y=1}
-	HUD_HEALTH_OFFSET = {x=-218, y=-96}
+	HUD_HEALTH_OFFSET = {x=-202, y=-90}
 	
 	HUD_HUNGER_POS = {x=0.5,y=1}
-	HUD_HUNGER_OFFSET = {x=-218, y=-88-24}
+	HUD_HUNGER_OFFSET = {x=-202, y=-106}
 	
 	HUD_AIR_POS = {x=0.5,y=1}
-	HUD_AIR_OFFSET = {x=-218, y=-88-40}
+	HUD_AIR_OFFSET = {x=-202, y=-121}
 	
 	--HUD_ARMOR_POS = {x=0.5,y=1}
 	--HUD_ARMOR_OFFSET = {x=-262, y=-110}

@@ -110,8 +110,8 @@ function intro.hud_bg(player)
 	player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=1},
-		offset = {x=0.5, y=-67},
-		scale = {x=1, y=1},
+		offset = {x=0.5, y=-87},
+		scale = {x=1.25, y=1.25},
 		text = "hud_stat_bg.png",
 	})
 	
@@ -119,24 +119,24 @@ function intro.hud_bg(player)
 	player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=1},
-		offset = {x=-171, y=-54},
-		scale = {x=1, y=1},
+		offset = {x=-214, y=-70},
+		scale = {x=1.17, y=1.17},
 		text = "intro_heart.png",
 	})
 	
 	player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=1},
-		offset = {x=-171, y=-66},
-		scale = {x=1, y=1},
+		offset = {x=-214, y=-85},
+		scale = {x=1.25, y=1.25},
 		text = "intro_hunger.png",
 	})
 	
 	player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=1},
-		offset = {x=-171, y=-79}, -- note; these offsets are in pixels.
-		scale = {x=1, y=1},
+		offset = {x=-214, y=-100}, -- note; these offsets are in pixels.
+		scale = {x=1.25, y=1.25},
 		text = "intro_bubble.png",
 	})
 end
