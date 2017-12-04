@@ -79,6 +79,13 @@ atvomat.mover_input["atvomat:breaker_1"] = {
 
 }
 
+atvomat.mover_input["atvomat:breaker_2"] = {
+
+	1,
+	"main"
+
+}
+
 -- registration of insertable containers:
 
 atvomat.mover_output["core:chest"] = {
