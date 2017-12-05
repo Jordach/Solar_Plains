@@ -194,3 +194,41 @@ minetest.register_node("atvomat:breaker_2", {
 	end,
 	
 })
+
+minetest.register_craft({
+
+	output = "atvomat:breaker_1",
+	recipe = {
+	
+		{"core:iron_ingot", "core:mese", "core:iron_ingot"},
+		{"core:iron_ingot", "core:mese_pickaxe_3", "core:iron_ingot"},
+		{"core:iron_ingot", "core:chest", "core:iron_ingot"}
+	
+	},
+	
+	replacements = {
+	
+		{"core:mese_pickaxe_3", "core:mese_pickaxe_1"},
+	
+	},
+	
+})
+
+minetest.register_craft({
+
+	output = "atvomat:breaker_2",
+	recipe = {
+	
+		{"core:mese_crystal", "core:mese", "core:mese_crystal"},
+		{"core:mese_crystal", "core:mese_pickaxe_5", "core:mese_crystal"},
+		{"core:mese_crystal", "atvomat:breaker_1", "core:mese_crystal"}
+	
+	},
+	
+	replacements = {
+	
+		{"core:mese_pickaxe_5", "core:mese_pickaxe_3"},
+	
+	},
+	
+})

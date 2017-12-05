@@ -309,7 +309,7 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "core:oak_planks 6",
+	output = "core:pine_planks 6",
 	recipe = {
 		"core:pine_log_grassy",
 	},
@@ -325,7 +325,7 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "core:oak_planks 6",
+	output = "core:birch_planks 6",
 	recipe = {
 		"core:birch_log_grassy",
 	},
@@ -341,7 +341,7 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "core:oak_planks 6",
+	output = "core:cherry_planks 6",
 	recipe = {
 		"core:cherry_log_grassy",
 	},
@@ -400,6 +400,58 @@ minetest.register_craft({
 	recipe = {
 		"group:planks",
 	},
+})
+
+-- stones
+
+minetest.register_craft({
+
+	output = "core:basalt_brick 4",
+	recipe = {
+	
+		{"core:basalt", "core:basalt"},
+		{"core:basalt", "core:basalt"},
+	
+	},
+	
+
+})
+
+minetest.register_craft({
+
+	output = "core:basalt 4",
+	recipe = {
+	
+		{"core:basalt_brick", "core:basalt_brick"},
+		{"core:basalt_brick", "core:basalt_brick"},
+	
+	},
+	
+
+})
+
+minetest.register_craft({
+
+	output = "core:obsidian_brick 4",
+	recipe = {
+	
+		{"core:obsidian", "core:obsidian"},
+		{"core:obsidian", "core:obsidian"},
+	
+	},
+
+})
+
+minetest.register_craft({
+
+	output = "core:obsidian 4",
+	recipe = {
+	
+		{"core:obsidian_brick", "core:obsidian_brick"},
+		{"core:obsidian_brick", "core:obsidian_brick"},
+	
+	},
+
 })
 
 ----------
@@ -500,6 +552,21 @@ minetest.register_craft({
 	output = "core:diamond",
 	recipe = "core:diamond_ore",
 })
+
+-- glass
+
+minetest.register_craft({
+	type = "cooking",
+	output = "core:glass",
+	recipe = "core:sand",
+})
+
+minetest.register_craft({
+	type = "cooking",
+	output = "core:obsidian_glass",
+	recipe = "core:obsidian",
+})
+
 
 -- gemstones and crystals
 

@@ -46,13 +46,45 @@ minetest.register_node("core:stone", {
 })
 
 minetest.register_node("core:obsidian", {
-	tiles = {"core_stone.png"},
-	description = "Stone",
-	is_ground_content = true,
-	drop = "core:cobble",
+	tiles = {"core_obsidian.png"},
+	description = "Obsidian",
 	groups = {cracky=1, solid=1},
 	sounds = mcore.sound_stone,
 })
+
+minetest.register_node("core:obsidian_brick", {
+	tiles = {"core_obsidian_brick_top.png", "core_obsidian_brick_top.png", "core_obsidian_brick.png", "core_obsidian_brick.png", "core_obsidian_brick_bottom.png", "core_obsidian_brick_bottom.png"},
+	description = "Obsidian Brick",
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_stone,
+})
+
+minetest.register_node("core:obsidian_glass", {
+	tiles = {"core_obsidian_glass.png"},
+	description = "Obsidian",
+	drawtype = "glasslike",
+	paramtype = "light",
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_stone,
+})
+
+
+minetest.register_node("core:basalt", {
+	tiles = {"core_basalt.png"},
+	description = "Basalt",
+	is_ground_content = true,
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_stone,
+})
+
+minetest.register_node("core:basalt_brick", {
+	tiles = {"core_basalt_brick_top.png", "core_basalt_brick_top.png", "core_basalt_brick.png", "core_basalt_brick.png", "core_basalt_brick_bottom.png", "core_basalt_brick_bottom.png"},
+	description = "Basalt Brick",
+	is_ground_content = true,
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_stone,
+})
+
 
 minetest.register_node("core:firestone", {
 	tiles = {"core_firestone.png"},

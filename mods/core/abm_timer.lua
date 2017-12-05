@@ -172,7 +172,7 @@ function mcore.freeze_lava(pos, node)
 			
 		else
 		
-			minetest.set_node(pos, {name="core:stone"})
+			minetest.set_node(pos, {name="core:basalt"})
 			
 		end
 		
@@ -213,6 +213,23 @@ minetest.register_abm({
 	action = function(pos, node)
 	
 		minetest.set_node(pos, {name="core:obsidian"})
+	
+	end,
+
+})
+
+minetest.register_abm({
+
+	nodenames = {"core:lava_flowing"},
+	neighnors = {"air"},
+	
+	interval = 60,
+	chance = 2,
+	catch_up = false,
+	
+	action = function(pos, node)
+	
+		minetest.set_node(pos, {name="core:basalt"})
 	
 	end,
 
