@@ -45,6 +45,15 @@ minetest.register_node("core:stone", {
 	sounds = mcore.sound_stone,
 })
 
+minetest.register_node("core:obsidian", {
+	tiles = {"core_stone.png"},
+	description = "Stone",
+	is_ground_content = true,
+	drop = "core:cobble",
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_stone,
+})
+
 minetest.register_node("core:firestone", {
 	tiles = {"core_firestone.png"},
 	description = "Fire Stone",

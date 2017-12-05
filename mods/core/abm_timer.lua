@@ -134,3 +134,97 @@ minetest.register_abm({
 	end,
 })
 
+-- lava cooling and obsidian;
+
+function mcore.freeze_lava(pos, node)
+
+	if node.name == "core:lava_source" then
+	
+		minetest.set_node(pos, {name="core:obsidian"})
+		
+		return true
+		
+	else -- we know it's not the source block.
+		
+		if math.random(1, 64) == 18 then
+		
+			minetest.set_node(pos, {name="core:diamond_ore"})
+		
+		elseif math.random(1, 48) == 16 then
+		
+			minetest.set_node(pos, {name="core:gold_ore"})
+		
+		elseif math.random(1, 32) == 12 then
+		
+			minetest.set_node(pos, {name="core:silver_ore"})
+		
+		elseif math.random(1, 24) == 8 then
+		
+			minetest.set_node(pos, {name="core:iron_ore"})
+		
+		elseif math.random(1, 16) == 6 then
+		
+			minetest.set_node(pos, {name="core:copper_ore"})
+		
+		elseif math.random(1, 12) == 5 then
+		
+			minetest.set_node(pos, {name="core:coal_ore"})
+			
+		else
+		
+			minetest.set_node(pos, {name="core:stone"})
+			
+		end
+		
+		return true
+		
+	end
+
+end
+
+minetest.register_abm({
+
+	nodenames = {"core:lava_source", "core:lava_flowing"},
+	neighbors = {"core:water_source", "core:ice", "core:water_flowing"},
+	
+	interval = 2,
+	chance = 1,
+	catch_up = false,
+	
+	action = function(pos, node)
+	
+		mcore.freeze_lava(pos, node)
+	
+	end,
+	
+})
+
+-- make lava cool down once exposed to ambient air
+
+minetest.register_abm({
+
+	nodenames = {"core:lava_source"},
+	neighnors = {"air"},
+	
+	interval = 180,
+	chance = 6,
+	catch_up = false,
+	
+	action = function(pos, node)
+	
+		minetest.set_node(pos, {name="core:obsidian"})
+	
+	end,
+
+})
+
+-- util func for resetting the math.random seed.
+
+local function randseed()
+
+	math.randomseed( os.time())
+	
+	minetest.after(math.random(15,45), randseed)
+end
+
+minetest.after(math.random(15,45), randseed)

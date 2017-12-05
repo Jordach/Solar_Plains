@@ -63,7 +63,7 @@ minetest.register_node("atvomat:breaker_1", {
 		if meta:get_string("active") == "false" then
 		
 			meta:set_string("active", "true")
-			minetest.get_node_timer(pos):start(1.125)
+			minetest.get_node_timer(pos):start(3)
 			
 			meta:set_string("infotext", "Auto Block Breaker, Enabled.")
 			
@@ -147,7 +147,7 @@ minetest.register_node("atvomat:breaker_2", {
 		if meta:get_string("active") == "false" then
 		
 			meta:set_string("active", "true")
-			minetest.get_node_timer(pos):start(1.125)
+			minetest.get_node_timer(pos):start(3)
 			
 			meta:set_string("infotext", "Auto Block Collector (Gently collects blocks), Enabled.")
 			

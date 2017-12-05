@@ -229,6 +229,10 @@ function beds.wake_specific_player(player) -- for those sleepy people (or leavin
 
 	if pos == nil then return end -- unlikely, but this is Minetest
 	
+	if player_bed_swap[pname] == nil then return end
+	
+	if player_bed_param[pname] == nil then return end
+	
 	local pname = player:get_player_name()
 	
 	player_sleeping[pname] = false
