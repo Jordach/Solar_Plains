@@ -163,8 +163,9 @@ local function beds_formspec(player)
 	
 	local formspec = "size[8.15,3]" ..
 	"button[2.93,2.5;2.15,1;beds_exit;Get out of bed.]"..
-	--"button[6.75,-0.3;1.5,1;beds_chat_snd;Send]"..
-	"field[0.35,0;8.15,1;beds_chat;;]"..
+	"field[1,0;7.15,1;beds_chat;;]"..
+	"button[6.75,-0.3;1.5,1;beds_chat_snd;Send]"..
+	"label[-0.1,-0.125;Chat:]"..
 	"image_button[7.35,2.5;1,1;"..jingle_image_state..";beds_ui_jingle;;true;false;"..jingle_image_state_push.."]"
 	
 	return formspec
@@ -204,6 +205,8 @@ function beds.wake_players() -- only to be used within a globalstep!!!
 
 			if pos == nil then return end -- unlikely, but this is Minetest
 			
+			pl:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
+			
 			player_sleeping[pname] = false
 			
 			pl:set_pos(pos)
@@ -233,7 +236,7 @@ function beds.wake_specific_player(player) -- for those sleepy people (or leavin
 	local pos2 = player:get_pos()
 	
 	minetest.set_node(pos2, {name=player_bed_swap[pname], param1=0, param2=player_bed_param[pname]})
-	
+	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
 	player:set_pos(pos)
 	player:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
 	--local hud_f = player:hud_get_flags()
@@ -342,15 +345,14 @@ function beds.sleep(pos, player, height_offset, bed_node_norm, bed_node_slp) -- 
 	beds.set_respawn_point(pos, player, param)
 	
 	player_sleeping[pname] = true
-	player_bed_swap[pname] = bed_node_norm
-		
+	player_bed_swap[pname] = bed_node_norm	
 	
 	minetest.show_formspec(pname, "beds_ui", beds_formspec(player))
 	
 	-- set player animation and stuffs
 	
 	
-	local hud_f = player:hud_get_flags()
+	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = false, breathbar = false})
 	
 	player_bed_param[pname] = param
 	
@@ -361,7 +363,6 @@ function beds.sleep(pos, player, height_offset, bed_node_norm, bed_node_slp) -- 
 	--player:set_look_vertical(0)
 	player:setpos({x=pos.x, y=pos.y, z=pos.z})
 	player:set_eye_offset({x=0, y=-14, z=0}, {x=0, y=0, z=0})
-	hud_f.wielditem = false
 	wardrobe.close_eyes(player)
 	player:set_animation({ x= 226, y=228, }, 0, false, false)
 end
@@ -474,13 +475,15 @@ end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	
-	if formname ~= "beds_ui" then return end
+	if formname ~= "beds_ui" and player_sleeping[player:get_player_name()] == true then return true end
 	
 	if fields.key_enter_field or fields.beds_chat_snd then
 	
 		local pname = player:get_player_name()
 	
 		minetest.chat_send_all("<"..pname.."> ".. fields.beds_chat)
+		
+		fields.beds_chat = ""
 		
 		minetest.after(0.05, minetest.show_formspec, pname, "beds_ui", beds_formspec(player))
 		
