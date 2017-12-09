@@ -636,7 +636,7 @@ minetest.register_node("atvomat:sorter", {
 	
 	on_punch = function(pos)
 	
-		sort(pos)
+		minetest.get_node_timer(pos):start(1.0)
 	
 	end,
 	
