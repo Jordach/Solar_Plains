@@ -222,29 +222,35 @@ minetest.register_node("atvomat:mover",{
 			
 				local inv = minetest.get_meta(fpos):get_inventory()
 				
-				if inv:room_for_item(v[2], moverstackname) and moverstackname == "core:coal_lump" then
-				
-					moverstack:take_item()
-					inv:add_item(v[2], moverstackname)
-					mover_inv:set_stack("main", 1, moverstack)
+				if v[3] ~= false then
 					
-				elseif inv:room_for_item(v[1], moverstackname) then
+					minetest.get_node_timer(fpos):start(1.0)
+						
+				end
+				
+				for k2, v2 in pairs(atvomat.fuel_sort) do
+					
+					if inv:room_for_item(v[2], moverstackname) and moverstackname == k2 then
+				
+						moverstack:take_item()
+						inv:add_item(v[2], moverstackname)
+						mover_inv:set_stack("main", 1, moverstack)
+						
+						return true
+						
+					end
+					
+				end
+				
+				if inv:room_for_item(v[1], moverstackname) then
 				
 					moverstack:take_item()
 					inv:add_item(v[1], moverstackname)
 					mover_inv:set_stack("main", 1, moverstack)
-				
+						
+					return true
+						
 				end
-				
-				
-				if v[3] ~= false then
-					
-					minetest.get_node_timer(fpos):start(1.0)
-					
-				end
-				
-				return true
-			
 			end
 		
 		end

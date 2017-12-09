@@ -161,7 +161,9 @@ local function sort(pos, elapsed)
 		
 		elseif stackname == "atvomat:tool_sorter_card" then
 		
-			--sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
+			sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
+			
+			return true
 		
 		elseif stackname == "atvomat:dye_sorter_card" then
 		
@@ -171,13 +173,13 @@ local function sort(pos, elapsed)
 			
 		elseif stackname == "atvomat:farm_sorter_card" then
 		
-			--sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)
+			sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)			
 			
 			return true
 			
 		elseif stackname == "atvomat:fuel_sorter_card" then
 		
-			--sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
+			sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
 			
 			return true
 		

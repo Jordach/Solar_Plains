@@ -268,7 +268,7 @@ local function find_tools()
 
 end
 
-minetest.after(1.2, find_tools)
+minetest.after(1, find_tools)
 
 -- register craftitems as sorter cards
 
