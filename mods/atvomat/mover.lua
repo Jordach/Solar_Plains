@@ -132,7 +132,7 @@ local atmover =
 	"list[current_name;main;3.5,2;1,1]" ..
 	"list[current_player;main;0,4.5;8,1;]" ..
 	"list[current_player;main;0,6;8,3;8]" ..
-	"liststring[current_name;main]" ..
+	"listring[current_name;main]" ..
 	"listring[current_player;main]" ..
 	"background[-0.45,-0.5;8.9,10;atvomat_mover_interface.png]"..
 	"listcolors[#3a4466;#8b9bb4;#ffffff;#4e5765;#ffffff]"
