@@ -54,9 +54,9 @@ local function insert_into_mover(inv, inputstack, inputname, mover_inv)
 		inputstack:take_item()
 		mover_inv:add_item("main", inputname)
 		inv:set_stack("main", 1, inputstack)
-
+		
 	end
-
+	
 end
 
 local function sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
@@ -73,12 +73,18 @@ local function sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
 			
 		insert_into_mover(inv, inputstack, inputname, mover_inv)
 		
+		return true
+		
 	end
 
+	return false
+	
 end
 
 local function sorting_card(inv, inputstack, inputname, sort_table, face_pos)
-			
+	
+	local is_match = false
+	
 	for k, v in pairs(sort_table) do -- check through the list of items to sort based on this card
 			
 		-- todo, make k the node/item name like how the mover operates;
@@ -99,6 +105,8 @@ local function sorting_card(inv, inputstack, inputname, sort_table, face_pos)
 						
 					insert_into_mover(inv, inputstack, inputname, mover_inv)
 					
+					is_match = true
+					
 				end
 				
 			end
@@ -106,7 +114,11 @@ local function sorting_card(inv, inputstack, inputname, sort_table, face_pos)
 		end
 			
 	end
-
+	
+	if is_match == true then return true
+					
+	else return false end
+	
 end
 
 local function sort(pos, elapsed)
@@ -116,507 +128,121 @@ local function sort(pos, elapsed)
 	local inputstack = inv:get_stack("main", 1) -- the stack contained in the input slot
 	local inputname = inputstack:get_name()
 	
+	local stackstr = ""
+	
 	local face_pos = table.copy(pos)
+	
+	for i=1,6 do -- let's loop through the faces and make face_pos correct per direction
 		
-	-- check the top (inv "up") sorting face first;
-	
-	face_pos.y = face_pos.y + 1
-	
-	for i=1, 3 do
-	
-		local stack = inv:get_stack("up", i) -- the stack contained in the sorting slots
-		local stackname = stack:get_name()
+		face_pos = table.copy(pos)
 		
-		if stackname ~= "" then
+		if i == 1 then stackstr = "up"; face_pos.y = face_pos.y + 1 
+		elseif i == 2 then stackstr = "down"; face_pos.y = face_pos.y - 1
+		elseif i == 3 then stackstr = "left"; face_pos.x = face_pos.x - 1
+		elseif i == 4 then stackstr = "right"; face_pos.x = face_pos.x + 1
+		elseif i == 5 then stackstr = "front"; face_pos.z = face_pos.z + 1
+		elseif i == 6 then stackstr = "back"; face_pos.z = face_pos.z - 1
+		end
+		
+		-- let's check sorting inv slots
+		
+		for s=1,3 do
+	
+			local stack = inv:get_stack(stackstr, s) -- the stack contained in the sorting slots
+			local stackname = stack:get_name()
+		
+			if stackname ~= "" then
 			
-			if inputname ~= "" then
-			
-				if inputname == stackname then
+				if inputname ~= "" then
+				
+					if inputname == stackname then
 						
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
+						local mover_inv = minetest.get_meta(face_pos):get_inventory()
+									
+						if sort_by_item(inv, inputstack, inputname, mover_inv, face_pos) == true then return true end
+						
+					end
 					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
+					if stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
+								
+						if sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos) == true then return true end
+									
+					elseif stackname == "atvomat:ore_sorter_card" then
+								
+						if sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos) == true then return true end
+									
+					elseif stackname == "atvomat:ingot_sorter_card" then
+								
+						if sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos) == true then return true end
+									
+					elseif stackname == "atvomat:block_sorter_card" then
+									
+						if sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos) == true then return true end
+								
+					elseif stackname == "atvomat:tool_sorter_card" then
+								
+						if sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos) == true then return true end
+								
+					elseif stackname == "atvomat:dye_sorter_card" then
+								
+						if sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos) == true then return true end
+									
+					elseif stackname == "atvomat:farm_sorter_card" then
+								
+						if sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos) == true then return true end
 					
-					return true
-				
-				elseif stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
-				
-					sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ore_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ingot_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:block_sorter_card" then
-					
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:tool_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:dye_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:farm_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)			
-					
-					return true
-					
-				elseif stackname == "atvomat:fuel_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:eject_card" then
-				
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
+					elseif stackname == "atvomat:fuel_sorter_card" then
+								
+						if sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos) == true then return true end
+								
+					end
 				
 				end
+				
 			end
+		
 		end
+		
 	end
-		
-	-- check the bottom (inv "down") sorting face;
-		
-	face_pos.y = face_pos.y - 2
 	
-	for i=1, 3 do
+	for i=1,6 do
 	
-		local stack = inv:get_stack("down", i) -- the stack contained in the sorting slots
-		local stackname = stack:get_name()
+		face_pos = table.copy(pos)
 		
-		if stackname ~= "" then
+		if i == 1 then stackstr = "up"; face_pos.y = face_pos.y + 1 
+		elseif i == 2 then stackstr = "down"; face_pos.y = face_pos.y - 1
+		elseif i == 3 then stackstr = "left"; face_pos.x = face_pos.x - 1
+		elseif i == 4 then stackstr = "right"; face_pos.x = face_pos.x + 1
+		elseif i == 5 then stackstr = "front"; face_pos.z = face_pos.z + 1
+		elseif i == 6 then stackstr = "back"; face_pos.z = face_pos.z - 1
+		end
+		
+		for s=1,3 do
 			
-			if inputname ~= "" then
+			local stack = inv:get_stack(stackstr, s) -- the stack contained in the sorting slots
+			local stackname = stack:get_name()
 			
-				if inputname == stackname then
+			if stackname ~= "" then
+			
+				if inputname ~= "" then
+		
+					-- after we've literally done everything, let's do the ejecting cards;
+		
+					if stackname == "atvomat:eject_card" then
+								
+						local mover_inv = minetest.get_meta(face_pos):get_inventory()
+									
+						if sort_by_item(inv, inputstack, inputname, mover_inv, face_pos) == true then end
 						
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
-				
-					sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ore_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ingot_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:block_sorter_card" then
-					
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:tool_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:dye_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:farm_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)			
-					
-					return true
-					
-				elseif stackname == "atvomat:fuel_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:eject_card" then
-				
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
+					end
 				
 				end
+				
 			end
+			
 		end
+	
 	end
-		
-	-- check the left (inv "left") sorting face;
-	
-	face_pos = table.copy(pos)
-	
-	face_pos.x = face_pos.x - 1
-	
-	for i=1, 3 do
-	
-		local stack = inv:get_stack("left", i) -- the stack contained in the sorting slots
-		local stackname = stack:get_name()
-		
-		if stackname ~= "" then
-			
-			if inputname ~= "" then
-			
-				if inputname == stackname then
-						
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
-				
-					sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ore_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ingot_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:block_sorter_card" then
-					
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:tool_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:dye_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:farm_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)			
-					
-					return true
-					
-				elseif stackname == "atvomat:fuel_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:eject_card" then
-				
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				end
-			end
-		end
-	end
-	
-	-- check the right (inv "right") sorting face;
-	
-	face_pos.x = face_pos.x + 2
-	
-	for i=1, 3 do
-	
-		local stack = inv:get_stack("right", i) -- the stack contained in the sorting slots
-		local stackname = stack:get_name()
-		
-		if stackname ~= "" then
-			
-			if inputname ~= "" then
-			
-				if inputname == stackname then
-						
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
-				
-					sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ore_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ingot_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:block_sorter_card" then
-					
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:tool_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:dye_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:farm_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)			
-					
-					return true
-					
-				elseif stackname == "atvomat:fuel_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:eject_card" then
-				
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				end
-			end
-		end
-	end
-	
-	-- check the front (inv "front") sorting face;
-	
-	face_pos = table.copy(pos)
-	
-	face_pos.z = face_pos.z + 1
-	
-	for i=1, 3 do
-	
-		local stack = inv:get_stack("front", i) -- the stack contained in the sorting slots
-		local stackname = stack:get_name()
-		
-		if stackname ~= "" then
-			
-			if inputname ~= "" then
-			
-				if inputname == stackname then
-						
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
-				
-					sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ore_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ingot_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:block_sorter_card" then
-					
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:tool_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:dye_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:farm_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)			
-					
-					return true
-					
-				elseif stackname == "atvomat:fuel_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:eject_card" then
-				
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				end
-			end
-		end
-	end
-	
-	-- check the rear (inv "back") sorting face;
-	
-	face_pos = table.copy(pos)
-	
-	face_pos.z = face_pos.z - 1
-	
-	for i=1, 3 do
-	
-		local stack = inv:get_stack("back", i) -- the stack contained in the sorting slots
-		local stackname = stack:get_name()
-		
-		if stackname ~= "" then
-			
-			if inputname ~= "" then
-			
-				if inputname == stackname then
-						
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
-				
-					sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ore_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:ingot_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:block_sorter_card" then
-					
-					sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:tool_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:dye_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos)
-					
-					return true
-					
-				elseif stackname == "atvomat:farm_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)			
-					
-					return true
-					
-				elseif stackname == "atvomat:fuel_sorter_card" then
-				
-					sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
-					
-					return true
-				
-				elseif stackname == "atvomat:eject_card" then
-				
-					local mover_inv = minetest.get_meta(face_pos):get_inventory()
-					
-					sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
-					
-					return true
-				
-				end
-			end
-		end
-	end
-	
-	-- if i can't sort it, or move it with the eject card, stop sorting, then, return true
 	
 	return true
 	
