@@ -118,6 +118,14 @@ atvomat.mover_output["core:furnace_active"] = {
 
 }
 
+atvomat.mover_output["atvomat:sorter"] = {
+
+	"main",
+	"main",
+	true
+	
+}
+
 local atmover = 
 
 	"size[8,9]" ..
