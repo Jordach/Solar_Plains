@@ -836,7 +836,7 @@ minetest.register_node("core:bamboo", {
 minetest.register_node("core:coal_ore", {
 	description = "Coal Ore",
 	tiles = {"core_ore_coal.png"},
-	groups = {cracky=3, solid=1},
+	groups = {cracky=3, solid=1, ore=1},
 	sounds = mcore.sound_stone,
 	drop = {
 		max_items = 3,
@@ -851,35 +851,35 @@ minetest.register_node("core:coal_ore", {
 minetest.register_node("core:copper_ore", {
 	description = "Copper Ore",
 	tiles = {"core_ore_copper.png"},
-	groups = {cracky=3, solid=1},
+	groups = {cracky=3, solid=1, ore=1},
 	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:iron_ore", {
 	description = "Iron Ore",
 	tiles = {"core_ore_iron.png"},
-	groups = {cracky=2, solid=1},
+	groups = {cracky=2, solid=1, ore=1},
 	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:silver_ore", {
 	description = "Silver Ore",
 	tiles = {"core_ore_silver.png"},
-	groups = {cracky=2, solid=1},
+	groups = {cracky=2, solid=1, ore=1},
 	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:gold_ore", {
 	description = "Gold Ore",
 	tiles = {"core_ore_gold.png"},
-	groups = {cracky=1, solid=1},
+	groups = {cracky=1, solid=1, ore=1},
 	sounds = mcore.sound_stone,
 })
 
 minetest.register_node("core:mese_ore", {
 	description = "Mese Ore",
 	tiles = {"core_ore_mese.png"},
-	groups = {cracky=1, solid=1},
+	groups = {cracky=1, solid=1, ore=1},
 	sounds = mcore.sound_stone,
 })
 
@@ -894,7 +894,7 @@ minetest.register_node("core:mese", {
 minetest.register_node("core:diamond_ore", {
 	description = "Diamond Ore",
 	tiles = {"core_ore_diamond.png"},
-	groups = {cracky=1, solid=1},
+	groups = {cracky=1, solid=1, ore=1},
 	sounds = mcore.sound_stone,
 })
 

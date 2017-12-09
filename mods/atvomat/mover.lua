@@ -228,7 +228,7 @@ minetest.register_node("atvomat:mover",{
 						
 				end
 				
-				for k2, v2 in pairs(atvomat.fuel_sort) do
+				for k2, v2 in pairs(atvomat.fuel_sort) do -- let's see if the mover has a fuel item inside it and check if it will fit inside the fuel slot entirely.
 					
 					if inv:room_for_item(v[2], moverstackname) and moverstackname == k2 then
 				
@@ -242,7 +242,7 @@ minetest.register_node("atvomat:mover",{
 					
 				end
 				
-				if inv:room_for_item(v[1], moverstackname) then
+				if inv:room_for_item(v[1], moverstackname) then -- does it not fit or is the slot incapable of taking it in? fuel will be placed in the cooking or container slot instead.
 				
 					moverstack:take_item()
 					inv:add_item(v[1], moverstackname)
@@ -255,7 +255,7 @@ minetest.register_node("atvomat:mover",{
 		
 		end
 		
-		if front_node.name == "atvomat:mover" then
+		if front_node.name == "atvomat:mover" then -- is the node in front of us a mover? then we'll insert it directly instead of the push pull configuration. this bypasses the pull from container, then push
 		
 			local inv = minetest.get_meta(fpos):get_inventory()
 			
