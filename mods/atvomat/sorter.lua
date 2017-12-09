@@ -1,19 +1,7 @@
 -- avtomat - (automatico, automation)
 -- part of solar plains, by jordach
 
---like the mover, the format for adding items into the list of sorting cards is: atvomat.ingot_sort["item:name"] = ""
-
-atvomat.ingot_sort = {}
-
-atvomat.ingot_block_sort = {}
-
-atvomat.ore_sort = {}
-
-atvomat.dye_sort = {}
-
 -- register ingots for sorting:
-
-
 
 --[[
 
@@ -48,7 +36,179 @@ local atsorter =
 	"listring[current_player;main]" ..
 	"background[-0.45,-0.5;8.9,10;atvomat_sorter_interface.png]"..
 	"listcolors[#3a4466;#8b9bb4;#ffffff;#4e5765;#ffffff]"
+
+local function reboot_mover(pos)
+
+	if minetest.get_node_timer(pos):is_started() == false then
+						
+		minetest.get_node_timer(pos):start(1)
+		
+	end
+
+end
+
+local function insert_into_mover(inv, inputstack, inputname, mover_inv)
+
+	if mover_inv:room_for_item("main", inputstack) then
+						
+		inputstack:take_item()
+		mover_inv:add_item("main", inputname)
+		inv:set_stack("main", 1, inputstack)
+
+	end
+
+end
+
+local function sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
+
+	local node = minetest.get_node_or_nil(face_pos)
 	
+	if node.name == "atvomat:mover" and node.name ~= nil then
+		
+		-- push item into mover :^)
+			
+		local mover_inv = minetest.get_meta(face_pos):get_inventory()
+			
+		reboot_mover(face_pos)
+			
+		insert_into_mover(inv, inputstack, inputname, mover_inv)
+		
+	end
+
+end
+
+local function sorting_card(inv, inputstack, inputname, sort_table, face_pos)
+			
+	for k, v in pairs(sort_table) do -- check through the list of items to sort based on this card
+			
+		-- todo, make k the node/item name like how the mover operates;
+				
+		if inputname ~= "" then
+				
+			if k == inputname then 
+				
+				local node = minetest.get_node_or_nil(face_pos)
+				
+				if node.name == "atvomat:mover" and node.name ~= nil then
+					
+					-- push item into mover :^)
+						
+					local mover_inv = minetest.get_meta(face_pos):get_inventory()
+						
+					reboot_mover(face_pos)
+						
+					insert_into_mover(inv, inputstack, inputname, mover_inv)
+					
+				end
+				
+			end
+				
+		end
+			
+	end
+
+end
+
+local function sort(pos, elapsed)
+
+	local inv = minetest.get_meta(pos):get_inventory() -- sorter storage
+	
+	local inputstack = inv:get_stack("main", 1) -- the stack contained in the input slot
+	local inputname = inputstack:get_name()
+	
+	local face_pos = table.copy(pos)
+		
+	-- check the top sorting face first;
+	
+	face_pos.y = face_pos.y + 1
+	
+	for i=1, 3 do
+		
+		local stack = inv:get_stack("up", i) -- the stack contained in the sorting slots
+		local stackname = stack:get_name()
+		
+		if inputname == stackname then
+				
+			local mover_inv = minetest.get_meta(face_pos):get_inventory()
+			
+			sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
+			
+			return true
+		
+		elseif stackname == "atvomat:wood_sorter_card" then -- detect sorter cards! see init.lua:174 for the ordering of sorter cards.
+		
+			sorting_card(inv, inputstack, inputname, atvomat.wood_sort, face_pos)
+			
+			return true
+			
+		elseif stackname == "atvomat:ore_sorter_card" then
+		
+			sorting_card(inv, inputstack, inputname, atvomat.ore_sort, face_pos)
+			
+			return true
+			
+		elseif stackname == "atvomat:ingot_sorter_card" then
+		
+			sorting_card(inv, inputstack, inputname, atvomat.ingot_sort, face_pos)
+			
+			return true
+			
+		elseif stackname == "atvomat:block_sorter_card" then
+			
+			sorting_card(inv, inputstack, inputname, atvomat.ingot_block_sort, face_pos)
+			
+			return true
+		
+		elseif stackname == "atvomat:tool_sorter_card" then
+		
+			--sorting_card(inv, inputstack, inputname, atvomat.tool_sort, face_pos)
+		
+		elseif stackname == "atvomat:dye_sorter_card" then
+		
+			sorting_card(inv, inputstack, inputname, atvomat.dye_sort, face_pos)
+			
+			return true
+			
+		elseif stackname == "atvomat:farm_sorter_card" then
+		
+			--sorting_card(inv, inputstack, inputname, atvomat.farm_sort, face_pos)
+			
+			return true
+			
+		elseif stackname == "atvomat:fuel_sorter_card" then
+		
+			--sorting_card(inv, inputstack, inputname, atvomat.fuel_sort, face_pos)
+			
+			return true
+		
+		elseif stackname == "atvomat:eject_card" then
+		
+			local mover_inv = minetest.get_meta(face_pos):get_inventory()
+			
+			sort_by_item(inv, inputstack, inputname, mover_inv, face_pos)
+			
+			return true
+		
+		end
+	
+	end
+		
+		-- check the bottom sorting face;
+		
+		-- check the left sorting face;
+		
+		-- check the right sorting face;
+		
+		-- check the front sorting face;
+		
+		-- check the rear sorting face;
+		
+		-- if i can't sort it, or move it with the eject card, stop sorting, then, return true
+	
+	return true
+	
+end
+
 minetest.register_node("atvomat:sorter", {
 
 	description = "Sorter (Sorts things based on items inside of it.)",
@@ -72,5 +232,13 @@ minetest.register_node("atvomat:sorter", {
 		inv:set_size("back", 3)
 		minetest.get_node_timer(pos):start(1.0)
 	end,
+	
+	on_punch = function(pos)
+	
+		sort(pos)
+	
+	end,
+	
+	on_timer = sort,
 
 })

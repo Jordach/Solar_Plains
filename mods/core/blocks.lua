@@ -898,6 +898,51 @@ minetest.register_node("core:diamond_ore", {
 	sounds = mcore.sound_stone,
 })
 
+-- register ingot and gem blocks except MESE
+
+minetest.register_node("core:copper_block", {
+	description = "Block of Copper",
+	tiles = {"core_copper_block.png"},
+	groups = {cracky=3, solid=1},
+	sounds = mcore.sound_metallic,
+})
+
+minetest.register_node("core:iron_block", {
+	description = "Block of Iron",
+	tiles = {"core_iron_block.png"},
+	groups = {cracky=2, solid=1},
+	sounds = mcore.sound_metallic,
+})
+
+minetest.register_node("core:silver_block", {
+	description = "Block of Silver",
+	tiles = {"core_silver_block.png"},
+	groups = {cracky=2, solid=1},
+	sounds = mcore.sound_metallic,
+})
+
+minetest.register_node("core:gold_block", {
+	description = "Block of Gold",
+	tiles = {"core_gold_block.png"},
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_metallic,
+})
+
+minetest.register_node("core:ironze_block", {
+	description = "Block of Ironze?!",
+	tiles = {"core_ironze_block.png"},
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_metallic,
+})
+
+
+minetest.register_node("core:diamond_block", {
+	description = "Block of Diamond",
+	tiles = {"core_diamond_block.png"},
+	groups = {cracky=1, solid=1},
+	sounds = mcore.sound_stone,
+})
+
 -- torches and light sources
 
 minetest.register_node("core:torch", {

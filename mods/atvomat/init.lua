@@ -74,57 +74,297 @@ atvomat.logger_control["cherry"] = {"core:cherry_log", "core:cherry_leaves", "co
 
 -- sorting control card for sorting blocks, format: "name:ingot", "etc", "etc", "etc"
 
-atvomat.ingot_sort = {
+-- will migrate these to a format which can be paired over instead of ipairs.
 
-	"core:iron_ingot",
-	"core:copper_ingot",
-	"core:ironze_ingot",
-	"core:gold_ingot",
-	"core:silver_ingot",
-	"core:mese_crystal",
-	"core:diamond"
+-- actually, consider the following
 
-}
+-- atvomat.itemtype_sort["item:name"] = ""
 
-atvomat.ingot_block_sort = {
+atvomat.ingot_sort = {} -- register ingots and gems
 
-	"core:iron_block",
-	"core:copper_block",
-	"core:ironze_block",
-	"core:gold_block",
-	"core:silver_block",
-	"core:mese",
-	"core:diamond_block",
+atvomat.ingot_sort["core:iron_ingot"] = ""
+atvomat.ingot_sort["core:copper_ingot"] = ""
+atvomat.ingot_sort["core:ironze_ingot"] = ""
+atvomat.ingot_sort["core:gold_ingot"] = ""
+atvomat.ingot_sort["core:silver_ingot"] = ""
+atvomat.ingot_sort["core:mese_crystal"] = ""
+atvomat.ingot_sort["core:diamond"] = ""
 
-}
+atvomat.ingot_block_sort = {} -- register ingot and gem blocks
 
-atvomat.ore_sort = {
+atvomat.ingot_block_sort["core:iron_block"] = ""
+atvomat.ingot_block_sort["core:copper_block"] = ""
+atvomat.ingot_block_sort["core:ironze_block"] = ""
+atvomat.ingot_block_sort["core:gold_block"] = ""
+atvomat.ingot_block_sort["core:silver_block"] = ""
+atvomat.ingot_block_sort["core:mese"] = ""
+atvomat.ingot_block_sort["core:diamond_block"] = ""
 
-	"core:iron_ore",
-	"core:copper_ore",
-	"core:gold_ore",
-	"core:silver_ore",
-	"core:mese_ore",
-	"core:diamond_ore",
+atvomat.ore_sort = {} -- register ores
 
-}
+atvomat.ore_sort["core:iron_ore"] = ""
+atvomat.ore_sort["core:copper_ore"] = ""
+atvomat.ore_sort["core:gold_ore"] = ""
+atvomat.ore_sort["core:silver_ore"] = ""
+atvomat.ore_sort["core:mese_ore"] = ""
+atvomat.ore_sort["core:diamond_ore"] = ""
+atvomat.ore_sort["core:coal_ore"] = ""
 
-atvomat.dye_sort = {
+atvomat.dye_sort = {} -- register dyes
 
-	"dye:red",
-	"dye:orange",
-	"dye:yellow",
-	"dye:lime",
-	"dye:green",
-	"dye:dark_green",
-	"dye:cyan",
-	"dye:blue",
-	"dye:magenta",
-	"dye:purple",
-	"dye:violet",
-	"dye:white",
-	"dye:light_grey",
-	"dye:grey",
-	"dye:black",
+atvomat.dye_sort["dye:red"] = ""
+atvomat.dye_sort["dye:orange"] = ""
+atvomat.dye_sort["dye:yellow"] = ""
+atvomat.dye_sort["dye:lime"] = ""
+atvomat.dye_sort["dye:green"] = ""
+atvomat.dye_sort["dye:dark_green"] = ""
+atvomat.dye_sort["dye:cyan"] = ""
+atvomat.dye_sort["dye:blue"] = ""
+atvomat.dye_sort["dye:brown"] = ""
+atvomat.dye_sort["dye:magenta"] = ""
+atvomat.dye_sort["dye:purple"] = ""
+atvomat.dye_sort["dye:violet"] = ""
+atvomat.dye_sort["dye:white"] = ""
+atvomat.dye_sort["dye:light_grey"] = ""
+atvomat.dye_sort["dye:grey"] = ""
+atvomat.dye_sort["dye:black"] = ""
 
-}
+atvomat.wood_sort = {} -- register logs, planks, leaves and saplings
+
+atvomat.wood_sort["core:oak_log"] = ""
+atvomat.wood_sort["core:oak_log_grassy"] = ""
+atvomat.wood_sort["core:oak_leaves"] = ""
+atvomat.wood_sort["core:oak_planks"] = ""
+atvomat.wood_sort["core:oak_sapling"] = ""
+
+atvomat.wood_sort["core:pine_log"] = ""
+atvomat.wood_sort["core:pine_log_grassy"] = ""
+atvomat.wood_sort["core:pine_needles"] = ""
+atvomat.wood_sort["core:pine_needles_snowy"] = ""
+atvomat.wood_sort["core:pine_planks"] = ""
+atvomat.wood_sort["core:pine_sapling"] = ""
+
+atvomat.wood_sort["core:cherry_log"] = ""
+atvomat.wood_sort["core:cherry_log_grassy"] = ""
+atvomat.wood_sort["core:cherry_leaves"] = ""
+atvomat.wood_sort["core:cherry_planks"] = ""
+atvomat.wood_sort["core:cherry_sapling"] = ""
+atvomat.wood_sort["core:fallen_cherry_leaves"] = ""
+
+atvomat.wood_sort["core:birch_log"] = ""
+atvomat.wood_sort["core:birch_log_grassy"] = ""
+atvomat.wood_sort["core:birch_leaves"] = ""
+atvomat.wood_sort["core:birch_sapling"] = ""
+atvomat.wood_sort["core:birch_planks"] = ""
+
+atvomat.farm_sort = {} -- register food, seeds, and plant matter
+
+atvomat.farm_sort["farming:cocoa_beans"] = ""
+atvomat.farm_sort["farming:cookie"] = ""
+atvomat.farm_sort["farming:chocolate_dark"] = ""
+atvomat.farm_sort["farming:coffee_beans"] = ""
+atvomat.farm_sort["farming:drinking_cup"] = ""
+atvomat.farm_sort["farming:coffee_cup"] = ""
+atvomat.farm_sort["farming:coffee_cup_hot"] = ""
+atvomat.farm_sort["farming:corn"] = ""
+atvomat.farm_sort["farming:corn_cob"] = ""
+atvomat.farm_sort["farming:bottle_ethanol"] = ""
+atvomat.farm_sort["farming:seed_cotton"] = ""
+atvomat.farm_sort["farming:cotton"] = ""
+atvomat.farm_sort["farming:string"] = ""
+atvomat.farm_sort["farming:cucumber"] = ""
+atvomat.farm_sort["farming:donut"] = ""
+atvomat.farm_sort["farming:donut_chocolate"] = ""
+atvomat.farm_sort["farming:donut_apple"] = ""
+atvomat.farm_sort["farming:grapes"] = ""
+atvomat.farm_sort["farming:trellis"] = ""
+atvomat.farm_sort["farming:melon_slice"] = ""
+atvomat.farm_sort["farming:melon_8"] = ""
+atvomat.farm_sort["farming:potato"] = ""
+atvomat.farm_sort["farming:baked_potato"] = ""
+atvomat.farm_sort["farming:pumpkin"] = ""
+atvomat.farm_sort["farming:pumpkin_slice"] = ""
+atvomat.farm_sort["farming:jackolantern"] = ""
+atvomat.farm_sort["farming:pumpkin_bread"] = ""
+atvomat.farm_sort["farming:pumpkin_dough"] = ""
+atvomat.farm_sort["farming:raspberries"] = ""
+atvomat.farm_sort["farming:smoothie_raspberry"] = ""
+atvomat.farm_sort["farming:rhubarb"] = ""
+atvomat.farm_sort["farming:rhubarb_pie"] = ""
+atvomat.farm_sort["farming:sugar"] = ""
+atvomat.farm_sort["core:papyrus"] = ""
+atvomat.farm_sort["core:cactus"] = ""
+atvomat.farm_sort["farming:carrot"] = ""
+atvomat.farm_sort["farming:carrot_gold"] = ""
+atvomat.farm_sort["farming:blueberries"] = ""
+atvomat.farm_sort["farming:muffin_blueberry"] = ""
+atvomat.farm_sort["farming:beans"] = ""
+atvomat.farm_sort["farming:beanpole"] = ""
+atvomat.farm_sort["farming:seed_barley"] = ""
+atvomat.farm_sort["farming:barley"] = ""
+atvomat.farm_sort["farming:flour"] = ""
+atvomat.farm_sort["farming:seed_wheat"] = ""
+atvomat.farm_sort["farming:wheat"] = ""
+atvomat.farm_sort["farming:straw"] = ""
+atvomat.farm_sort["farming:flour"] = ""
+atvomat.farm_sort["farming:bread"] = ""
+atvomat.farm_sort["farming:toast"] = ""
+atvomat.farm_sort["farming:tomato"] = ""
+-- atvomat.farm_sort[""] = ""
+-- atvomat.farm_sort[""] = ""
+-- atvomat.farm_sort[""] = ""
+-- atvomat.farm_sort[""] = ""
+-- atvomat.farm_sort[""] = ""
+-- atvomat.farm_sort[""] = ""
+-- atvomat.farm_sort[""] = ""
+-- atvomat.farm_sort[""] = ""
+
+atvomat.tool_sort = {} -- todo, write a function that gets all registered tools except hands.
+
+atvomat.fuel_sort = {} -- todo, write a small function worth a million dollars to add burntime items to the list.
+
+-- functions to fill tool_sort and fuel_sort:
+
+local function find_fuel_items()
+
+	for k, v in pairs(minetest.registered_items) do
+	
+		local burntime = minetest.get_craft_result({method = "fuel", width = 1, items = {ItemStack(k)}}).time
+		
+		if burntime == 0 then
+		
+			-- do shit all, we want the name of the item and making sure it has a goddamn burntime that isn't 0.
+			
+		else
+	
+			atvomat.fuel_sort[k] = ""
+		
+		end
+	
+		
+	end
+	
+end
+
+minetest.after(1, find_fuel_items)
+
+local function find_tools()
+
+	for k, v in pairs(minetest.registered_items) do
+	
+		local itemtype = minetest.registered_items[k].type
+		
+		if itemtype == "tool" then
+		
+			atvomat.tool_sort[k] = ""
+			
+		else
+		
+			--bugger off, type returns item or node for anything else.
+			
+		end
+	
+	end
+
+end
+
+minetest.after(1.2, find_tools)
+
+-- register craftitems as sorter cards
+
+--[[
+
+Order of preference of sorting cards:
+
+Wood
+Ore
+Ingot
+Block
+Tools
+Dye
+Farm
+Fuel
+Eject
+
+]]--
+
+minetest.register_craftitem("atvomat:ore_sorter_card", {
+
+	description = "Sorts Ores",
+	inventory_image = "atvomat_card_ore.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:ingot_sorter_card", {
+
+	description = "Sorts Ingots and Gems (Not Ingot and Gem Blocks)",
+	inventory_image = "atvomat_card_ingot.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:block_sorter_card", {
+
+	description = "Sorts Ingot and Gem Blocks (Not Ingots and Gems)",
+	inventory_image = "atvomat_card_block.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:dye_sorter_card", {
+
+	description = "Sorts Dyes",
+	inventory_image = "atvomat_card_dye.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:wood_sorter_card", {
+
+	description = "Sorts Planks, Logs, Leaves and Saplings",
+	inventory_image = "atvomat_card_wood.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:fuel_sorter_card", {
+
+	description = "Sorts Fuels",
+	inventory_image = "atvomat_card_fuel.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:farm_sorter_card", {
+
+	description = "Sorts Seeds, Food and Farming Resources",
+	inventory_image = "atvomat_card_farm.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:tool_sorter_card", {
+
+	description = "Sorts Tools and Hoes.",
+	inventory_image = "atvomat_card_tool.png",
+	
+	groups = {sorter_card=1},
+
+})
+
+minetest.register_craftitem("atvomat:eject_card", {
+
+	description = "Ejects extra items to the selected face.",
+	inventory_image = "atvomat_card_eject.png",
+	
+	groups = {sorter_card=1},
+
+})

@@ -111,8 +111,8 @@ minetest.register_craft({
 	output = "farming:beanpole",
 	recipe = {
 		{'', '', ''},
-		{'default:stick', '', 'default:stick'},
-		{'default:stick', '', 'default:stick'},
+		{'core:stick', '', 'core:stick'},
+		{'core:stick', '', 'core:stick'},
 	}
 })
 

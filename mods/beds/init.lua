@@ -211,7 +211,9 @@ function beds.wake_players() -- only to be used within a globalstep!!!
 			
 			pl:set_pos(pos)
 			pl:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
-
+			
+			pl:set_animation({x=0, y=79}, 30, 0)
+			
 			wardrobe.apply_to_player(pl)
 			
 			beds.play_jingle(pl)
@@ -225,28 +227,34 @@ end
 
 function beds.wake_specific_player(player) -- for those sleepy people (or leaving the formspec early!)
 	
-	local pos = minetest.string_to_pos(player:get_attribute("beds_spawn"))
-
-	if pos == nil then return end -- unlikely, but this is Minetest
-	
-	if player_bed_swap[pname] == nil then return end
-	
-	if player_bed_param[pname] == nil then return end
-	
 	local pname = player:get_player_name()
+		
+	if player_sleeping[pname] == true then -- look for players who are actually sleeping
+			
+		local pos2 = player:get_pos()
 	
-	player_sleeping[pname] = false
-	
-	local pos2 = player:get_pos()
-	
-	minetest.set_node(pos2, {name=player_bed_swap[pname], param1=0, param2=player_bed_param[pname]})
-	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
-	player:set_pos(pos)
-	player:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
-	--local hud_f = player:hud_get_flags()
-	--hud_f.wielditem = true
-	wardrobe.apply_to_player(player)
-	minetest.close_formspec(pname, "beds_ui")
+		minetest.set_node(pos2, {name=player_bed_swap[pname], param1=0, param2=player_bed_param[pname]})
+			
+		local pos = minetest.string_to_pos(player:get_attribute("beds_spawn"))
+
+		if pos == nil then return end -- unlikely, but this is Minetest
+			
+		player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
+			
+		player_sleeping[pname] = false
+		
+		player:set_pos(pos)
+		player:set_eye_offset({x = 0, y = 0, z = 0}, {x = 0, y = 0, z = 0})
+
+		player:set_animation({x=0, y=79}, 30, 0)
+		
+		wardrobe.apply_to_player(player)
+			
+		beds.play_jingle(player)
+			
+		minetest.close_formspec(player:get_player_name(), "beds_ui")
+		
+	end
 end
 
 function beds.set_respawn_point(pos, player, param)
@@ -479,20 +487,17 @@ end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	
-	if formname ~= "beds_ui" and player_sleeping[player:get_player_name()] == true then return true end
+	if formname ~= "beds_ui" and player_sleeping[player:get_player_name()] == false then return false end
 	
 	if fields.key_enter_field or fields.beds_chat_snd then
 	
 		local pname = player:get_player_name()
 	
 		minetest.chat_send_all("<"..pname.."> ".. fields.beds_chat)
+		minetest.close_formspec(pname, "beds_ui")
+		minetest.after(0.01, minetest.show_formspec, pname, "beds_ui", beds_formspec(player))
 		
-		fields.beds_chat = ""
-		
-		minetest.after(0.05, minetest.show_formspec, pname, "beds_ui", beds_formspec(player))
-		
-		return
-		
+		return true
 	end
 	
 	if fields.beds_ui_jingle then
@@ -508,17 +513,19 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			player:set_attribute("beds_enable_jingle", "false")
 			minetest.chat_send_player(pname, "Morning jingle is disabled.")
 		end
+		minetest.close_formspec(pname, "beds_ui")
+		minetest.after(0.01, minetest.show_formspec, pname, "beds_ui", beds_formspec(player))
 		
-		minetest.after(0.05, minetest.show_formspec, pname, "beds_ui", beds_formspec(player))
+		return true
 		
-		return
-	
 	end
 	
 	if fields.quit or fields.beds_exit then
 		
 		beds.wake_specific_player(player)
-
+	
+		return true
+	
 	end
 	
 end)

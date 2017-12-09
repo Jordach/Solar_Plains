@@ -98,7 +98,7 @@ minetest.register_craft({
 	output = "farming:jackolantern",
 	recipe = {
 		{"", "", ""},
-		{"", "default:torch", ""},
+		{"", "core:torch", ""},
 		{"", "farming:pumpkin", ""},
 	}
 })

@@ -582,6 +582,152 @@ minetest.register_craftitem("core:diamond", {
 	groups = {cooking_multiplier=1}, -- note: used for cooking ore in furnace, not crafting!
 })
 
+-- register crafting for ingot blocks and gems
+
+minetest.register_craft({
+
+	output = "core:copper_block",
+	
+	recipe = {
+	
+		{"core:copper_ingot", "core:copper_ingot", "core:copper_ingot"},
+		{"core:copper_ingot", "core:copper_ingot", "core:copper_ingot"},
+		{"core:copper_ingot", "core:copper_ingot", "core:copper_ingot"},
+	
+	},
+
+})
+
+minetest.register_craft({
+
+	output = "core:iron_block",
+	
+	recipe = {
+	
+		{"core:iron_ingot", "core:iron_ingot", "core:iron_ingot"},
+		{"core:iron_ingot", "core:iron_ingot", "core:iron_ingot"},
+		{"core:iron_ingot", "core:iron_ingot", "core:iron_ingot"},
+	
+	},
+
+})
+
+minetest.register_craft({
+
+	output = "core:ironze_block",
+	
+	recipe = {
+	
+		{"core:ironze_ingot", "core:ironze_ingot", "core:ironze_ingot"},
+		{"core:ironze_ingot", "core:ironze_ingot", "core:ironze_ingot"},
+		{"core:ironze_ingot", "core:ironze_ingot", "core:ironze_ingot"},
+	
+	},
+
+})
+
+minetest.register_craft({
+
+	output = "core:silver_block",
+	
+	recipe = {
+	
+		{"core:silver_ingot", "core:silver_ingot", "core:silver_ingot"},
+		{"core:silver_ingot", "core:silver_ingot", "core:silver_ingot"},
+		{"core:silver_ingot", "core:silver_ingot", "core:silver_ingot"},
+	
+	},
+
+})
+
+minetest.register_craft({
+
+	output = "core:gold_block",
+	
+	recipe = {
+	
+		{"core:gold_ingot", "core:gold_ingot", "core:gold_ingot"},
+		{"core:gold_ingot", "core:gold_ingot", "core:gold_ingot"},
+		{"core:gold_ingot", "core:gold_ingot", "core:gold_ingot"},
+	
+	},
+
+})
+
+minetest.register_craft({
+
+	output = "core:mese",
+	
+	recipe = {
+	
+		{"core:mese_crystal", "core:mese_crystal", "core:mese_crystal"},
+		{"core:mese_crystal", "core:mese_crystal", "core:mese_crystal"},
+		{"core:mese_crystal", "core:mese_crystal", "core:mese_crystal"},
+	
+	},
+
+})
+
+minetest.register_craft({
+
+	output = "core:diamond_block",
+	
+	recipe = {
+	
+		{"core:diamond", "core:diamond", "core:diamond"},
+		{"core:diamond", "core:diamond", "core:diamond"},
+		{"core:diamond", "core:diamond", "core:diamond"},
+			
+	},
+
+})
+
+-- make storage blocks return their gems and ingots;
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:copper_ingot 9",
+	recipe = {"core:copper_block"},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:iron_ingot 9",
+	recipe = {"core:iron_block"},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:ironze_ingot 9",
+	recipe = {"core:ironze_block"},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:silver_ingot 9",
+	recipe = {"core:silver_block"},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:gold_ingot 9",
+	recipe = {"core:gold_block"},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:mese_crystal 9",
+	recipe = {"core:mese"},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:diamond 9",
+	recipe = {"core:diamond_block"},
+})
+
+
+
 -- fuels
 
 minetest.register_craft({

@@ -69,6 +69,21 @@ minetest.register_craftitem("farming:bread", {
 	on_use = hud.item_eat(5),
 })
 
+-- TOAAAAAAAAAAAAST
+
+minetest.register_craftitem("farming:toast", {
+	description = S("Toast (Not Suitable for making Reactors from.)"),
+	inventory_image = "farming_bread.png",
+	on_use = hud.item_eat(7),
+})
+
+minetest.register_craft({
+	type = "cooking",
+	cooktime = 15,
+	output = "farming:toast",
+	recipe = "farming:bread"
+})
+
 minetest.register_craft({
 	type = "cooking",
 	cooktime = 15,

@@ -157,6 +157,22 @@ function mcore.facedir_stripper(node)
 	
 end
 
+minetest.register_node("core:model_tester", {
+
+	description = "Hax",
+	tiles = {"core_stone.png"},
+	groups = {dig_immediate = 1},
+	drawtype = "mesh",
+	
+	mesh = "chest_unlocked.b3d",
+	
+	paramtype = "light",
+	paramtype2 = "facedir",
+	
+	on_place = minetest.rotate_and_place,
+
+})
+
 function mcore.get_node_from_front(pos) 
 	--pos is the standard pos table provided by minetest, eg: pos = {x=int, y=int, z=int}
 	
