@@ -793,7 +793,7 @@ minetest.register_craft({
 	recipe = {
 	
 		{"core:cactus", "core:mese_crystal", "core:cactus"},
-		{"core:mese_crystal", "farming:wheat_seeds", "core:mese_crystal"},
+		{"core:mese_crystal", "farming:seed_wheat", "core:mese_crystal"},
 		{"core:cactus", "core:mese_crystal", "core:cactus"},
 	
 	},
