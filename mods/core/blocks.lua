@@ -142,7 +142,7 @@ minetest.register_node("core:sand", {
 	description = "Sand",
 	is_ground_content = true,
 	drop = "core:sand",
-	groups = {crumbly=3},
+	groups = {crumbly=3, falling_node=1},
 	sounds = mcore.sound_sand,
 })
 
@@ -168,7 +168,6 @@ minetest.register_node("core:sandstone", {
 	tiles = {"core_sandstone.png"},
 	description = "Stone",
 	is_ground_content = true,
-	drop = "core:cobble",
 	groups = {cracky=2, solid=1, stone=1},
 	sounds = mcore.sound_stone,
 })
@@ -618,7 +617,7 @@ minetest.register_node("core:fallen_cherry_leaves", {
 	tiles = {"core_cherry_leaves.png"},
 	drawtype = "mesh",
 	mesh = "planar_flower.b3d",
-	groups = {snappy=3},
+	groups = {snappy=3, attached_node=1},
 	--use_texture_alpha = true,
 	paramtype = "light",
 	buildable_to = true,
@@ -694,7 +693,7 @@ minetest.register_node("core:oak_sapling", {
 	tiles = {"core_oak_sapling.png"},
 	waving = 1,
 	walkable = false,
-	groups = {snappy=3, flammable=2},
+	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
 })
 
@@ -705,7 +704,7 @@ minetest.register_node("core:pine_sapling", {
 	tiles = {"core_pine_sapling.png"},
 	waving = 1,
 	walkable = false,
-	groups = {snappy=3, flammable=2},
+	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
 })
 
@@ -716,7 +715,7 @@ minetest.register_node("core:birch_sapling", {
 	tiles = {"core_birch_sapling.png"},
 	waving = 1,
 	walkable = false,
-	groups = {snappy=3, flammable=2},
+	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
 })
 
@@ -727,7 +726,7 @@ minetest.register_node("core:cherry_sapling", {
 	tiles = {"core_cherry_sapling.png"},
 	waving = 1,
 	walkable = false,
-	groups = {snappy=3, flammable=2},
+	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
 })
 
