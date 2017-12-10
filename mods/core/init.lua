@@ -184,7 +184,7 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 
 	local pz = math.ceil(math.abs(placer:get_pos().z - rpos.z))
 	
-	if px < 2 and pz < 2 then
+	if px < 3 and pz < 3 then
 		
 		local pY = math.ceil(math.abs(placer:get_pos().y + 0.5))
 		
