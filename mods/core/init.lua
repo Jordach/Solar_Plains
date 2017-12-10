@@ -176,43 +176,47 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 		
 	end
 	
-	local hor_rot = math.deg(placer:get_look_horizontal())
-	local deg_to_fdir = math.floor(((hor_rot * 4 / 360) + 0.5) % 4) 
-	local fdir = 0
+	local hor_rot = math.deg(placer:get_look_horizontal()) -- convert radians to degrees
+	local deg_to_fdir = math.floor(((hor_rot * 4 / 360) + 0.5) % 4) -- returns 0, 1, 2 or 3; checks between 90 degrees in a pacman style angle check, it's quite magical.
 	
-	local px = math.ceil(math.abs(placer:get_pos().x - rpos.x))
+	local fdir = 0 -- get initialised, and if we don't ever assign an fdir, then it's safe to ignore?! (probably not a good idea to do so)
+	
+	local px = math.ceil(math.abs(placer:get_pos().x - rpos.x)) -- measure the distance from the player to the placed nodes position
 
 	local pz = math.ceil(math.abs(placer:get_pos().z - rpos.z))
 	
-	if px < 3 and pz < 3 then
+	if px < 3 and pz < 3 then -- if the node is being placed 1 block away from us, then lets place it either upright or upside down
 		
-		local pY = math.ceil(math.abs(placer:get_pos().y + 0.5))
+		local pY = math.ceil(math.abs(placer:get_pos().y + 0.5)) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
 		
-		if pY - (math.ceil(rpos.y)) > -1 then
+		if pY - (math.ceil(rpos.y)) > -1 then -- are we being placed on the floor? let's be upright then.
 				
-			if deg_to_fdir == 0 then fdir = 0
-			elseif deg_to_fdir == 1 then fdir = 3
-			elseif deg_to_fdir == 2 then fdir = 2
-			elseif deg_to_fdir == 3 then fdir = 1 end
+			if deg_to_fdir == 0 then fdir = 0 -- north
+			elseif deg_to_fdir == 1 then fdir = 3 --east
+			elseif deg_to_fdir == 2 then fdir = 2 -- south
+			elseif deg_to_fdir == 3 then fdir = 1 end -- west
 	
 			return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
 			
-		else
+		else -- if not, let's be upside down.
 
-			if deg_to_fdir == 0 then fdir = 20
-			elseif deg_to_fdir == 1 then fdir = 21
-			elseif deg_to_fdir == 2 then fdir = 22
-			elseif deg_to_fdir == 3 then fdir = 23 end
+			if deg_to_fdir == 0 then fdir = 20 -- north
+			elseif deg_to_fdir == 1 then fdir = 21 -- east
+			elseif deg_to_fdir == 2 then fdir = 22 -- south
+			elseif deg_to_fdir == 3 then fdir = 23 end -- west
 			
 			return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
 	
 		end 	
 		
 	end
-	if deg_to_fdir == 0 then fdir = 9
-	elseif deg_to_fdir == 1 then fdir = 12
-	elseif deg_to_fdir == 2 then fdir = 7
-	elseif deg_to_fdir == 3 then fdir = 18 end
+	
+	-- since we couldn't find a place that isn't either on a ceiling or floor, let's place it onto it's side.
+	
+	if deg_to_fdir == 0 then fdir = 9 -- north
+	elseif deg_to_fdir == 1 then fdir = 12 -- east
+	elseif deg_to_fdir == 2 then fdir = 7 -- south
+	elseif deg_to_fdir == 3 then fdir = 18 end -- west
 	
 	return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
 
@@ -226,10 +230,10 @@ function mcore.sensible_facedir_simple(itemstack, placer, pointed_thing)
 	local deg_to_fdir = math.floor(((hor_rot * 4 / 360) + 0.5) % 4) 
 	local fdir = 0
 	
-	if deg_to_fdir == 0 then fdir = 9
-	elseif deg_to_fdir == 1 then fdir = 12
-	elseif deg_to_fdir == 2 then fdir = 7
-	elseif deg_to_fdir == 3 then fdir = 18 end
+	if deg_to_fdir == 0 then fdir = 0
+	elseif deg_to_fdir == 1 then fdir = 3
+	elseif deg_to_fdir == 2 then fdir = 2
+	elseif deg_to_fdir == 3 then fdir = 1 end
 	
 	return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
 
