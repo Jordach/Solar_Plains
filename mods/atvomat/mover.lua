@@ -168,7 +168,7 @@ minetest.register_node("atvomat:mover",{
 	
 	end,
 	
-	on_place = minetest.rotate_and_place,
+	on_place = mcore.sensible_facedir,
 	
 	on_timer = function(pos, elapsed)
 	

@@ -142,6 +142,99 @@ end
 
 minetest.register_entity("core:tester", mob)
 
+minetest.register_node("core:model_tester", {
+
+	description = "Hax",
+	tiles = {"core_stone.png"},
+	groups = {dig_immediate = 1},
+	drawtype = "mesh",
+	
+	mesh = "chest_unlocked.b3d",
+	
+	paramtype = "light",
+	paramtype2 = "facedir",
+	
+	on_place = mcore.sensible_facedir,
+
+})
+
+-- better facedir than minetest.rotate_and_place
+
+--use mcore.sensible_facedir_simple for furnaces or mcore.sensible_facedir for those multiple rotation nodes.
+
+function mcore.sensible_facedir(itemstack, placer, pointed_thing)
+	
+	local rpos = ""
+	
+	if minetest.registered_nodes[minetest.get_node(pointed_thing.under).name].buildable_to == true then
+	
+		rpos = pointed_thing.under
+		
+	else
+		
+		rpos = pointed_thing.above
+		
+	end
+	
+	local hor_rot = math.deg(placer:get_look_horizontal())
+	local deg_to_fdir = math.floor(((hor_rot * 4 / 360) + 0.5) % 4) 
+	local fdir = 0
+	
+	local px = math.ceil(math.abs(placer:get_pos().x - rpos.x))
+
+	local pz = math.ceil(math.abs(placer:get_pos().z - rpos.z))
+	
+	if px < 2 and pz < 2 then
+		
+		local pY = math.ceil(math.abs(placer:get_pos().y + 0.5))
+		
+		if pY - (math.ceil(rpos.y)) > -1 then
+				
+			if deg_to_fdir == 0 then fdir = 0
+			elseif deg_to_fdir == 1 then fdir = 3
+			elseif deg_to_fdir == 2 then fdir = 2
+			elseif deg_to_fdir == 3 then fdir = 1 end
+	
+			return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
+			
+		else
+
+			if deg_to_fdir == 0 then fdir = 20
+			elseif deg_to_fdir == 1 then fdir = 21
+			elseif deg_to_fdir == 2 then fdir = 22
+			elseif deg_to_fdir == 3 then fdir = 23 end
+			
+			return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
+	
+		end 	
+		
+	end
+	if deg_to_fdir == 0 then fdir = 9
+	elseif deg_to_fdir == 1 then fdir = 12
+	elseif deg_to_fdir == 2 then fdir = 7
+	elseif deg_to_fdir == 3 then fdir = 18 end
+	
+	return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
+
+end
+
+function mcore.sensible_facedir_simple(itemstack, placer, pointed_thing)
+	
+	local rpos = ""
+	
+	local hor_rot = math.deg(placer:get_look_horizontal())
+	local deg_to_fdir = math.floor(((hor_rot * 4 / 360) + 0.5) % 4) 
+	local fdir = 0
+	
+	if deg_to_fdir == 0 then fdir = 9
+	elseif deg_to_fdir == 1 then fdir = 12
+	elseif deg_to_fdir == 2 then fdir = 7
+	elseif deg_to_fdir == 3 then fdir = 18 end
+	
+	return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
+
+end
+
 -- get 3d facedir to simple axis; 
 -- 0 = y+    1 = z+    2 = z-    3 = x+    4 = x-    5 = y-
 
@@ -156,22 +249,6 @@ function mcore.facedir_stripper(node)
 	return number
 	
 end
-
-minetest.register_node("core:model_tester", {
-
-	description = "Hax",
-	tiles = {"core_stone.png"},
-	groups = {dig_immediate = 1},
-	drawtype = "mesh",
-	
-	mesh = "chest_unlocked.b3d",
-	
-	paramtype = "light",
-	paramtype2 = "facedir",
-	
-	on_place = minetest.rotate_and_place,
-
-})
 
 function mcore.get_node_from_front(pos) 
 	--pos is the standard pos table provided by minetest, eg: pos = {x=int, y=int, z=int}

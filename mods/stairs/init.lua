@@ -19,7 +19,7 @@ function stairs.register_stair(subname, groups_table, images, desc, sound_table)
 		is_ground_content = false,
 		groups = groups_table,
 		sounds = sound_table,
-		on_place = minetest.rotate_node,
+		on_place = mcore.sensible_facedir,
 		
 		selection_box = {
 			type = "fixed",
