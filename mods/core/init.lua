@@ -4,16 +4,6 @@ mcore = {}
 
 give_initial_stuff = {}
 
--- dofiles for loading files required by "core"
-dofile(minetest.get_modpath("core").."/sounds.lua")
-dofile(minetest.get_modpath("core").."/mapgen.lua")
-dofile(minetest.get_modpath("core").."/blocks.lua")
-dofile(minetest.get_modpath("core").."/player.lua")
-dofile(minetest.get_modpath("core").."/tools.lua")
-dofile(minetest.get_modpath("core").."/crafting.lua")
-dofile(minetest.get_modpath("core").."/abm_timer.lua")
-
-
 --dofile(minetest.get_modpath("core").."/")
 --dofile(minetest.get_modpath("core").."/")
 --dofile(minetest.get_modpath("core").."/")
@@ -185,11 +175,17 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 
 	local pz = math.abs(placer:get_pos().z - rpos.z)
 	
+	print(px)
+	print(pz)
+	
+	
 	if px < 2 and pz < 2 then -- if the node is being placed 1 block away from us, then lets place it either upright or upside down
 		
 		local pY = math.abs(placer:get_pos().y + 1.14) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
 		
-		if pY - math.abs(rpos.y) > 2 then -- are we being placed on the floor? let's be upright then.
+		print(pY)
+		
+		if pY - math.abs(rpos.y) > 1 then -- are we being placed on the floor? let's be upright then.
 				
 			if deg_to_fdir == 0 then fdir = 0 -- north
 			elseif deg_to_fdir == 1 then fdir = 3 --east
@@ -351,3 +347,12 @@ function mcore.get_node_from_rear(pos)
 	end
 
 end
+
+-- dofiles for loading files required by "core"
+dofile(minetest.get_modpath("core").."/sounds.lua")
+dofile(minetest.get_modpath("core").."/mapgen.lua")
+dofile(minetest.get_modpath("core").."/blocks.lua")
+dofile(minetest.get_modpath("core").."/player.lua")
+dofile(minetest.get_modpath("core").."/tools.lua")
+dofile(minetest.get_modpath("core").."/crafting.lua")
+dofile(minetest.get_modpath("core").."/abm_timer.lua")
