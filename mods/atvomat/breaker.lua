@@ -54,7 +54,7 @@ minetest.register_node("atvomat:breaker_1", {
 		meta:set_string("infotext", "Auto Block Breaker, Disabled.")
 	end,
 	
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	
 	on_punch = function(pos, node, puncher)
 	
@@ -138,7 +138,7 @@ minetest.register_node("atvomat:breaker_2", {
 		meta:set_string("infotext", "Automatic Block Collector (Gently collects blocks), Disabled.")
 	end,
 	
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	
 	on_punch = function(pos, node, puncher)
 	

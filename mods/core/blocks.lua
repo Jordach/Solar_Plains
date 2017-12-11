@@ -429,7 +429,7 @@ minetest.register_node("core:pine_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
@@ -439,7 +439,7 @@ minetest.register_node("core:pine_log_grassy", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
@@ -510,7 +510,7 @@ minetest.register_node("core:oak_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
@@ -520,7 +520,7 @@ minetest.register_node("core:oak_log_grassy", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
@@ -565,7 +565,7 @@ minetest.register_node("core:cherry_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
@@ -575,7 +575,7 @@ minetest.register_node("core:cherry_log_grassy", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
@@ -637,7 +637,7 @@ minetest.register_node("core:birch_log", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
@@ -647,7 +647,7 @@ minetest.register_node("core:birch_log_grassy", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
-	on_place = mcore.sensible_facedir,
+	on_place = mcore.rotate_axis,
 	sounds = mcore.sound_wood,
 })
 
