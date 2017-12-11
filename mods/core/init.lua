@@ -419,7 +419,7 @@ end
 function mcore.rotate_axis(itemstack, placer, pointed_thing)
     mcore.rotate_axis_and_place(itemstack, placer, pointed_thing,
         false,
-        placer:get_player_control().sneak)
+        false)
     return itemstack
 end
 
