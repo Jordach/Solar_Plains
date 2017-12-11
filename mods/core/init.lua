@@ -181,15 +181,15 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 	
 	local fdir = 0 -- get initialised, and if we don't ever assign an fdir, then it's safe to ignore?! (probably not a good idea to do so)
 	
-	local px = math.ceil(math.abs(placer:get_pos().x - rpos.x)) -- measure the distance from the player to the placed nodes position
+	local px = math.abs(placer:get_pos().x - rpos.x) -- measure the distance from the player to the placed nodes position
 
-	local pz = math.ceil(math.abs(placer:get_pos().z - rpos.z))
+	local pz = math.abs(placer:get_pos().z - rpos.z)
 	
-	if px < 3 and pz < 3 then -- if the node is being placed 1 block away from us, then lets place it either upright or upside down
+	if px < 2 and pz < 2 then -- if the node is being placed 1 block away from us, then lets place it either upright or upside down
 		
-		local pY = math.ceil(math.abs(placer:get_pos().y + 1.14)) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
+		local pY = math.abs(placer:get_pos().y + 1.14) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
 		
-		if pY - (math.ceil(rpos.y)) > -1 then -- are we being placed on the floor? let's be upright then.
+		if pY - (math.ceil(rpos.y)) >= 0 then -- are we being placed on the floor? let's be upright then.
 				
 			if deg_to_fdir == 0 then fdir = 0 -- north
 			elseif deg_to_fdir == 1 then fdir = 3 --east
