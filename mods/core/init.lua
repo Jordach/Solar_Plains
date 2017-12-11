@@ -410,11 +410,15 @@ function mcore.rotate_axis_and_place(itemstack, placer, pointed_thing, infinites
 	
 	elseif is_y then
         
-		p2 = 0
+		if invert_wall then p2 = 0
+		else p2 = 20
+		end
        
 	elseif not is_y then
 	
-		p2 = 20
+		if invert_wall then p2 = 20
+		else p2 = 0
+		end
 	
     end
 	
