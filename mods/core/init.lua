@@ -360,10 +360,14 @@ function mcore.rotate_axis_and_place(itemstack, placer, pointed_thing, infinites
 
     local above = pointed_thing.above
     local under = pointed_thing.under
-    local is_x = (above.x ~= under.x)
-    local is_y = (above.y ~= under.y)
-    local is_z = (above.z ~= under.z)
-
+    local is_x = (under.x + 1 == above.x)
+	local is_x2 = (under.x == above.x)
+	
+    local is_y = (under.y + 1 == above.y)
+	
+    local is_z = (under.z + 1 == above.z)
+    local is_z2 = (under.z == above.z)
+	
     local anode = minetest.get_node_or_nil(above)
     if not anode then
         return
@@ -387,27 +391,33 @@ function mcore.rotate_axis_and_place(itemstack, placer, pointed_thing, infinites
     end
 
     local p2
-    if is_y then
-        if invert_wall then
-            if fdir == 3 or fdir == 1 then
-                p2 = 12
-            else
-                p2 = 6
-            end
-        end
-    elseif is_x then
-        if invert_wall then
-            p2 = 0
-        else
-            p2 = 12
-        end
-    elseif is_z then
-        if invert_wall then
-            p2 = 0
-        else
-            p2 = 6
-        end
+    
+	if is_x and not is_x2 then
+	
+		p2 = 18
+		
+	elseif not is_x and not is_x2 then
+	
+		p2 = 12
+		
+	elseif is_z and not is_z2 then
+       
+		p2 = 9
+		
+	elseif not is_z and not is_z2 then
+	
+		p2 = 7
+	
+	elseif is_y then
+        
+		p2 = 0
+       
+	elseif not is_y then
+	
+		p2 = 20
+	
     end
+	
     minetest.set_node(pos, {name = wield_name, param2 = p2})
 
     if not infinitestacks then
@@ -419,7 +429,7 @@ end
 function mcore.rotate_axis(itemstack, placer, pointed_thing)
     mcore.rotate_axis_and_place(itemstack, placer, pointed_thing,
         false,
-        false)
+        placer:get_player_control().sneak)
     return itemstack
 end
 
