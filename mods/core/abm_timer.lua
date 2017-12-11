@@ -206,7 +206,7 @@ minetest.register_abm({
 	nodenames = {"core:lava_source"},
 	neighnors = {"air"},
 	
-	interval = 180,
+	interval = 181,
 	chance = 6,
 	catch_up = false,
 	
@@ -223,7 +223,7 @@ minetest.register_abm({
 	nodenames = {"core:lava_flowing"},
 	neighnors = {"air"},
 	
-	interval = 60,
+	interval = 64,
 	chance = 2,
 	catch_up = false,
 	

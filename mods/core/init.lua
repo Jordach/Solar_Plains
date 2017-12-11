@@ -189,7 +189,7 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 		
 		local pY = math.abs(placer:get_pos().y + 1.14) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
 		
-		if pY - (math.ceil(rpos.y)) >= 0 then -- are we being placed on the floor? let's be upright then.
+		if pY - math.abs(rpos.y) > 2 then -- are we being placed on the floor? let's be upright then.
 				
 			if deg_to_fdir == 0 then fdir = 0 -- north
 			elseif deg_to_fdir == 1 then fdir = 3 --east
@@ -198,7 +198,7 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 	
 			return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
 			
-		else -- if not, let's be upside down.
+		elseif  math.abs(rpos.y) - pY > 0 then -- if not, let's be upside down.
 
 			if deg_to_fdir == 0 then fdir = 20 -- north
 			elseif deg_to_fdir == 1 then fdir = 21 -- east
