@@ -233,6 +233,7 @@ minetest.register_node("core:glass", {
 	groups = {oddly_breakable_by_hand = 3},
 	sounds = mcore.sound_glass,
 	drawtype = "glasslike",
+	paramtype = "light",
 })
 
 -- liquids
