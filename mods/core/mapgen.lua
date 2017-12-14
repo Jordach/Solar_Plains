@@ -169,7 +169,7 @@ end
 
 function mcore.grow_pine(pos, boolsnow)
 	local x, y, z = pos.x, pos.y, pos.z
-	local maxy = y + math.random(9, 13) --trunk top
+	local maxy = y + math.random(7, 13) --trunk top
 	
 	local c_air = minetest.get_content_id("air")
 	local c_ignore = minetest.get_content_id("ignore")

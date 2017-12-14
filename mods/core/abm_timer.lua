@@ -63,7 +63,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:oak_sapling"},
-	interval = 100, --100
+	interval = 1, --100
 	chance = 3,
 	action = function(pos, node)
 		
@@ -81,7 +81,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:birch_sapling"},
-	interval = 90, --90
+	interval = 1, --90
 	chance = 3,
 	action = function(pos, node)
 		
@@ -99,7 +99,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:cherry_sapling"},
-	interval = 85, --85
+	interval = 1, --85
 	chance = 3,
 	action = function(pos, node)
 		
@@ -118,7 +118,7 @@ minetest.register_abm({
 
 minetest.register_abm({
 	nodenames = {"core:pine_sapling"},
-	interval = 70, --70
+	interval = 1, --70
 	chance = 3,
 	action = function(pos, node)
 		
