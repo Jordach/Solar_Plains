@@ -219,8 +219,6 @@ local function active_logger(pos, elapsed)
 							fuel_required = remove_stump(fpos, v, y2, x2, z2, inv)
 							
 						end
-						
-						
 					
 					end
 					
@@ -284,7 +282,7 @@ minetest.register_node("atvomat:logger", {
 	
 })
 
-minetest.register_recipe({
+minetest.register_craft({
 
 	output = "atvomat:logger",
 	recipe = {

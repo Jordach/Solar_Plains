@@ -101,7 +101,8 @@ minetest.register_craft( {
 
 -- cocoa definition
 local crop_def = {
-	drawtype = "plantlike",
+	drawtype = "mesh",
+	mesh = "farming_cocoa_1.b3d",
 	tiles = {"farming_cocoa_1.png"},
 	paramtype = "light",
 	walkable = true,
@@ -126,6 +127,7 @@ minetest.register_node("farming:cocoa_1", table.copy(crop_def))
 
 -- stage2
 crop_def.tiles = {"farming_cocoa_2.png"}
+crop_def.mesh = "farming_cocoa_2.b3d"
 crop_def.drop = {
 	items = {
 		{items = {'farming:cocoa_beans 1'}, rarity = 1},
