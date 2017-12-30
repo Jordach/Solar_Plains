@@ -665,8 +665,8 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'doors:trapdoor_steel',
 	recipe = {
-		{'default:steel_ingot', 'default:steel_ingot'},
-		{'default:steel_ingot', 'default:steel_ingot'},
+		{'core:iron_ingot', 'core:iron_ingot'},
+		{'core:iron_ingot', 'core:iron_ingot'},
 	}
 })
 
@@ -742,16 +742,6 @@ minetest.register_tool("doors:key", {
 		return itemstack
 	end,
 })
-
-minetest.register_craft({
-	output = "doors:key",
-	recipe = {
-		{"", "", "default:steel_ingot"},
-		{"default:steel_ingot", "default:steel_ingot", ""},
-		{"default:steel_ingot", "default:steel_ingot", ""},
-	}
-})
-
 
 ----fence gate----
 
