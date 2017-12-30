@@ -13,8 +13,6 @@ local replenish = tonumber(minetest.settings:get("sprint_stamina_replenish")) or
 
 local autohide = minetest.settings:get_bool("hudbars_autohide_stamina") ~= false
 
-if dir ~= false then dir = true end
-
 local sprint_timer_step = 0.5
 local sprint_timer = 0
 local stamina_timer = 0
