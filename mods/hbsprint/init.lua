@@ -1,7 +1,7 @@
 -- Vars
 
 local speed = tonumber(minetest.settings:get("sprint_speed")) or 1.6
-local jump = tonumber(minetest.settings:get("sprint_jump")) or 1.5
+local jump = tonumber(minetest.settings:get("sprint_jump")) or 1.35
 
 local particles = tonumber(minetest.settings:get("sprint_particles")) or 8
 
@@ -63,7 +63,6 @@ if minetest.get_modpath("hudbars") ~= nil and stamina then
 		20,
 		20,
 		false,
-		"%s: %.1f/%.1f"
 	)
 	
 	hudbars = true
@@ -109,7 +108,7 @@ minetest.register_globalstep(function(dtime)
 				local ground = minetest.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
 				local player_stamina = tonumber(player:get_attribute("stamina"))
 				
-				if player_stamina > 0 then
+				if player_stamina > 1 then
 
 					player:set_physics_override({speed = speed, jump = jump})
 					
