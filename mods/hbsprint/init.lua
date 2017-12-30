@@ -132,7 +132,7 @@ minetest.register_globalstep(function(dtime)
 				
 				if player_stamina > 2 then
 					
-					print("is sprinting")
+					print("is sprinting \n")
 					
 					start_sprint(player)
 					
@@ -142,7 +142,7 @@ minetest.register_globalstep(function(dtime)
 					
 				else
 					
-					print("stopped sprinting")
+					print("stopped sprinting \n")
 					
 					stop_sprint(player)
 					
@@ -156,7 +156,7 @@ minetest.register_globalstep(function(dtime)
 				
 				if stamina_timer >= replenish then
 					
-					print("restoring AP")
+					print("restoring AP \n")
 					
 					replenish_stamina(player)
 				  
@@ -166,9 +166,9 @@ minetest.register_globalstep(function(dtime)
 			  
 			end
 			
-			sprint_timer = 0
-			
 		end
+		
+		sprint_timer = 0
 		
 	end
 	
