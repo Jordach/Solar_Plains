@@ -93,13 +93,7 @@ minetest.register_globalstep(function(dtime)
 		    --   key_press = ctrl.aux1 or key_press and key_tap
 		    -- end
 			
-			print(player:get_player_name())
-			
-			print(_)
-			
 			if key_press then
-				
-				print("has pressed forward and aux1")
 				
 				local name = player:get_player_name()
 				local pos = player:get_pos()
@@ -107,9 +101,7 @@ minetest.register_globalstep(function(dtime)
 				local player_stamina = tonumber(player:get_attribute("stamina"))
 				
 				if player_stamina > 1 then
-					
-					print("is sprinting \n")
-					
+
 					player:set_physics_override({speed = speed, jump = jump})
 					
 					if player_stamina > 0 then
@@ -129,21 +121,15 @@ minetest.register_globalstep(function(dtime)
 					
 				else
 					
-					print("stopped sprinting \n")
-					
 					player:set_physics_override({speed = 1, jump = 1})
 					
 				end
 				
 			else
 				
-				print("stopped sprinting \n")
-				
 				player:set_physics_override({speed = 1, jump = 1})
 				
 				if stamina_timer >= replenish then
-					
-					print("restoring AP \n")
 					
 					local player_stamina = tonumber(player:get_attribute("stamina"))
 					
@@ -160,8 +146,6 @@ minetest.register_globalstep(function(dtime)
 						if autohide and player_stamina == 20 then hb.hide_hudbar(player, "stamina") end
   
 					end
-				  
-					stamina_timer = 0
 					
 				end
 			  
@@ -169,6 +153,7 @@ minetest.register_globalstep(function(dtime)
 			
 		end
 		
+		stamina_timer = 0
 		sprint_timer = 0
 		
 	end
