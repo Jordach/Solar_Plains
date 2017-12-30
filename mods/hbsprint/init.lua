@@ -34,22 +34,11 @@ if minetest.get_modpath("player_monoids") ~= nil then monoids = true else monoid
 -- Functions
 
 local function start_sprint(player)
-    player:set_physics_override({speed = speed, jump = jump})
+    
 end
 
 local function stop_sprint(player)
-    player:set_physics_override({speed = 1, jump = 1})
-end
-
-local function drain_stamina(player)
-  local player_stamina = tonumber(player:get_attribute("stamina"))
-  if player_stamina > 0 then
-    player:set_attribute("stamina", player_stamina - stamina_drain)
-  end
-  if hudbars then
-    if autohide and player_stamina < 20 then hb.unhide_hudbar(player, "stamina") end
-    hb.change_hudbar(player, "stamina", player_stamina)
-  end
+    
 end
 
 local function replenish_stamina(player)
@@ -108,7 +97,7 @@ minetest.register_globalstep(function(dtime)
 	stamina_timer = stamina_timer + dtime
 	breath_timer = breath_timer + dtime
 	if sprint_timer >= sprint_timer_step then
-		for _,player in ipairs(minetest.get_connected_players()) do
+		for _,player in pairs(minetest.get_connected_players()) do
 	
 			local ctrl = player:get_player_control()
 		    local key_press = ctrl.aux1 and ctrl.up
@@ -121,6 +110,8 @@ minetest.register_globalstep(function(dtime)
 			
 			print(player:get_player_name())
 			
+			print(_)
+			
 			if key_press then
 				
 				print("has pressed forward and aux1")
@@ -130,13 +121,24 @@ minetest.register_globalstep(function(dtime)
 				local ground = minetest.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
 				local player_stamina = tonumber(player:get_attribute("stamina"))
 				
-				if player_stamina > 2 then
+				if player_stamina > 1 then
 					
 					print("is sprinting \n")
 					
-					start_sprint(player)
+					player:set_physics_override({speed = speed, jump = jump})
 					
-					drain_stamina(player)
+					if player_stamina > 0 then
+						player:set_attribute("stamina", player_stamina - stamina_drain)
+					end
+					
+					if hudbars then
+				
+						if autohide and player_stamina < 20 then hb.unhide_hudbar(player, "stamina") end
+						
+						hb.change_hudbar(player, "stamina", player_stamina)
+						
+						
+					end
 					
 					--create_particles(player, name, pos, ground)
 					
@@ -144,15 +146,15 @@ minetest.register_globalstep(function(dtime)
 					
 					print("stopped sprinting \n")
 					
-					stop_sprint(player)
+					player:set_physics_override({speed = 1, jump = 1})
 					
 				end
 				
 			else
 				
-				print("stopped sprinting")
+				print("stopped sprinting \n")
 				
-				stop_sprint(player)
+				player:set_physics_override({speed = 1, jump = 1})
 				
 				if stamina_timer >= replenish then
 					
