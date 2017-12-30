@@ -66,7 +66,7 @@ minetest.register_craft({
 minetest.register_craftitem("farming:bread", {
 	description = S("Bread"),
 	inventory_image = "farming_bread.png",
-	on_use = hud.item_eat(5),
+	on_use = minetest.item_eat(5),
 })
 
 -- TOAAAAAAAAAAAAST
@@ -74,7 +74,7 @@ minetest.register_craftitem("farming:bread", {
 minetest.register_craftitem("farming:toast", {
 	description = S("Toast (Not Suitable for making Reactors from.)"),
 	inventory_image = "farming_bread.png",
-	on_use = hud.item_eat(7),
+	on_use = minetest.item_eat(7),
 })
 
 minetest.register_craft({

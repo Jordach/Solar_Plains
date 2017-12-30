@@ -240,17 +240,12 @@ minetest.register_entity("wardrobe:dummy", {
 	collisionbox = {0,0,0,0,0,0},
 	
 	visual = "mesh",
-	mesh = "wardrobe_dummy.x",
+	mesh = "wardrobe_dummy.b3d",
 	textures = {
-				"ptextures_transparent.png", 
 				"(wardrobe_skin.png^[multiply:#ffffff)",
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png"
 	},
 	visual_size = {x=1, y=1},
+	backface_culling = false,
 })
 
 function wardrobe.formspec_meta(texture_table, rgb_table )
@@ -820,7 +815,6 @@ function wardrobe.update_dummy(pos, player, fields)
 		entity[1]:set_animation({x=0, y=1339}, 60, 0)			
 		entity[1]:set_properties({
 			textures = {
-				"ptextures_transparent.png", 
 					"(wardrobe_skin"..                                                   ".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][1]..  ")^"..
 					"(wardrobe_eyes_white_"..  wardrobe.formspec_selections[pname][1]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][2]..  ")^"..
 					"(wardrobe_eyes_pupil_"..  wardrobe.formspec_selections[pname][2]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][3]..  ")^"..
@@ -844,16 +838,11 @@ function wardrobe.update_dummy(pos, player, fields)
 					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][20] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][20].. ")^"..
 					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][21] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][21].. ")^"..
 					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][22] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][22].. ")",
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png", 
-				"ptextures_transparent.png"
 			}
 		})
 		
 	end
-	wardrobe.save_user_data(player)
+	--wardrobe.save_user_data(player)
 end
 
 -- Caution: this function changes the players appearance only temporarily; use for when sleeping and such.
@@ -914,7 +903,7 @@ function wardrobe.apply_to_player(player, fields)
 	
 	if fields ~= nil then
 	
-	wardrobe.save_text_fields(fields, pname)
+		wardrobe.save_text_fields(fields, pname)
 	
 	end
 	

@@ -13,14 +13,14 @@ minetest.register_craftitem("farming:corn", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:corn_1", true)
 	end,
-	on_use = hud.item_eat(2),
+	on_use = minetest.item_eat(2),
 })
 
 -- corn on the cob (texture by TenPlus1)
 minetest.register_craftitem("farming:corn_cob", {
 	description = S("Corn on the Cob"),
 	inventory_image = "farming_corn_cob.png",
-	on_use = hud.item_eat(4),
+	on_use = minetest.item_eat(4),
 })
 
 minetest.register_craft({

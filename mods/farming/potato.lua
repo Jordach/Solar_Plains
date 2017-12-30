@@ -13,14 +13,14 @@ minetest.register_craftitem("farming:potato", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:potato_1", true)
 	end,
-	on_use = hud.item_eat(1),
+	on_use = minetest.item_eat(1),
 })
 
 -- baked potato
 minetest.register_craftitem("farming:baked_potato", {
 	description = S("Baked Potato"),
 	inventory_image = "farming_baked_potato.png",
-	on_use = hud.item_eat(4),
+	on_use = minetest.item_eat(4),
 })
 
 minetest.register_craft({

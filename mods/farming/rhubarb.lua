@@ -8,14 +8,14 @@ minetest.register_craftitem("farming:rhubarb", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:rhubarb_1", true)
 	end,
-	on_use = hud.item_eat(1),
+	on_use = minetest.item_eat(1),
 })
 
 -- rhubarb pie
 minetest.register_craftitem("farming:rhubarb_pie", {
 	description = S("Rhubarb Pie"),
 	inventory_image = "farming_rhubarb_pie.png",
-	on_use = hud.item_eat(6),
+	on_use = minetest.item_eat(6),
 })
 
 minetest.register_craft({

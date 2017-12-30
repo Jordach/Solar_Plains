@@ -13,7 +13,7 @@ minetest.register_craftitem("farming:tomato", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:tomato_1", true)
 	end,
-	on_use = hud.item_eat(1),
+	on_use = minetest.item_eat(1),
 })
 
 -- tomato definition

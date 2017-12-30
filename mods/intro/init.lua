@@ -115,30 +115,6 @@ function intro.hud_bg(player)
 		text = "hud_stat_bg.png",
 	})
 	
-	
-	player:hud_add({
-		hud_elem_type = "image",
-		position = {x=0.5, y=1},
-		offset = {x=-214, y=-70},
-		scale = {x=1.17, y=1.17},
-		text = "intro_heart.png",
-	})
-	
-	player:hud_add({
-		hud_elem_type = "image",
-		position = {x=0.5, y=1},
-		offset = {x=-214, y=-85},
-		scale = {x=1.25, y=1.25},
-		text = "intro_hunger.png",
-	})
-	
-	player:hud_add({
-		hud_elem_type = "image",
-		position = {x=0.5, y=1},
-		offset = {x=-214, y=-100}, -- note; these offsets are in pixels.
-		scale = {x=1.25, y=1.25},
-		text = "intro_bubble.png",
-	})
 end
 
 function intro.spawn_title(player)
@@ -192,8 +168,9 @@ end
 
 function intro.reset_hud(player)
 
-	intro.hud_bg(player)
-	hud.custom_hud(player)
+	--intro.hud_bg(player)
+	--hud.custom_hud(player)
+	hb.custom_hud(player)
 	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
 	player:set_attribute("core_display_hud", "true")
 	hudclock.display_bg(player)
@@ -212,9 +189,7 @@ minetest.register_on_joinplayer(function(player)
 	
 	if player:get_attribute("intro_completed") == "true" then 
 		
-		minetest.after(0.1, function()
-			intro.reset_hud(player)
-		end)
+		minetest.after(0.1, function() intro.reset_hud(player) end)
 		return
 	
 	end

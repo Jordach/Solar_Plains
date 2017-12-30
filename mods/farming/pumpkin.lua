@@ -32,7 +32,7 @@ minetest.register_craftitem("farming:pumpkin_slice", {
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:pumpkin_1", true)
 	end,
-	on_use = hud.item_eat(2),
+	on_use = minetest.item_eat(2),
 })
 
 minetest.register_craft({
@@ -107,7 +107,7 @@ minetest.register_craft({
 minetest.register_craftitem("farming:pumpkin_bread", {
 	description = S("Pumpkin Bread"),
 	inventory_image = "farming_pumpkin_bread.png",
-	on_use = hud.item_eat(8)
+	on_use = minetest.item_eat(8)
 })
 
 minetest.register_craftitem("farming:pumpkin_dough", {
@@ -130,8 +130,9 @@ minetest.register_craft({
 
 -- pumpkin definition
 local crop_def = {
-	drawtype = "plantlike",
-	tiles = {"farming_pumpkin_1.png"},
+	drawtype = "mesh",
+	mesh = "farming_melon_2.b3d",
+	tiles = {"farming_pumpkin_tiny.png^[colorize:#265c42aa"},
 	paramtype = "light",
 	sunlight_propagates = true,
 	waving = 1,
@@ -151,35 +152,54 @@ local crop_def = {
 minetest.register_node("farming:pumpkin_1", table.copy(crop_def))
 
 -- stage 2
-crop_def.tiles = {"farming_pumpkin_2.png"}
+crop_def.mesh = "farming_melon_3.b3d"
+crop_def.tiles = {"farming_pumpkin_tiny.png^[colorize:#265c4288"}
 minetest.register_node("farming:pumpkin_2", table.copy(crop_def))
 
--- stage 3
-crop_def.tiles = {"farming_pumpkin_3.png"}
+-- stage 3 
+crop_def.mesh = "farming_melon_4.b3d"
+crop_def.tiles = {"farming_pumpkin_tiny.png^[colorize:#265c4277"}
 minetest.register_node("farming:pumpkin_3", table.copy(crop_def))
 
 -- stage 4
-crop_def.tiles = {"farming_pumpkin_4.png"}
+crop_def.mesh = "farming_melon_5.b3d"
+crop_def.tiles = {"farming_pumpkin_tiny.png^[colorize:#265c4266"}
 minetest.register_node("farming:pumpkin_4", table.copy(crop_def))
 
 -- stage 5
-crop_def.tiles = {"farming_pumpkin_5.png"}
+crop_def.mesh = "farming_melon_6.b3d"
+crop_def.tiles = {"farming_pumpkin_tiny.png^[colorize:#265c4255"}
 minetest.register_node("farming:pumpkin_5", table.copy(crop_def))
 
 -- stage 6
-crop_def.tiles = {"farming_pumpkin_6.png"}
+crop_def.mesh = "farming_melon_7.b3d"
+crop_def.tiles = {"farming_pumpkin_tiny.png^[colorize:#265c4244"}
 minetest.register_node("farming:pumpkin_6", table.copy(crop_def))
 
 -- stage 7
-crop_def.tiles = {"farming_pumpkin_7.png"}
+crop_def.mesh = "farming_melon_8.b3d"
+crop_def.tiles = {"farming_pumpkin_tiny.png^[colorize:#265c4233"}
 minetest.register_node("farming:pumpkin_7", table.copy(crop_def))
 
 -- stage 8 (final)
-crop_def.tiles = {"farming_pumpkin_8.png"}
-crop_def.groups.growing = 0
-crop_def.drop = {
-	items = {
-		{items = {'farming:pumpkin_slice 9'}, rarity = 1},
-	}
-}
-minetest.register_node("farming:pumpkin_8", table.copy(crop_def))
+
+minetest.register_node("farming:pumpkin_8", {
+	description = S("Pumpkin"),
+	tiles = {
+		"farming_pumpkin_top.png",
+		"farming_pumpkin_top.png",
+		"farming_pumpkin_side.png"
+	},
+	groups = {
+		choppy = 1, oddly_breakable_by_hand = 1,
+		flammable = 2, plant = 1
+	},
+	drop = {
+		items = {
+			{items = {'farming:pumpkin_slice 9'}, rarity = 1},
+		}
+	},
+	sounds = mcore.sound_wood,
+})
+
+minetest.register_alias("farming:pumpkin", "farming:pumpkin_8")

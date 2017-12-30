@@ -50,7 +50,7 @@ minetest.register_node("farming:coffee_cup", {
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.25, 0.25}
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
-	on_use = hud.item_eat(2, "farming:drinking_cup"),
+	on_use = minetest.item_eat(2, "farming:drinking_cup"),
 	sounds = mcore.sound_plants,
 })
 
@@ -83,7 +83,7 @@ minetest.register_node("farming:coffee_cup_hot", {
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.25, 0.25}
 	},
 	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
-	on_use = hud.item_eat(3, "farming:drinking_cup"),
+	on_use = minetest.item_eat(3, "farming:drinking_cup"),
 	sounds = mcore.sound_plants,
 })
 

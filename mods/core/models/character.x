@@ -2091,49 +2091,42 @@ Frame Root {
              96.078431;
              0.000000; 0.000000; 0.000000;;
              0.000000; 0.000000; 0.000000;;
-            TextureFilename {"character.png";}
           }
           Material Char1_8 {
              0.640000; 0.640000; 0.640000; 0.000000;;
              96.078431;
              0.000000; 0.000000; 0.000000;;
              0.000000; 0.000000; 0.000000;;
-            TextureFilename {"player_singleplayer2.png";}
           }
           Material CharHelmet {
              0.640000; 0.640000; 0.640000; 0.000000;;
              96.078431;
              0.000000; 0.000000; 0.000000;;
              0.000000; 0.000000; 0.000000;;
-            TextureFilename {"full_diamond.png";}
           }
           Material CharChest {
              0.640000; 0.640000; 0.640000; 0.000000;;
              96.078431;
              0.000000; 0.000000; 0.000000;;
              0.000000; 0.000000; 0.000000;;
-            TextureFilename {"full_diamond.png";}
           }
           Material CharLegs {
              0.640000; 0.640000; 0.640000; 0.000000;;
              96.078431;
              0.000000; 0.000000; 0.000000;;
              0.000000; 0.000000; 0.000000;;
-            TextureFilename {"full_diamond.png";}
           }
           Material CharBoots {
              0.640000; 0.640000; 0.640000; 0.000000;;
              96.078431;
              0.000000; 0.000000; 0.000000;;
              0.000000; 0.000000; 0.000000;;
-            TextureFilename {"full_diamond.png";}
           }
           Material CharShield {
              0.640000; 0.640000; 0.640000; 0.000000;;
              96.078431;
              0.000000; 0.000000; 0.000000;;
              0.000000; 0.000000; 0.000000;;
-            TextureFilename {"shields_inv_shield_diamond.png";}
           }
         } // End of Player material list
         XSkinMeshHeader {
