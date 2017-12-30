@@ -118,19 +118,22 @@ minetest.register_globalstep(function(dtime)
 		    -- elseif key == "W" then
 		    --   key_press = ctrl.aux1 or key_press and key_tap
 		    -- end
-
+			
+			print(player:get_player_name())
+			
 			if key_press then
-		   
+				
+				print("has pressed forward and aux1")
+				
 				local name = player:get_player_name()
 				local pos = player:get_pos()
 				local ground = minetest.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
 				local player_stamina = tonumber(player:get_attribute("stamina"))
-				if starve then
-				  hunger = tonumber(hbhunger.hunger[name])
-				end
 				
 				if player_stamina > 2 then
-				
+					
+					print("is sprinting")
+					
 					start_sprint(player)
 					
 					drain_stamina(player)
@@ -138,16 +141,23 @@ minetest.register_globalstep(function(dtime)
 					--create_particles(player, name, pos, ground)
 					
 				else
-				
+					
+					print("stopped sprinting")
+					
 					stop_sprint(player)
 					
 				end
 				
 			else
+				
+				print("stopped sprinting")
+				
 				stop_sprint(player)
 				
 				if stamina_timer >= replenish then
-				  
+					
+					print("restoring AP")
+					
 					replenish_stamina(player)
 				  
 					stamina_timer = 0
