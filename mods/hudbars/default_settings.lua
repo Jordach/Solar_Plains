@@ -25,7 +25,7 @@ else
 	hb.settings.start_offset_right.y = hb.load_setting("hudbars_start_statbar_offset_right_y", "number", -90)
 end
 hb.settings.vmargin  = hb.load_setting("hudbars_vmargin", "number", 24)
-hb.settings.tick = hb.load_setting("hudbars_tick", "number", 0.1)
+hb.settings.tick = hb.load_setting("hudbars_tick", "number", 0.5)
 
 -- Experimental setting: Changing this setting is not officially supported, do NOT rely on it!
 hb.settings.forceload_default_hudbars = hb.load_setting("hudbars_forceload_default_hudbars", "bool", true)
