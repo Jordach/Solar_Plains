@@ -118,7 +118,7 @@ minetest.register_globalstep(function(dtime)
 				
 						if autohide and player_stamina < 20 then hb.unhide_hudbar(player, "stamina") end
 						
-						hb.change_hudbar(player, "stamina", player_stamina)
+						hb.change_hudbar(player, "stamina", player_stamina - stamina_drain)
 						
 						
 					end
