@@ -81,6 +81,9 @@ minetest.register_globalstep(function(dtime)
 	sprint_timer = sprint_timer + dtime
 	stamina_timer = stamina_timer + dtime
 	breath_timer = breath_timer + dtime
+	
+	local timer_latch = false
+	
 	if sprint_timer >= sprint_timer_step then
 		for _,player in pairs(minetest.get_connected_players()) do
 	
@@ -144,8 +147,10 @@ minetest.register_globalstep(function(dtime)
 						hb.change_hudbar(player, "stamina", player_stamina)
 						
 						if autohide and player_stamina == 20 then hb.hide_hudbar(player, "stamina") end
-  
+						
 					end
+					
+					timer_latch = true
 					
 				end
 			  
@@ -153,7 +158,7 @@ minetest.register_globalstep(function(dtime)
 			
 		end
 		
-		stamina_timer = 0
+		if timer_latch then stamina_timer = 0 end
 		sprint_timer = 0
 		
 	end
