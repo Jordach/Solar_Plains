@@ -1,7 +1,7 @@
 -- Vars
 
 local speed = tonumber(minetest.settings:get("sprint_speed")) or 1.6
-local jump = tonumber(minetest.settings:get("sprint_jump")) or 1.35
+local jump = tonumber(minetest.settings:get("sprint_jump")) or 1.25
 
 local particles = tonumber(minetest.settings:get("sprint_particles")) or 8
 
