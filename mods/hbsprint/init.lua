@@ -33,23 +33,8 @@ if minetest.get_modpath("player_monoids") ~= nil then monoids = true else monoid
 
 -- Functions
 
-local function start_sprint(player)
-    
-end
-
-local function stop_sprint(player)
-    
-end
-
 local function replenish_stamina(player)
-  local player_stamina = tonumber(player:get_attribute("stamina"))
-  if player_stamina < 20 then
-    player:set_attribute("stamina", player_stamina + stam_charge)
-  end
-  if hudbars then
-    hb.change_hudbar(player, "stamina", player_stamina)
-    if autohide and player_stamina == 20 then hb.hide_hudbar(player, "stamina") end
-  end
+  
 end
 
 local function create_particles(player, name, pos, ground)
@@ -160,7 +145,21 @@ minetest.register_globalstep(function(dtime)
 					
 					print("restoring AP \n")
 					
-					replenish_stamina(player)
+					local player_stamina = tonumber(player:get_attribute("stamina"))
+					
+					if player_stamina < 20 then
+						
+						player:set_attribute("stamina", player_stamina + stam_charge)
+					
+					end
+  
+					if hudbars then
+					
+						hb.change_hudbar(player, "stamina", player_stamina)
+						
+						if autohide and player_stamina == 20 then hb.hide_hudbar(player, "stamina") end
+  
+					end
 				  
 					stamina_timer = 0
 					
