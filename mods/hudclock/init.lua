@@ -31,22 +31,9 @@ function hudclock.update_time()
 
 	for _,p in ipairs(minetest.get_connected_players()) do
 		local name = p:get_player_name();
-		if p:get_attribute("core_display_hud") == "true" then
-			local h = p:hud_add({
-				hud_elem_type = "text",
-				position = {x=positionx, y=positiony},
-				text = "Time: " .. get_time() .. "\n\n" .. "Day: " .. hudclock.day .. "\nMonth: " .. hudclock.month .. "\nYear: " .. hudclock.year,
-				number = 0xFFFFFF,
-				offset = {x=48, y=-48},
-			});
 		
-		
-		if (hudclock.player_hud[name]) then
-			p:hud_remove(hudclock.player_hud[name]);
-		end
-					
-		hudclock.player_hud[name] = h
-		end
+		p:hud_change(hudclock.player_hud[name], "text", "Time: " .. get_time() .. "\n\n" .. "Day: " .. hudclock.day .. "\nMonth: " .. hudclock.month .. "\nYear: " .. hudclock.year)
+	
 	end
 	
 	minetest.after(1, hudclock.update_time)
@@ -119,12 +106,9 @@ minetest.after(1, hudclock.update_calendar)
 -- })
 
 minetest.register_on_joinplayer(function(player)
-	local name = player:get_player_name()
-	if hudclock.player_hud[name] ~= nil then
-		player:hud_remove(hudclock.player_hud[name]);
-		hudclock.player_hud[name] = nil
-	end
+	
 	minetest.after(1, hudclock.update_calendar)
+	
 	return true
 end)
 
@@ -144,7 +128,25 @@ function hudclock.display_bg(player)
 		scale = {x=1.333, y=1.333},
 		text = "mthudclock.png",
 	})
-
+	
+	local name = player:get_player_name()
+	
+	if player:get_attribute("core_display_hud") == "true" then
+		
+		local h = player:hud_add({
+			
+			hud_elem_type = "text",
+			position = {x=positionx, y=positiony},
+			text = "Time: " .. get_time() .. "\n\n" .. "Day: " .. hudclock.day .. "\nMonth: " .. hudclock.month .. "\nYear: " .. hudclock.year,
+			number = 0xFFFFFF,
+			offset = {x=48, y=-48},
+			
+		})
+			
+		hudclock.player_hud[name] = h
+	
+	end
+	
 end
 
 print ("calculating current ingame time!")
