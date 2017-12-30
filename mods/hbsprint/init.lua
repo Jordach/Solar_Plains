@@ -62,7 +62,7 @@ if minetest.get_modpath("hudbars") ~= nil and stamina then
 		{bar = "sprint_stamina_bar.png", icon = "sprint_stamina_icon.png", bgicon = "sprint_stamina_bgicon.png"},
 		20,
 		20,
-		false,
+		false
 	)
 	
 	hudbars = true
