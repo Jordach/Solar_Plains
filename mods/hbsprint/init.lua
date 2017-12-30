@@ -1,10 +1,10 @@
 -- Vars
 
-local speed = tonumber(minetest.settings:get("sprint_speed")) or 1.25
+local speed = tonumber(minetest.settings:get("sprint_speed")) or 1.3
 local jump = tonumber(minetest.settings:get("sprint_jump")) or 1.2
 local key = minetest.settings:get("sprint_key") or "Use"
 local dir = minetest.settings:get_bool("sprint_forward_only")
-local particles = tonumber(minetest.settings:get("sprint_particles")) or 2
+local particles = tonumber(minetest.settings:get("sprint_particles")) or 8
 local stamina = minetest.settings:get_bool("sprint_stamina")
 local stamina_drain = tonumber(minetest.settings:get("sprint_stamina_drain")) or 2
 local replenish = tonumber(minetest.settings:get("sprint_stamina_replenish")) or 2
@@ -18,7 +18,7 @@ if stamina ~= false then stamina = true end
 if starve ~= false then starve = true end
 if breath ~= false then breath = true end
 
-local sprint_timer_step = 1
+local sprint_timer_step = 0.5
 local sprint_timer = 0
 local stamina_timer = 0
 local breath_timer = 0
@@ -123,7 +123,9 @@ if minetest.get_modpath("hudbars") ~= nil and stamina then
     20, 20,
     false, "%s: %.1f/%.1f")
   hudbars = true
-
+  if autohide then
+    hb.hide_hudbar(player, "stamina")
+  end
 end
 
 minetest.register_on_joinplayer(function(player)
@@ -168,7 +170,7 @@ minetest.register_globalstep(function(dtime)
               breath_timer = 0
             end
           end
-          if particles then create_particles(player, name, pos, ground) end
+          create_particles(player, name, pos, ground)
         else
           stop_sprint(player)
           player:set_attribute("sprinting", "false")
