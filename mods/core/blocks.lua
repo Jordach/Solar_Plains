@@ -1414,8 +1414,8 @@ minetest.register_node("core:furnace", {
 	description = "Furnace",
 	tiles = {
 		"core_furnace_top.png", "core_furnace_top.png",
-		"core_furnace_side.png", "core_furnace_side.png",
-		"core_furnace_side.png", "core_furnace_front.png"
+		"core_furnace_top.png", "core_furnace_top.png",
+		"core_furnace_top.png", "core_furnace_front.png"
 	},
 	paramtype2 = "facedir",
 	groups = {cracky=2},
@@ -1453,8 +1453,8 @@ minetest.register_node("core:furnace_active", {
 	description = "Furnace",
 	tiles = {
 		"core_furnace_top.png", "core_furnace_top.png",
-		"core_furnace_side.png", "core_furnace_side.png",
-		"core_furnace_side.png", "core_furnace_front_active.png"
+		"core_furnace_top.png", "core_furnace_top.png",
+		"core_furnace_top.png", "core_furnace_front_active.png"
 	},
 	paramtype2 = "facedir",
 	light_source = 8,
@@ -1493,6 +1493,9 @@ function mcore.register_fence(name, def)
 	})
 
 	-- Allow almost everything to be overridden
+	
+	-- items in this table appear to be unable to be overridden
+	
 	local default_fields = {
 		paramtype = "light",
 		drawtype = "nodebox",
@@ -1501,23 +1504,26 @@ function mcore.register_fence(name, def)
 			fixed = {{-1/8, -1/2, -1/8, 1/8, 1/2, 1/8}},
 			-- connect_top =
 			-- connect_bottom =
-			connect_front = {{-1/16,3/16,-1/2,1/16,5/16,-1/8},
-				{-1/16,-5/16,-1/2,1/16,-3/16,-1/8}},
-			connect_left = {{-1/2,3/16,-1/16,-1/8,5/16,1/16},
-				{-1/2,-5/16,-1/16,-1/8,-3/16,1/16}},
-			connect_back = {{-1/16,3/16,1/8,1/16,5/16,1/2},
-				{-1/16,-5/16,1/8,1/16,-3/16,1/2}},
-			connect_right = {{1/8,3/16,-1/16,1/2,5/16,1/16},
-				{1/8,-5/16,-1/16,1/2,-3/16,1/16}},
+			connect_front = {{-1/16,  5/16, -1/2,   1/16,  7/16, -1/8},
+							 {-1/16, -3/16, -1/2,   1/16, -1/16, -1/8}},
+			connect_left =  {{-1/2,   5/16, -1/16, -1/8,   7/16,  1/16},
+							 {-1/2,  -3/16, -1/16, -1/8,  -1/16,  1/16}},
+			connect_back =  {{-1/16,  5/16,  1/8,   1/16,  7/16,  1/2},
+							 {-1/16, -3/16,  1/8,   1/16, -1/16,  1/2}},
+			connect_right = {{1/8,    5/16, -1/16,  1/2,   7/16,  1/16},
+							 {1/8,   -3/16, -1/16,  1/2,  -1/16,  1/16}},
 		},
 		connects_to = {"group:fence", "group:wood", "group:tree", "group:solid"},
-		inventory_image = def.inventory_image,
-		wield_image = def.wield_image,
+		--inventory_image = def.inventory_image,
+		--wield_image = def.wield_image,
 		tiles = {def.texture},
 		sunlight_propagates = true,
 		is_ground_content = false,
 		groups = {},
 	}
+	
+	-- insert missing table values into the def table for node def
+	
 	for k, v in pairs(default_fields) do
 		if not def[k] then
 			def[k] = v
@@ -1538,9 +1544,31 @@ end
 mcore.register_fence("core:fence_oak", {
 	description = "Oak Fence",
 	texture = "core_oak_planks.png",
-	inventory_image = "core_fence_oak.png",
-	wield_image = "core_fence_oak.png",
 	material = "core:oak_planks",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = mcore.sound_wood,
+})
+
+mcore.register_fence("core:fence_birch", {
+	description = "Birch Fence",
+	texture = "core_birch_planks.png",
+	material = "core:birch_planks",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = mcore.sound_wood,
+})
+
+mcore.register_fence("core:fence_pine", {
+	description = "Pine Fence",
+	texture = "core_pine_planks.png",
+	material = "core:pine_planks",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = mcore.sound_wood,
+})
+
+mcore.register_fence("core:fence_cherry", {
+	description = "Cherry Fence",
+	texture = "core_cherry_planks.png",
+	material = "core:cherry_planks",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	sounds = mcore.sound_wood,
 })

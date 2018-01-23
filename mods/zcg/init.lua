@@ -103,17 +103,19 @@ zcg.formspec = function(pn)
 	page = zcg.users[pn].page
 	alt = zcg.users[pn].alt
 	current_item = zcg.users[pn].current_item
-	local formspec = "size[8,7.5]"
-	.. "button[0,0;2,.5;main;Back]"
+	local formspec = "size[8,8]"
+	.. "image_button[0,0;3,1;core_button_wood.png;main;Return to Inventory;false;false;core_button_wood_pressed.png]"
+	.. "background[-0.45,-0.5;8.9,9;core_inv_plus_guide.png]"
+	
 	if zcg.users[pn].history.index > 1 then
-		formspec = formspec .. "image_button[0,1;1,1;zcg_previous.png;zcg_previous;;false;false;zcg_previous_press.png]"
+		formspec = formspec .. "image_button[0,2;1.55,1;core_button_wood.png;zcg_previous;Last Recipe;false;false;core_button_wood_pressed.png]"
 	else
-		formspec = formspec .. "image[0,1;1,1;zcg_previous_inactive.png]"
+		--formspec = formspec .. "image[0,1;1,1;zcg_previous_inactive.png]"
 	end
 	if zcg.users[pn].history.index < #zcg.users[pn].history.list then
-		formspec = formspec .. "image_button[1,1;1,1;zcg_next.png;zcg_next;;false;false;zcg_next_press.png]"
+		formspec = formspec .. "image_button[1.5,2;1.55,1;core_button_wood.png;zcg_next;Next Recipe;false;false;core_button_wood_pressed.png]"
 	else
-		formspec = formspec .. "image[1,1;1,1;zcg_next_inactive.png]"
+		--formspec = formspec .. "image[1,1;1,1;zcg_next_inactive.png]"
 	end
 	-- Show craft recipe
 	if current_item ~= "" then
@@ -134,12 +136,14 @@ zcg.formspec = function(pn)
 				for i, item in pairs(c.items) do
 					formspec = formspec .. "item_image_button["..((i-1)%c.width+x)..","..(math.floor((i-1)/c.width+y))..";1,1;"..item..";zcg:"..item..";]"
 				end
-				if c.type == "normal" or c.type == "cooking" then
+				if c.type == "normal" then
 					formspec = formspec .. "image[6,2;1,1;zcg_method_"..c.type..".png]"
-				else -- we don't have an image for other types of crafting
+				elseif c.type == "cooking" then	-- we don't have an image for other types of crafting
+					formspec = formspec .. "image[6,2;1,1;"..minetest.inventorycube("core_furnace_top.png", "core_furnace_front_active.png", "core_furnace_top.png").."]"
+				else
 					formspec = formspec .. "label[0,2;Method: "..c.type.."]"
 				end
-				formspec = formspec .. "image[6,1;1,1;zcg_craft_arrow.png]"
+				formspec = formspec .. "image[6,1;1,1;core_crafting_arrow.png]"
 				formspec = formspec .. "item_image_button[7,1;1,1;"..zcg.users[pn].current_item..";;]"
 			end
 		end
@@ -152,22 +156,22 @@ zcg.formspec = function(pn)
 	for _, name in ipairs(zcg.itemlist) do
 		if s < page*npp then s = s+1 else
 			if i >= npp then break end
-			formspec = formspec .. "item_image_button["..(i%8)..","..(math.floor(i/8)+3.5)..";1,1;"..name..";zcg:"..name..";]"
+			formspec = formspec .. "item_image_button["..(i%8)..","..(math.floor(i/8)+4)..";1,1;"..name..";zcg:"..name..";]"
 			i = i+1
 		end
 	end
 	if page > 0 then
-		formspec = formspec .. "button[0,7;1,.5;zcg_page:"..(page-1)..";<<]"
+		formspec = formspec .. "image_button[0,7.1;2,1;core_button_wood.png;zcg_page:"..(page-1)..";Previous Page;false;false;core_button_wood_pressed.png]"
 	end
 	if i >= npp then
-		formspec = formspec .. "button[1,7;1,.5;zcg_page:"..(page+1)..";>>]"
+		formspec = formspec .. "image_button[2,7.1;2,1;core_button_wood.png;zcg_page:"..(page+1)..";Next Page;false;false;core_button_wood_pressed.png]"
 	end
-	formspec = formspec .. "label[2,6.85;Page "..(page+1).."/"..(math.floor(#zcg.itemlist/npp+1)).."]" -- The Y is approximatively the good one to have it centered vertically...
+	formspec = formspec .. "label[0,3.45;Crafting Page: "..(page+1).." of "..(math.floor(#zcg.itemlist/npp+1)).."]" -- The Y is approximatively the good one to have it centered vertically...
 	return formspec
 end
 
 minetest.register_on_joinplayer(function(player)
-	inventory_plus.register_button(player,"zcg","Craft guide")
+	inventory_plus.register_button(player,"zcg","Crafting Guide")
 end)
 
 minetest.register_on_player_receive_fields(function(player,formname,fields)

@@ -79,12 +79,15 @@ inventory_plus.get_formspec = function(player, page)
 	end
 
 	-- default inventory page
-	local formspec = "size[8,7.5]"
+	local formspec = "size[8,9]"
 		-- .. default.gui_bg
 		-- .. default.gui_bg_img
 		-- .. default.gui_slots
-		.. "list[current_player;main;0,3.5;8,4;]"
-
+		.. "list[current_player;main;0,4.5;8,1;]"
+		.. "list[current_player;main;0,6;8,3;8]"
+		.. "listcolors[#573b2e;#de9860;#ffffff;#3f2832;#ffffff]"
+		
+		
 	-- craft page
 	if page == "craft" then
 
@@ -94,14 +97,16 @@ inventory_plus.get_formspec = function(player, page)
 		end
 
 		formspec = formspec
-			.. "button[0,1;2,0.5;main;Back]"
+			.. "image_button[0,0;1.85,1;core_button_wood.png;cguide;Crafting Guide;false;false;core_button_wood_pressed.png]"
 			.. "list[current_player;craftpreview;7,1;1,1;]"
 			.. "list[current_player;craft;3,0;3,3;]"
 			.. "listring[current_name;craft]"
 			.. "listring[current_player;main]"
 			-- trash icon
-			.. "list[detached:trash;main;1,2;1,1;]"
-			.. "image[1.1,2.1;0.8,0.8;trash_icon.png]"
+			.. "list[detached:trash;main;0,2.95;1,1;]"
+			.. "image[6,1;1,1;core_crafting_arrow.png]"
+			.. "background[-0.45,-0.5;8.9,10;core_inv_plus_craft.png]"
+			--.. "image[1.1,2.1;0.8,0.8;trash_icon.png]"
 	end
 
 	-- main page
@@ -118,12 +123,12 @@ inventory_plus.get_formspec = function(player, page)
 		-- buttons
 		local x = 0
 		local f = math.ceil(num / 4)
-		local y = (2.5 / 2) / f
+		local y = 0
 
 		for k, v in pairs( inventory_plus.buttons[name] ) do
 
-			formspec = formspec .. "button[" .. x .. ","
-				 .. y .. ";2,0.5;" .. k .. ";" .. v .. "]"
+			formspec = formspec .. "image_button[" .. x .. ","
+				 .. y .. ";2,1;core_button_wood.png;" .. k .. ";" .. v .. ";false;false;core_button_wood_pressed.png]"
 
 			x = x + 2
 
@@ -132,6 +137,8 @@ inventory_plus.get_formspec = function(player, page)
 				y = y + 1
 			end
 		end
+		
+		formspec = formspec .. "background[-0.45,-0.5;8.9,10;core_inv_plus.png]"
 	end
 
 	return formspec
@@ -140,7 +147,7 @@ end
 -- register_on_joinplayer
 minetest.register_on_joinplayer(function(player)
 
-	inventory_plus.register_button(player,"craft", "Craft")
+	inventory_plus.register_button(player,"craft", "Crafting")
 
 	if minetest.settings:get_bool("creative_mode")
 	or minetest.check_player_privs(player:get_player_name(), {creative = true}) then
@@ -157,17 +164,16 @@ end)
 -- register_on_player_receive_fields
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 
-	-- main
-	if fields.main then
+	if fields.cguide then
 
-		inventory_plus.set_inventory_formspec(player,
-				inventory_plus.get_formspec(player, "main"))
+		inventory_plus.set_inventory_formspec(player, zcg.formspec(player:get_player_name()))
 
 		return
+		
 	end
 
 	-- craft
-	if fields.craft then
+	if fields.main then
 
 		inventory_plus.set_inventory_formspec(player,
 				inventory_plus.get_formspec(player, "craft"))
