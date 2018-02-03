@@ -73,8 +73,8 @@ function hudclock.update_calendar()
 	-- print (totalmonths)
 	-- print (totalyears)
 		
-	hudclock.day = 12-- totaldays
-	hudclock.month = 12-- totalmonths
+	hudclock.day = totaldays
+	hudclock.month =  totalmonths
 	hudclock.year = totalyears
 	minetest.after(30, hudclock.update_calendar)
 	
