@@ -3,8 +3,8 @@ hudclock = {}
 hudclock.player_hud = { };
 
 local timer = 0;
-local positionx = 0;
-local positiony = 1;
+local positionx = 1;
+local positiony = 0;
 local last_time = os.time()
 
 local totaldays = 1
@@ -32,7 +32,8 @@ function hudclock.update_time()
 	for _,p in ipairs(minetest.get_connected_players()) do
 		local name = p:get_player_name();
 		
-		p:hud_change(hudclock.player_hud[name], "text", "Time: " .. get_time() .. "\n\n" .. "Day: " .. hudclock.day .. "\nMonth: " .. hudclock.month .. "\nYear: " .. hudclock.year)
+		p:hud_change(hudclock.player_hud[name].timev, "text", get_time())
+		p:hud_change(hudclock.player_hud[name].datev, "text", hudclock.day .. "/" .. hudclock.month .. "/" .. hudclock.year)
 	
 	end
 	
@@ -72,10 +73,12 @@ function hudclock.update_calendar()
 	-- print (totalmonths)
 	-- print (totalyears)
 		
-	hudclock.day = totaldays
-	hudclock.month = totalmonths
+	hudclock.day = 12-- totaldays
+	hudclock.month = 12-- totalmonths
 	hudclock.year = totalyears
-	minetest.after(25, hudclock.update_calendar)
+	minetest.after(30, hudclock.update_calendar)
+	
+	print ("[Hudclock] Recalculating calendar.\n[Hudclock] The date is: " .. hudclock.day .. " / " .. hudclock.month .. " / " .. hudclock.year)
 end
 
 --[[
@@ -92,61 +95,72 @@ end
 
 minetest.after(1, hudclock.update_calendar)
 
--- minetest.register_chatcommand("hcr", {
--- 	params = "",
--- 	description = "This should reset your hudclock.",
--- 	func = function(name, param)
--- 		local player = minetest.get_player_by_name(name)
--- 		if not player then
--- 			return
--- 		end
--- 		player:hud_remove(player_hud[name]);
--- 		player_hud[name] = nil
--- 	end,
--- })
+minetest.register_chatcommand("yeartest", {
+	
+	description = "debugs the current year",
+	param = "use a number to select the year.",
+	func = function(name, param)
+		
+		if not minetest.check_player_privs(name, "server") then
+			return false, "You are not allowed to control time, you shitlord. \n \n This incident WILL be reported."
+		end
+		
+		hudclock.year = param
+		
+		return true, "Current year updated."
+	end,
 
-minetest.register_on_joinplayer(function(player)
-	
-	minetest.after(1, hudclock.update_calendar)
-	
-	return true
-end)
+})
 
 function hudclock.display_bg(player)
 	
-	player:hud_add({
-		hud_elem_type = "image",
-		position = {x=0.5, y=0.5},
-		scale = {x=-100, y=-100},
-		text = "hud_vignette.png"
-	})
-	
-	player:hud_add({
-		hud_elem_type = "image",
-		position = {x=positionx, y=positiony},
-		offset = {x=128-54, y=-48},
-		scale = {x=1.333, y=1.333},
-		text = "mthudclock.png",
-	})
-	
-	local name = player:get_player_name()
-	
 	if player:get_attribute("core_display_hud") == "true" then
 		
-		local h = player:hud_add({
+		player:hud_add({
+			hud_elem_type = "image",
+			position = {x=0.5, y=0.5},
+			scale = {x=-100, y=-100},
+			text = "hud_vignette.png"
+		})
+	
+		player:hud_add({
+			hud_elem_type = "image",
+			position = {x=1, y=0},
+			offset = {x=-120, y=64},
+			scale = {x=1, y=1},
+			text = "mthudclock.png",
+		})
+	
+		local name = player:get_player_name()
+		
+		hudclock.player_hud[name] = {}
+		
+		local t = player:hud_add({
 			
 			hud_elem_type = "text",
-			position = {x=positionx, y=positiony},
-			text = "Time: " .. get_time() .. "\n\n" .. "Day: " .. hudclock.day .. "\nMonth: " .. hudclock.month .. "\nYear: " .. hudclock.year,
+			position = {x=1, y=0},
+			text = get_time(),
 			number = 0xFFFFFF,
-			offset = {x=48, y=-48},
+			alignment = {x=1, y=0},
+			offset = {x=-233, y=118}, -- 21px difference!
 			
 		})
-			
-		hudclock.player_hud[name] = h
-	
+		
+		local d = player:hud_add({
+		
+			hud_elem_type = "text",
+			position = {x=1, y=0},
+			text = hudclock.day .. "/" .. hudclock.month .. "/" .. hudclock.year,
+			number = 0xFFFFFF,
+			alignment = {x=1, y=0},
+			offset = {x=-233, y=138},
+		
+		})
+
+		hudclock.player_hud[name].timev = t
+		hudclock.player_hud[name].datev = d
+		
+		
 	end
 	
 end
-
-print ("calculating current ingame time!")

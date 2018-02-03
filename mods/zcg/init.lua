@@ -103,17 +103,18 @@ zcg.formspec = function(pn)
 	page = zcg.users[pn].page
 	alt = zcg.users[pn].alt
 	current_item = zcg.users[pn].current_item
-	local formspec = "size[8,8]"
-	.. "image_button[0,0;3,1;core_button_wood.png;main;Return to Inventory;false;false;core_button_wood_pressed.png]"
-	.. "background[-0.45,-0.5;8.9,9;core_inv_plus_guide.png]"
+	local formspec = "size[8,9]"
+	.. "button[0,0;3,1;main;Return to Inventory]"
+	.. "background[-0.45,-0.5;8.9,10;core_inv_plus_guide.png]"
+	.. "listcolors[#573b2e;#de9860;#ffffff;#3f2832;#ffffff]"
 	
 	if zcg.users[pn].history.index > 1 then
-		formspec = formspec .. "image_button[0,2;1.55,1;core_button_wood.png;zcg_previous;Last Recipe;false;false;core_button_wood_pressed.png]"
+		formspec = formspec .. "button[0,2;1.55,1;zcg_previous;Last Recipe]"
 	else
 		--formspec = formspec .. "image[0,1;1,1;zcg_previous_inactive.png]"
 	end
 	if zcg.users[pn].history.index < #zcg.users[pn].history.list then
-		formspec = formspec .. "image_button[1.5,2;1.55,1;core_button_wood.png;zcg_next;Next Recipe;false;false;core_button_wood_pressed.png]"
+		formspec = formspec .. "button[1.45,2;1.55,1;zcg_next;Next Recipe]"
 	else
 		--formspec = formspec .. "image[1,1;1,1;zcg_next_inactive.png]"
 	end
@@ -156,17 +157,17 @@ zcg.formspec = function(pn)
 	for _, name in ipairs(zcg.itemlist) do
 		if s < page*npp then s = s+1 else
 			if i >= npp then break end
-			formspec = formspec .. "item_image_button["..(i%8)..","..(math.floor(i/8)+4)..";1,1;"..name..";zcg:"..name..";]"
+			formspec = formspec .. "item_image_button["..(i%8)..","..(math.floor(i/8)+5)..";1,1;"..name..";zcg:"..name..";]"
 			i = i+1
 		end
 	end
 	if page > 0 then
-		formspec = formspec .. "image_button[0,7.1;2,1;core_button_wood.png;zcg_page:"..(page-1)..";Previous Page;false;false;core_button_wood_pressed.png]"
+		formspec = formspec .. "button[0,8.1;2.25,1;zcg_page:"..(page-1)..";Previous Page]"
 	end
 	if i >= npp then
-		formspec = formspec .. "image_button[2,7.1;2,1;core_button_wood.png;zcg_page:"..(page+1)..";Next Page;false;false;core_button_wood_pressed.png]"
+		formspec = formspec .. "button[2.25,8.1;2.25,1;zcg_page:"..(page+1)..";Next Page]"
 	end
-	formspec = formspec .. "label[0,3.45;Crafting Page: "..(page+1).." of "..(math.floor(#zcg.itemlist/npp+1)).."]" -- The Y is approximatively the good one to have it centered vertically...
+	formspec = formspec .. "label[0,4.45;Crafting Page: "..(page+1).." of "..(math.floor(#zcg.itemlist/npp+1)).."]" -- The Y is approximatively the good one to have it centered vertically...
 	return formspec
 end
 

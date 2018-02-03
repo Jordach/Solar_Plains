@@ -97,7 +97,7 @@ inventory_plus.get_formspec = function(player, page)
 		end
 
 		formspec = formspec
-			.. "image_button[0,0;1.85,1;core_button_wood.png;cguide;Crafting Guide;false;false;core_button_wood_pressed.png]"
+			.. "button[0,0;2.15,1;cguide;Crafting Guide]"
 			.. "list[current_player;craftpreview;7,1;1,1;]"
 			.. "list[current_player;craft;3,0;3,3;]"
 			.. "listring[current_name;craft]"

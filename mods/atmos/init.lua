@@ -13,6 +13,11 @@ minetest.register_chatcommand("ratio", {
 		end
 		
 		atmos.current_weather = 0 + param
+		
+		local player = minetest.get_player_by_name(name)
+		
+		atmos.set_skybox(player)
+		
 		return true, "Current weather updated."
 	end,
 
@@ -101,10 +106,10 @@ atmos.weather_clouds[12] = 0.65
 atmos.weather_clouds[13] = 0.65
 atmos.weather_clouds[14] = 0.65
 
-atmos.weather_cloud_colour[1] = "#fff0f0e5"
-atmos.weather_cloud_colour[2] = "#fff0f055"
-atmos.weather_cloud_colour[3] = "#fff0f0e5"
-atmos.weather_cloud_colour[4] = "#fff0f0f5"
+atmos.weather_cloud_colour[1] = "#f0f0f0e5"
+atmos.weather_cloud_colour[2] = "#f0f0f055"
+atmos.weather_cloud_colour[3] = "#f0f0f0e5"
+atmos.weather_cloud_colour[4] = "#f0f0f0f5"
 atmos.weather_cloud_colour[5] = "#9b9b9bff"
 atmos.weather_cloud_colour[6] = "#797979ff"
 atmos.weather_cloud_colour[7] = "#93a2b3ff"
@@ -217,7 +222,7 @@ function atmos.sync_skybox()
 	minetest.after(1, atmos.sync_skybox)
 end
 
--- table of weathers; even numbers above 5 are night time version
+-- table of weathers; even numbers above 5 are night time version (but not this table)
 
 -- 1 = cloudless (uses default dynamic skybox)
 -- 2 = some clouds (uses default dynamic skybox)

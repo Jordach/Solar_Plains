@@ -174,7 +174,8 @@ function intro.reset_hud(player)
 	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
 	player:set_attribute("core_display_hud", "true")
 	hudclock.display_bg(player)
-
+	hudinfo.display_hud_text(player)
+	
 end
 
 minetest.register_on_newplayer(function(player)
