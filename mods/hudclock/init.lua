@@ -95,23 +95,6 @@ end
 
 minetest.after(1, hudclock.update_calendar)
 
-minetest.register_chatcommand("yeartest", {
-	
-	description = "debugs the current year",
-	param = "use a number to select the year.",
-	func = function(name, param)
-		
-		if not minetest.check_player_privs(name, "server") then
-			return false, "You are not allowed to control time, you shitlord. \n \n This incident WILL be reported."
-		end
-		
-		hudclock.month = tonumber(param)
-		
-		return true, "Current year updated."
-	end,
-
-})
-
 function hudclock.display_bg(player)
 	
 	if player:get_attribute("core_display_hud") == "true" then
