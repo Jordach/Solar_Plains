@@ -347,6 +347,22 @@ minetest.register_craft({
 	},
 })
 
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:acacia_planks 6",
+	recipe = {
+		"core:acacia_log",
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:acacia_planks 6",
+	recipe = {
+		"core:acacia_log_grassy",
+	},
+})
+
 -- craft some grassy versions of logs
 
 minetest.register_craft({

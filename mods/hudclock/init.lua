@@ -74,9 +74,9 @@ function hudclock.update_calendar()
 	-- print (totalyears)
 		
 	hudclock.day = totaldays
-	hudclock.month =  totalmonths
+	hudclock.month = 1--totalmonths
 	hudclock.year = totalyears
-	minetest.after(30, hudclock.update_calendar)
+	--minetest.after(30, hudclock.update_calendar)
 	
 	print ("[Hudclock] Recalculating calendar.\n[Hudclock] The date is: " .. hudclock.day .. " / " .. hudclock.month .. " / " .. hudclock.year)
 end
@@ -105,7 +105,7 @@ minetest.register_chatcommand("yeartest", {
 			return false, "You are not allowed to control time, you shitlord. \n \n This incident WILL be reported."
 		end
 		
-		hudclock.year = param
+		hudclock.month = tonumber(param)
 		
 		return true, "Current year updated."
 	end,

@@ -27,6 +27,15 @@ minetest.register_node("core:grass", {
 	sounds = mcore.sound_grass,
 })
 
+minetest.register_node("core:grass_wildland", {
+	tiles = {"core_grass_wild.png", "core_dirt.png", "core_dirt.png^core_grass_wild_side.png"},
+	description = "Dirt with Grass",
+	is_ground_content = true,
+	drop = "core:dirt",
+	groups = {crumbly=3, soil=1, solid=1},
+	sounds = mcore.sound_grass,
+})
+
 minetest.register_node("core:grasstest", {
 	tiles = {"core_grass.png"},
 	description = "Dirt with Grass",
@@ -221,8 +230,9 @@ minetest.register_node("core:ice", {
 	tiles = {"core_ice.png"},
 	is_ground_content = true,
 	paramtype = "light",
+	drawtype = "glasslike",
 	groups = {cracky=2, puts_out_fire=1, solid=1},
-	sounds = mcore.sound_glass;
+	sounds = mcore.sound_glass,
 })
 
 --
@@ -261,7 +271,7 @@ minetest.register_node("core:water_source", {
 				aspect_h = 16,
 				length = 2,
 			},
-			backface_culling = false,
+			backface_culling = true,
 		},
 	},
 	--alpha = 153,
@@ -289,7 +299,7 @@ minetest.register_node("core:water_flowing", {
 	special_tiles = {
 		{
 			name = "core_water_flowing_animated.png",
-			backface_culling = false,
+			backface_culling = true,
 			animation = {
 				type = "vertical_frames",
 				aspect_w = 16,
@@ -731,7 +741,60 @@ minetest.register_node("core:cherry_sapling", {
 	sounds = mcore.sound_plants,
 })
 
+-- acacia
 
+minetest.register_node("core:acacia_log", {
+	description = "Acacia Log",
+	tiles = {"core_acacia_log_top.png", "core_acacia_log_top.png", "core_acacia_log.png"},
+	paramtype2 = "facedir",
+	is_ground_content = false,
+	groups = {tree=1, choppy=3, flammable=2, solid=1},
+	on_place = mcore.sensible_facedir,
+	sounds = mcore.sound_wood,
+})
+
+minetest.register_node("core:acacia_log_grassy", {
+	description = "Acacia Log (Grassy)",
+	tiles = {"core_acacia_log_top.png", "core_acacia_log_top.png", "core_acacia_log.png^core_long_grass_wild_1.png"},
+	paramtype2 = "facedir",
+	is_ground_content = false,
+	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
+	on_place = mcore.sensible_facedir,
+	sounds = mcore.sound_wood,
+})
+
+minetest.register_node("core:acacia_leaves", {
+	description = "Acacia Leaves",
+	tiles = {"core_acacia_leaves.png"},
+	special_tiles = {"core_acacia_leaves.png"},
+	drawtype = "allfaces_optional",
+	waving = 1,
+	visual_scale = 1.3,
+	paramtype = "light",
+	is_ground_content = false,
+	groups = {snappy=3, leafdecay=3, flammable=2},
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {"core:acacia_sapling"},
+				rarity = 16,
+			},
+			{
+				items = {"core:acacia_leaves"},
+			}
+		}
+	},
+	after_place_node = mcore.after_place_leaves,
+	sounds = mcore.sound_plants,
+})
+
+minetest.register_node("core:acacia_planks", {
+	description = "Acacia Planks",
+	tiles = {"core_acacia_planks.png"},
+	groups = {choppy=3, flammable=2, solid=1, planks=1},
+	sounds = mcore.sound_wood,
+})
 
 
 -- cacti
@@ -775,10 +838,37 @@ minetest.register_node("core:grass_1", {
 	
 })
 
+minetest.register_node("core:grass_wild_1", {
+	description = "Wildlands Long Grass",
+	tiles = {"core_long_grass_wild_1.png"},
+	waving = 1,
+	drawtype = "plantlike",
+	paramtype = "light",
+	paramtype2 = "meshoptions",
+	visual_scale = 1.0,
+	walkable = false,
+	buildable_to = true,
+	sunlight_propagates = true,
+	groups = {attached_node=1, snappy=3},
+	selection_box = {
+			type = "fixed",
+			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
+	},
+	sounds = mcore.sound_plants,
+	on_place = function(itemstack, placer, pointed_thing)
+		local nname = "core:grass_wild_" .. math.random(1,3)
+		local stack = ItemStack(nname)
+		local ret = minetest.item_place_node(stack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return ItemStack("core:grass_wild_1 "..itemstack:get_count() - (1 - ret:get_count()))
+	end,
+	
+})
+
+
 for i=2, 3 do
 	
 	minetest.register_node("core:grass_"..i, {
-		description = "Long grass",
+		description = "Long Grass",
 		tiles = {"core_long_grass_"..i..".png"},
 		waving = 1,
 		drawtype = "plantlike",
@@ -796,6 +886,27 @@ for i=2, 3 do
 		},
 		sounds = mcore.sound_plants,
 	})
+	
+	minetest.register_node("core:grass_wild_"..i, {
+		description = "Wildlands Long Grass",
+		tiles = {"core_long_grass_wild_"..i..".png"},
+		waving = 1,
+		drawtype = "plantlike",
+		paramtype = "light",
+		paramtype2 = "meshoptions",
+		visual_scale = 1.0,
+		walkable = false,
+		buildable_to = true,
+		drop = "core:grass_wild_1",
+		sunlight_propagates = true,
+		groups = {not_in_creative_inventory=1, attached_node=1, snappy=3},
+		selection_box = {
+			type = "fixed",
+			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
+		},
+		sounds = mcore.sound_plants,
+	})
+	
 end
 
 -- plants

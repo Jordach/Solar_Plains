@@ -359,6 +359,14 @@ minetest.register_craftitem("core:clay_lump", {
 	description = "Clay Lump",
 	inventory_image = "core_clay_lump.png",
 	wield_image = "core_clay_lump.png",
+	
+	on_place = function(itemstack, user, pointed_thing)
+	
+		mcore.create_acacia_tree(pointed_thing.under)
+		
+		return itemstack
+	
+	end
 })
 
 -- wood tier

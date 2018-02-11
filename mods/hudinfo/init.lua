@@ -30,9 +30,8 @@ local np_humid = {
 
 local nobj_temp = nil
 local nobj_humid = nil
-local nobj_prec = nil
 
-local function player_env_data(player)
+function hudinfo.player_env_data(player)
 
 	local pos = player:get_pos()
 	
@@ -90,7 +89,7 @@ local function player_env_data(player)
 	
 		some notes on temparature scaling in Solar Plains:
 		
-		temparature grading goes from 10 (-20C) to 75 (45C) 50 sits at a cool 20C
+		temparature grading goes from 10 (-25C) to 75 (40C) 50 sits at a cool 20C
 		
 		humidity modifies the actual "feel" of the temparature.
 		
@@ -115,7 +114,33 @@ local function player_env_data(player)
 	
 	end
 	
-	nval_temp = ((nval_temp / 2) - 10) + (nval_humid * 0.02)
+	nval_temp = ((nval_temp / 2) - 12) + (nval_humid * 0.02)
+	
+	if hudclock.month == 1 then
+		nval_temp = nval_temp - 20
+	elseif hudclock.month == 2 then
+		nval_temp = nval_temp - 15
+	elseif hudclock.month == 3 then
+		nval_temp = nval_temp - 10
+	elseif hudclock.month == 4 then
+		nval_temp = nval_temp - 5
+	elseif hudclock.month == 5 then
+		nval_temp = nval_temp + 0
+	elseif hudclock.month == 6 then
+		nval_temp = nval_temp + 5
+	elseif hudclock.month == 7 then
+		nval_temp = nval_temp + 5
+	elseif hudclock.month == 8 then
+		nval_temp = nval_temp + 0
+	elseif hudclock.month == 9 then
+		nval_temp = nval_temp - 5
+	elseif hudclock.month == 10 then
+		nval_temp = nval_temp - 10
+	elseif hudclock.month == 11 then
+		nval_temp = nval_temp - 15
+	elseif hudclock.month == 12 then
+		nval_temp = nval_temp - 20
+	end
 	
 	if pos.y >= 10000 then
 	
@@ -163,12 +188,21 @@ local function update_huds()
 	
 		local name = player:get_player_name()
 		
-		local locale, temparature, humid, weather_str = player_env_data(player)
+		local locale, temparature, humid, weather_str = hudinfo.player_env_data(player)
 		
-		player:hud_change(hudinfo.player_data[name].temp, "text", tonumber(string.format("%.1f", temparature)) .. " C,")
-		player:hud_change(hudinfo.player_data[name].humid, "text", tonumber(string.format("%.1f", humid)) .. "% RH.")
-		player:hud_change(hudinfo.player_data[name].locale, "text", locale)
-		player:hud_change(hudinfo.player_data[name].weather_str, "text", weather_str)
+		if hudinfo.player_data[name].temp == nil then
+			--fail
+		elseif hudinfo.player_data[name].humid == nil then -- fail prevention
+		elseif hudinfo.player_data[name].locale == nil then
+		elseif hudinfo.player_data[name].weather_str == nil then
+		else
+		
+			player:hud_change(hudinfo.player_data[name].temp, "text", tonumber(string.format("%.1f", temparature)) .. " C,")
+			player:hud_change(hudinfo.player_data[name].humid, "text", tonumber(string.format("%.1f", humid)) .. "% RH.")
+			player:hud_change(hudinfo.player_data[name].locale, "text", locale)
+			player:hud_change(hudinfo.player_data[name].weather_str, "text", weather_str)
+			
+		end
 		
 	end
 	
@@ -180,7 +214,7 @@ function hudinfo.display_hud_text(player)
 
 	if player:get_attribute("core_display_hud") == "true" then
 		
-		local locale, temparature, humid, weather_str = player_env_data(player)
+		local locale, temparature, humid, weather_str = hudinfo.player_env_data(player)
 		
 		local name = player:get_player_name()
 		
@@ -189,7 +223,7 @@ function hudinfo.display_hud_text(player)
 		local temp = player:hud_add({
 			hud_elem_type = "text",
 			position = {x=1, y=0},
-			text = tonumber(string.format("%.1f", temparature)) .. "C,",
+			text = tonumber(string.format("%.1f", temparature)) .. " C,",
 			number = 0xFFFFFF,
 			alignment = {x=1, y=0},
 			offset = {x=-233, y=50},
@@ -198,7 +232,7 @@ function hudinfo.display_hud_text(player)
 		local hum = player:hud_add({
 			hud_elem_type = "text",
 			position = {x=1, y=0},
-			text = tonumber(string.format("%.1f", humid)) .. "% Humidity",
+			text = tonumber(string.format("%.1f", humid)) .. "% RH.",
 			number = 0xFFFFFF,
 			alignment = {x=1, y=0},
 			offset = {x=-233, y=70},
@@ -231,4 +265,4 @@ function hudinfo.display_hud_text(player)
 
 end
 
-minetest.after(1, update_huds)
+update_huds()

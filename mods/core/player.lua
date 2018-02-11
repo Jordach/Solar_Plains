@@ -154,7 +154,7 @@ minetest.register_on_joinplayer(function(player)
 		visual_size = {x=1, y=1},
 		collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},
 		stepheight = 0.6,
-		eye_height = 1.64
+		eye_height = 1.64,
 	})
 end)
 

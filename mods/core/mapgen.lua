@@ -90,6 +90,14 @@ minetest.register_node("core:mg_cherry_sapling", {
 	groups = {not_in_creative_inventory=1},
 })
 
+minetest.register_node("core:mg_acacia_sapling", {
+	description = "Impossible to get node.",
+	drawtype = "airlike",
+	paramtype = "light",
+	--tiles = {"xfences_space.png"},
+	groups = {not_in_creative_inventory=1},
+})
+
 -- vmanip on generate
 
 local c_mg_birch_sap = minetest.get_content_id("core:mg_birch_sapling")
@@ -99,6 +107,7 @@ local c_mg_pine_sap = minetest.get_content_id("core:mg_pine_sapling")
 local c_mg_pine_snowy_sap = minetest.get_content_id("core:mg_pine_snowy_sapling")
 local c_mg_grass = minetest.get_content_id("core:mg_grass")
 local c_mg_grass_snowy = minetest.get_content_id("core:mg_grass_snowy")
+local c_mg_aca_sap = minetest.get_content_id("core:mg_acacia_sapling")
 
 minetest.register_on_generated(function(minp, maxp, seed)
 	local timer = os.clock()
@@ -131,6 +140,11 @@ minetest.register_on_generated(function(minp, maxp, seed)
 				elseif content_id == c_mg_pine_snowy_sap then
 					mcore.grow_pine({x=x, y=y, z=z}, true)
 					trees_grown = trees_grown + 1
+				
+				elseif content_id == c_mg_aca_sap then
+					mcore.create_acacia_tree({x=x, y=y, z=z})
+					trees_grown = trees_grown + 1
+				
 				end
 			end
 		end
@@ -355,6 +369,248 @@ local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 	end
 end
 
+function mcore.create_acacia_tree(pos)
+
+	local c_air = minetest.get_content_id("air")
+	local c_dirt = minetest.get_content_id("core:dirt")
+	local c_leaves = minetest.get_content_id("core:acacia_leaves")
+	local c_trunk = minetest.get_content_id("core:acacia_log")
+	local c_trunk_grassy = minetest.get_content_id("core:acacia_log_grassy")
+
+	local x2, y2, z2 = pos.x, pos.y, pos.z
+	
+	local mid_point = math.random(4,6)
+	
+	local vm = minetest.get_voxel_manip()
+	
+	local minp, maxp = vm:read_from_map(
+		{x = pos.x - 5, y = pos.y, z = pos.z - 5},
+		{x = pos.x + 5, y = pos.y + mid_point*2 + 1, z = pos.z + 5}
+	)
+	
+	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+	local data = vm:get_data()
+	
+	local tree_model = math.random(1,3) -- three models currently.
+	
+	for i=0, mid_point-1 do
+			
+		local vi = a:index(x2, y2 + i, z2)
+			
+		if i == 0 then
+			
+			data[vi] = c_trunk_grassy
+			
+		elseif data[vi] == c_air or data[vi] == c_ignore or data[vi] == c_leaves then
+			
+			data[vi] = c_trunk
+			
+		end
+			
+	end
+	
+	if tree_model == 1 then
+		
+		-- lets make the tree fork on the x-axis since the sun goes east to west;
+		
+		local h_rand = math.random(0,1)
+		
+		local vi = a:index(x2 - 1, y2 + math.floor((mid_point - h_rand) / 2), z2)
+		data[vi] = c_trunk
+		
+		vi = a:index(x2 - 2, (y2 + 1) + math.floor((mid_point - h_rand) / 2), z2)
+		data[vi] = c_trunk
+		
+		vi = a:index(x2 + 1, y2 + mid_point, z2)
+		data[vi] = c_trunk
+		
+		vi = a:index(x2 + 2, y2 + mid_point + 1, z2)
+		data[vi] = c_trunk
+		
+		vi = nil
+		
+		-- leaf me alone
+		
+		for xl=-2, 2 do -- top part of the top fork
+		
+			for zl=-2, 2 do
+				
+				local vi = a:index((x2 + 2) + xl, (y2 + mid_point) + 2, z2 + zl)
+				
+				if xl == -2 and zl == -2 then
+				elseif xl == -2 and zl == 2 then
+				elseif xl == 2 and zl == -2 then
+				elseif xl == 2 and zl == 2 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+		
+		for xl=-3, 3 do -- second part of the top fork
+		
+			for zl=-3, 3 do
+				
+				local vi = a:index((x2 + 2) + xl, (y2 + mid_point) + 1, z2 + zl)
+				
+				if xl == -3 and zl == -3 then
+				elseif xl == -3 and zl == 3 then
+				elseif xl == 3 and zl == -3 then
+				elseif xl == 3 and zl == 3 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+		
+		for xl=-2, 2 do -- top part of the lower fork
+		
+			for zl=-2, 2 do
+				
+				local vi = a:index((x2 - 2) + xl, (y2 + 2) + math.floor((mid_point - h_rand) / 2), z2 + zl)
+				
+				if xl == -2 and zl == -2 then
+				elseif xl == -2 and zl == 2 then
+				elseif xl == 2 and zl == -2 then
+				elseif xl == 2 and zl == 2 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+		
+		for xl=-3, 3 do -- lower part of the bottom fork
+		
+			for zl=-3, 3 do
+				
+				local vi = a:index((x2 - 2) + xl, (y2 + 1) + math.floor((mid_point - h_rand) / 2), z2 + zl)
+				
+				if xl == -3 and zl == -3 then
+				elseif xl == -3 and zl == 3 then
+				elseif xl == 3 and zl == -3 then
+				elseif xl == 3 and zl == 3 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+		
+	elseif tree_model == 2 then -- simple oak like tree
+	
+		for xl=-2, 2 do -- top part 
+		
+			for zl=-2, 2 do
+				
+				local vi = a:index(x2 + xl, y2 + mid_point + 1, z2 + zl)
+				
+				if xl == -2 and zl == -2 then
+				elseif xl == -2 and zl == 2 then
+				elseif xl == 2 and zl == -2 then
+				elseif xl == 2 and zl == 2 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+		
+		for xl=-3, 3 do -- lower part
+		
+			for zl=-3, 3 do
+				
+				local vi = a:index(x2 + xl, y2 + mid_point, z2 + zl)
+				
+				if xl == -3 and zl == -3 then
+				elseif xl == -3 and zl == 3 then
+				elseif xl == 3 and zl == -3 then
+				elseif xl == 3 and zl == 3 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+	
+	elseif tree_model == 3 then
+		
+		local vi = a:index(x2 - 1, y2 + mid_point, z2)
+		data[vi] = c_trunk
+		
+		vi = a:index(x2 - 2, y2 + mid_point + 1, z2)
+		data[vi] = c_trunk
+		
+		for xl=-2, 2 do -- top part of the top fork
+		
+			for zl=-2, 2 do
+				
+				local vi = a:index((x2 - 2) + xl, (y2 + mid_point) + 2, z2 + zl)
+				
+				if xl == -2 and zl == -2 then
+				elseif xl == -2 and zl == 2 then
+				elseif xl == 2 and zl == -2 then
+				elseif xl == 2 and zl == 2 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+		
+		for xl=-3, 3 do -- second part of the top fork
+		
+			for zl=-3, 3 do
+				
+				local vi = a:index((x2 - 2) + xl, (y2 + mid_point) + 1, z2 + zl)
+				
+				if xl == -3 and zl == -3 then
+				elseif xl == -3 and zl == 3 then
+				elseif xl == 3 and zl == -3 then
+				elseif xl == 3 and zl == 3 then
+				elseif data[vi] == c_air then
+					if math.random (1,100) < 85 then					
+						data[vi] = c_leaves
+					end
+				end
+			
+			end
+		
+		end
+		
+	end
+	
+	vm:set_data(data)
+	vm:calc_lighting()
+	vm:write_to_map()
+	vm:update_map()
+
+end
+
+
 local function place_leaves_on_ground(pos, chance, fallen_leaves_node)
 	
 	local x2, y2, z2 = pos.x, pos.y, pos.z
@@ -433,6 +689,9 @@ minetest.register_biome({
 	y_min = 1,
 	y_max = 120,
 	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
 	heat_point = 50,
 	humidity_point = 50,
 
@@ -451,6 +710,9 @@ minetest.register_biome({
 	y_min = 4,
 	y_max = 80,
 	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
 	heat_point = 40,
 	humidity_point = 55,
 
@@ -458,9 +720,9 @@ minetest.register_biome({
 
 minetest.register_biome({
 
-	name = "plains_bamboo_forest",
+	name = "wildlands",
 	
-	node_top = "core:grass",
+	node_top = "core:grass_wildland",
 	depth_top = 1,
 	
 	node_filler = "core:dirt",
@@ -468,6 +730,9 @@ minetest.register_biome({
 	
 	y_min = 4,
 	y_max = 120,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
 	
 	heat_point = 60,
 	humidity_point = 75,
@@ -487,6 +752,9 @@ minetest.register_biome({
 	
 	y_min = 0,
 	y_max = 4,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
 	
 	heat_point = 45,
 	humidity_point = 45,
@@ -508,6 +776,12 @@ minetest.register_biome({
 	y_min = 0,
 	y_max = 4,
 	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
+	node_water_top = "core:ice",
+	depth_water_top = 1,
+	
 	heat_point = 10,
 	humidity_point = 55,
 
@@ -525,11 +799,40 @@ minetest.register_biome({
 	node_filler = "core:dirt",
 	depth_filler = 3,
 	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
+	node_water_top = "core:ice",
+	depth_water_top = 1,
+	
 	y_min = 4,
-	y_max = 300,
+	y_max = 150,
 	
 	heat_point = 10,
 	humidity_point = 55,
+
+})
+
+minetest.register_biome({
+
+	name = "snowy_mountain",
+	
+	node_dust = "core:snow",
+	
+	node_top = "core:snowblock",
+	depth_top = 1,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
+	node_water_top = "core:ice",
+	depth_water_top = 1,
+	
+	y_min = 150,
+	y_max = 1000,
+	
+	heat_point = 50,
+	humidity_point = 50,
 
 })
 
@@ -546,7 +849,13 @@ minetest.register_biome({
 	depth_filler = 3,
 	
 	y_min = 4,
-	y_max = 200,
+	y_max = 150,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
+	node_water_top = "core:ice",
+	depth_water_top = 1,
 	
 	heat_point = 25,
 	humidity_point = 75,
@@ -567,8 +876,11 @@ minetest.register_biome({
 	
 	node_stone = "core:sandstone",
 	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
 	y_min = 4,
-	y_max = 150,
+	y_max = 1000,
 	
 	heat_point = 75,
 	humidity_point = 25,
@@ -584,6 +896,9 @@ minetest.register_biome({
 	
 	node_filler = "core:sand",
 	depth_filler = 3,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
 	
 	y_min = 0,
 	y_max = 4,
@@ -603,6 +918,9 @@ minetest.register_biome({
 	node_filler = "core:sandstone",
 	depth_filler = 3,
 	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
 	y_min = 4,
 	y_max = 120,
 	
@@ -615,18 +933,19 @@ minetest.register_biome({
 
 minetest.register_biome({
 		name = "ocean",
-		--node_dust = "",
+		
 		node_top = "core:sand",
 		depth_top = 1,
+		
 		node_filler = "core:sand",
 		depth_filler = 3,
-		--node_stone = "",
-		--node_water_top = "",
-		--depth_water_top = ,
-		--node_water = "",
-		--node_river_water = "",
+		
+		node_water = "core:water_source",
+		node_river_water = "core:water_source",
+		
 		y_min = -112,
 		y_max = 0,
+		
 		heat_point = 50,
 		humidity_point = 50,
 })
@@ -637,8 +956,8 @@ minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:grass_snow",
 	decoration = {"core:mg_pine_snowy_sapling"},
-	sidelen = 8,
-	fill_ratio = 0.025,
+	sidelen = 16,
+	fill_ratio = 0.01,
 	biomes = {"snowy_forest"},
 	height = 1,
 })
@@ -647,8 +966,8 @@ minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:grass",
 	decoration = {"core:mg_oak_sapling"},
-	sidelen = 8,
-	fill_ratio = 0.012,
+	sidelen = 16,
+	fill_ratio = 0.009,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -657,8 +976,8 @@ minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:grass",
 	decoration = {"core:mg_birch_sapling"},
-	sidelen = 8,
-	fill_ratio = 0.003,
+	sidelen = 16,
+	fill_ratio = 0.007,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -667,27 +986,17 @@ minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:grass",
 	decoration = {"core:mg_cherry_sapling"},
-	sidelen = 8,
-	fill_ratio = 0.002,
-	biomes = {"plains_forest"},
-	height = 1,
-})
-
-minetest.register_decoration({
-	deco_type = "simple",
-	place_on = "core:grass",
-	decoration = {"core:mg_birch_sapling"},
-	sidelen = 4,
+	sidelen = 16,
 	fill_ratio = 0.001,
-	biomes = {"plains"},
+	biomes = {"plains_forest"},
 	height = 1,
 })
 
 minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:grass",
-	decoration = {"core:mg_cherry_sapling"},
-	sidelen = 4,
+	decoration = {"core:mg_oak_sapling", "core:mg_cherry_sapling", "core:mg_birch_sapling"},
+	sidelen = 80,
 	fill_ratio = 0.0001,
 	biomes = {"plains"},
 	height = 1,
@@ -696,53 +1005,31 @@ minetest.register_decoration({
 minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:grass",
-	decoration = {"core:mg_oak_sapling"},
-	sidelen = 4,
-	fill_ratio = 0.0003,
-	biomes = {"plains"},
-	height = 1,
-})
-
-minetest.register_decoration({
-	deco_type = "simple",
-	place_on = "core:grass",
-	decoration = {"core:bamboo"},
+	decoration = {"core:grass_1", "core:grass_2", "core:grass_3"},
 	sidelen = 16,
 	fill_ratio = 0.2,
-	biomes = {"plains_bamboo_forest"},
-	height = 2,
-	y_max = 5,
-})
-
-minetest.register_decoration({
-	deco_type = "simple",
-	place_on = "core:grass",
-	decoration = {"core:grass_1"},
-	sidelen = 16,
-	fill_ratio = 0.006,
-	biomes = {"plains", "plains_forest", "plains_floral", "plains_bamboo_forest"},
+	biomes = {"plains", "plains_forest", "plains_floral"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass",
-	decoration = {"core:grass_2"},
-	sidelen = 16,
-	fill_ratio = 0.06,
-	biomes = {"plains", "plains_forest", "plains_floral", "plains_bamboo_forest"},
+	place_on = "core:grass_wildland",
+	decoration = {"core:mg_acacia_sapling"},
+	sidelen = 40,
+	fill_ratio = 0.0002,
+	biomes = {"wildlands"},
 	height = 1,
-	param2 = mcore.options("cross", true, true, false),
 })
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass",
-	decoration = {"core:grass_3"},
-	sidelen = 16,
-	fill_ratio = 0.06,
-	biomes = {"plains", "plains_forest", "plains_floral", "plains_bamboo_forest"},
+	place_on = "core:grass_wildland",
+	decoration = {"core:grass_wild_1", "core:grass_wild_2", "core:grass_wild_3"},
+	sidelen = 20,
+	fill_ratio = 0.002,
+	biomes = {"wildlands"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -754,8 +1041,8 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"plants:daisy"},
 	sidelen = 16,
-	fill_ratio = 0.12,
-	biomes = {"plains", "plains_forest", "plains_floral", "plains_bamboo_forest"},
+	fill_ratio = 0.02,
+	biomes = {"plains", "plains_floral"},
 	height = 1,
 })
 
@@ -765,8 +1052,8 @@ minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:sand",
 	decoration = {"core:cactus"},
-	sidelen = 8,
-	fill_ratio = 0.004,
+	sidelen = 20,
+	fill_ratio = 0.0004,
 	biomes = {"desert", "desert_cacti_forest"},
 	height = 3,
 	y_max = 4,

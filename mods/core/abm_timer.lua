@@ -22,10 +22,27 @@ minetest.register_abm({
 	end,
 })
 
+minetest.register_abm({
+	nodenames = {"core:dirt"},
+	neighbors = {"core:grass_wildland"},
+	interval = 180,
+	chance = 3,
+	action = function(pos)
+		pos.y = pos.y + 1
+		if not minetest.get_node_light(pos) then
+			return
+		end
+		if minetest.get_node_light(pos) > 9 then
+			pos.y = pos.y - 1
+			minetest.add_node(pos,{name="core:grass_wildland"})
+		end
+	end,
+})
+
 -- grass decay
 
 minetest.register_abm({
-	nodenames = {"core:grass"},
+	nodenames = {"core:grass", "core:grass_wildland"},
 	interval = 120,
 	chance = 2,
 	action = function(pos)
@@ -54,7 +71,7 @@ minetest.register_abm({
 		
 		if minetest.get_node_or_nil(pos).name ~= "core:snow" then
 			pos.y = pos.y - 1
-			minetest.add_node(pos,{name="core:dirt"})
+			minetest.add_node(pos,{name="core:grass"})
 		end
 	end,
 })
@@ -113,6 +130,24 @@ minetest.register_abm({
 		
 		minetest.remove_node({x=pos.x, y=pos.y, z=pos.z})
 		mcore.grow_tree(pos, false, "core:cherry_log", "core:cherry_leaves", "core:fallen_cherry_leaves", 1.25)
+	end,
+})
+
+minetest.register_abm({
+	nodenames = {"core:acacia_sapling"},
+	interval = 80, --70
+	chance = 3,
+	action = function(pos, node)
+		
+		local nu =  minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
+		local is_soil = minetest.get_item_group(nu, "soil")
+		
+		if is_soil == 0 then
+			return
+		end
+			
+		minetest.remove_node({x=pos.x, y=pos.y, z=pos.z})
+		mcore.create_acacia_tree(pos)
 	end,
 })
 

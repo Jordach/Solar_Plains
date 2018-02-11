@@ -4,7 +4,7 @@ local function register_plant(name, min, max, spawnby, num)
 		deco_type = "simple",
 		place_on = {"core:grass"},
 		param2=mcore.options("croplike", true, true, false),
-		sidelen = 16,
+		sidelen = 80,
 		noise_params = {
 			offset = 0,
 			scale = 0.006,
