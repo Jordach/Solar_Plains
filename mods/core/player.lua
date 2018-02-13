@@ -3,7 +3,6 @@
 
 -- Player animation blending
 -- Note: This is currently broken due to a bug in Irrlicht, leave at 0
-default = {}
 
 local animation_blend = 0
 

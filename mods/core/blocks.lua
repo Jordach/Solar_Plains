@@ -207,7 +207,7 @@ minetest.register_node("core:snow", {
 	groups = {crumbly = 3, falling_node = 1, puts_out_fire = 1},
 	
 	sounds = mcore.sound_snow;
-	
+	walkable = false,
 	on_construct = function(pos)
 		pos.y = pos.y - 1
 		if minetest.get_node(pos).name == "core:grass" then
@@ -476,7 +476,7 @@ minetest.register_node("core:pine_needles", {
 			}
 		}
 	},
-	after_place_node = mcore.after_place_leaves,
+	after_place_node = default.after_place_leaves,
 	sounds = mcore.sound_plants,
 })
 
@@ -502,7 +502,7 @@ minetest.register_node("core:pine_needles_snowy", {
 			}
 		}
 	},
-	after_place_node = mcore.after_place_leaves,
+	after_place_node = default.after_place_leaves,
 	sounds = mcore.sound_plants,
 })
 
@@ -557,7 +557,7 @@ minetest.register_node("core:oak_leaves", {
 			}
 		}
 	},
-	after_place_node = mcore.after_place_leaves,
+	after_place_node = default.after_place_leaves,
 	sounds = mcore.sound_plants,
 })
 
@@ -612,7 +612,7 @@ minetest.register_node("core:cherry_leaves", {
 			}
 		}
 	},
-	after_place_node = mcore.after_place_leaves,
+	after_place_node = default.after_place_leaves,
 	sounds = mcore.sound_plants,
 })
 
@@ -638,6 +638,7 @@ minetest.register_node("core:fallen_cherry_leaves", {
 		fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 	},
 	sounds = mcore.sound_plants,
+	after_place_node = default.after_place_leaves,
 })
 
 -- birch
@@ -684,7 +685,7 @@ minetest.register_node("core:birch_leaves", {
 			}
 		}
 	},
-	after_place_node = mcore.after_place_leaves,
+	after_place_node = default.after_place_leaves,
 	sounds = mcore.sound_plants,
 })
 
@@ -785,7 +786,7 @@ minetest.register_node("core:acacia_leaves", {
 			}
 		}
 	},
-	after_place_node = mcore.after_place_leaves,
+	after_place_node = default.after_place_leaves,
 	sounds = mcore.sound_plants,
 })
 
@@ -794,6 +795,48 @@ minetest.register_node("core:acacia_planks", {
 	tiles = {"core_acacia_planks.png"},
 	groups = {choppy=3, flammable=2, solid=1, planks=1},
 	sounds = mcore.sound_wood,
+})
+
+-- leafdecay definitions
+
+default.register_leafdecay({
+
+	trunks = {"core:oak_log"},
+	leaves = {"core:oak_leaves"},
+	radius = 3,
+
+})
+
+default.register_leafdecay({
+
+	trunks = {"core:birch_log"},
+	leaves = {"core:birch_leaves"},
+	radius = 3,
+
+})
+
+default.register_leafdecay({
+
+	trunks = {"core:pine_log"},
+	leaves = {"core:pine_needles_snowy", "core:pine_needles"},
+	radius = 5,
+
+})
+
+default.register_leafdecay({
+
+	trunks = {"core:cherry_log"},
+	leaves = {"core:cherry_leaves", "core:fallen_cherry_leaves"},
+	radius = 3,
+
+})
+
+default.register_leafdecay({
+
+	trunks = {"core:acacia_log"},
+	leaves = {"core:acacia_leaves"},
+	radius = 5,
+
 })
 
 
@@ -1583,16 +1626,7 @@ minetest.register_node("core:furnace_active", {
 	allow_metadata_inventory_take = mcore.furnace.allow_metadata_inventory_take,
 })
 
-
 -- utility functions
-
-mcore.after_place_leaves = function(pos, placer, itemstack, pointed_thing)
-	if placer and not placer:get_player_control().sneak then
-		local node = minetest.get_node(pos)
-		node.param2 = 1
-		minetest.set_node(pos, node)
-	end
-end
 
 function mcore.register_fence(name, def)
 	minetest.register_craft({

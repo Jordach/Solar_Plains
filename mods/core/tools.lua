@@ -125,7 +125,7 @@ function mcore.give_mese_exp(itemstack, user, node, digparams)
 		
 		for i=1, 4 do
 			
-			if itemstack:get_name() == "core:mese_" .. item_string .. "_" .. i and itemstack:get_wear() == 0 then
+			if itemstack:get_name() == "core:mese_" .. item_string .. "_" .. i and itemstack:get_wear() < 1 then
 				
 				itemstack:set_name("core:mese_" .. item_string .. "_" .. i+1)
 				

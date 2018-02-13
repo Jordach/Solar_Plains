@@ -4,6 +4,8 @@ mcore = {}
 
 give_initial_stuff = {}
 
+default = {}
+
 --dofile(minetest.get_modpath("core").."/")
 --dofile(minetest.get_modpath("core").."/")
 --dofile(minetest.get_modpath("core").."/")
@@ -444,10 +446,10 @@ function mcore.rotate_axis(itemstack, placer, pointed_thing)
 end
 
 -- dofiles for loading files required by "core"
+dofile(minetest.get_modpath("core").."/abm_timer.lua")
 dofile(minetest.get_modpath("core").."/sounds.lua")
 dofile(minetest.get_modpath("core").."/mapgen.lua")
 dofile(minetest.get_modpath("core").."/blocks.lua")
 dofile(minetest.get_modpath("core").."/player.lua")
 dofile(minetest.get_modpath("core").."/tools.lua")
 dofile(minetest.get_modpath("core").."/crafting.lua")
-dofile(minetest.get_modpath("core").."/abm_timer.lua")
