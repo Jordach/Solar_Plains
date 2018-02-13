@@ -76,7 +76,7 @@ function hudclock.update_calendar()
 	hudclock.day = totaldays
 	hudclock.month = totalmonths
 	hudclock.year = totalyears
-	--minetest.after(30, hudclock.update_calendar)
+	minetest.after(30, hudclock.update_calendar)
 	
 	print ("[Hudclock] Recalculating calendar.\n[Hudclock] The date is: " .. hudclock.day .. " / " .. hudclock.month .. " / " .. hudclock.year)
 end

@@ -150,6 +150,18 @@ function hudinfo.player_env_data(player)
 		
 	end
 	
+	if nval_humid > 100 then
+	
+		nval_humid = 100
+		
+	elseif nval_humid < 0 then
+	
+		nval_humid = 0
+	
+	end
+	
+	
+	
 	-- let's understand the current weather from atmos:
 	
 	local weather_str, weather_icon
