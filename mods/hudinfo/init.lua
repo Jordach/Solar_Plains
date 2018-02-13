@@ -114,6 +114,16 @@ function hudinfo.player_env_data(player)
 	
 	end
 	
+	if nval_humid > 100 then
+	
+		nval_humid = 100
+		
+	elseif nval_humid < 0 then
+	
+		nval_humid = 0
+	
+	end
+	
 	nval_temp = ((nval_temp / 2) - 12) + (nval_humid * 0.02)
 	
 	if hudclock.month == 1 then
@@ -148,19 +158,7 @@ function hudinfo.player_env_data(player)
 		
 		nval_humid = 0
 		
-	end
-	
-	if nval_humid > 100 then
-	
-		nval_humid = 100
-		
-	elseif nval_humid < 0 then
-	
-		nval_humid = 0
-	
-	end
-	
-	
+	end	
 	
 	-- let's understand the current weather from atmos:
 	
