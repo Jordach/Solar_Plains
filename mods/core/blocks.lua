@@ -742,6 +742,18 @@ minetest.register_node("core:cherry_sapling", {
 	sounds = mcore.sound_plants,
 })
 
+minetest.register_node("core:acacia_sapling", {
+	description = "Acacia Sapling",
+	drawtype = "plantlike",
+	paramtype = "light",
+	tiles = {"core_cherry_sapling.png"},
+	waving = 1,
+	walkable = false,
+	groups = {snappy=3, flammable=2, attached_node=1},
+	sounds = mcore.sound_plants,
+})
+
+
 -- acacia
 
 minetest.register_node("core:acacia_log", {

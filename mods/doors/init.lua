@@ -407,8 +407,8 @@ function doors.register(name, def)
 	def.walkable = true
 	def.is_ground_content = false
 	def.buildable_to = false
-	def.selection_box = { type = "fixed", fixed = { -1/2,-1/2,-1/2,1/2,3/2,-6/16} }
-	def.collision_box = { type = "fixed", fixed = { -1/2,-1/2,-1/2,1/2,3/2,-6/16} }
+	def.selection_box = { type = "fixed", fixed = { -0.5, -0.5, -0.5,  0.5, 1.5, -0.312500} }
+	def.collision_box = { type = "fixed", fixed = { -0.5, -0.5, -0.5,  0.5, 1.5, -0.312500} }
 
 	def.mesh = "door_a.b3d"
 	minetest.register_node(":" .. name .. "_a", def)
