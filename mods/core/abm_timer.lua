@@ -76,6 +76,24 @@ minetest.register_abm({
 	end,
 })
 
+minetest.register_abm({
+	nodenames = {"core:grass"},
+	interval = 30,
+	chance = 2,
+	action = function(pos)
+		pos.y = pos.y + 1
+		if not minetest.get_node_or_nil(pos) then
+			return
+		end
+		
+		if minetest.get_node_or_nil(pos).name == "core:snow" then
+			pos.y = pos.y - 1
+			minetest.add_node(pos, {name="core:grass_snow"})
+		end
+	end,
+})
+	
+
 -- saplings
 
 minetest.register_abm({
