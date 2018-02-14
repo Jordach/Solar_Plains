@@ -289,6 +289,8 @@ function hb.change_hudbar(player, identifier, new_value, new_max_value, new_icon
 	local value_changed, max_changed = false, false
 
 	if new_value ~= nil then
+		if hudtable.hudstate[name] == nil then return false end
+
 		if new_value ~= hudtable.hudstate[name].value then
 			hudtable.hudstate[name].value = new_value
 			value_changed = true
