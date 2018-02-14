@@ -179,7 +179,7 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 	
 	if px < 2 and pz < 2 then -- if the node is being placed 1 block away from us, then lets place it either upright or upside down
 		
-		local pY
+		local pY = 0
 		
 		if placer:get_pos().y < 0 then
 		
@@ -187,9 +187,11 @@ function mcore.sensible_facedir(itemstack, placer, pointed_thing)
 		
 		else
 		
-			pY = math.abs(placer:get_pos().y + 1.14) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
+			pY = math.abs(placer:get_pos().y + 2.14) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
 		
 		end
+		
+		print (pY - math.abs(rpos.y))
 		
 		if pY - math.abs(rpos.y) > 1.5 then -- are we being placed on the floor? let's be upright then.
 				
