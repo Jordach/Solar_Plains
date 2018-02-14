@@ -7,7 +7,7 @@
 
 minetest.register_abm({
 	nodenames = {"core:dirt"},
-	neighbors = {"core:grass"},
+	neighbors = {"core:grass", "core:grass_snow"},
 	interval = 180,
 	chance = 3,
 	action = function(pos)
