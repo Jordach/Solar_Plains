@@ -36,7 +36,7 @@ else
 		
 		if v == "Virtuoel" then
 		
-			minetest.register_node(":newhand:virtuoel", {
+			minetest.register_node(":newhand:Virtuoel", {
 			
 				description = "",
 				tiles = {
