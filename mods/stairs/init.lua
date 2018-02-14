@@ -231,3 +231,81 @@ If you want to skip certain parts, like the recipe item, just use nil.
 ]]
 
 stairs.register_stair_and_slab("cobble", "core:cobble", {cracky = 3}, {"core_cobble.png"}, "Cobble Stair", "Cobble Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("stone", "core:stone", {cracky = 3}, {"core_stone.png"}, "Stone Stair", "Stone Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("dirt", "core:dirt", {crumbly = 3}, {"core_dirt.png"}, "Dirt Stair", "Dirt Slab", mcore.sound_dirt)
+
+stairs.register_stair_and_slab("sand", "core:sand", {crumbly = 3}, {"core_sand.png"}, "Sand Stair", "Sand Slab", mcore.sound_sand)
+
+stairs.register_stair_and_slab("gravel", "core:gravel", {crumbly = 2}, {"core_gravel.png"}, "Gravel Stair", "Gravel Slab", mcore.sound_sand)
+
+stairs.register_stair_and_slab("clay", "core:clay", {crumbly = 2}, {"core_clay_block.png"}, "Clay Stair", "Clay Slab", mcore.sound_sand)
+
+stairs.register_stair_and_slab("basalt", "core:basalt", {cracky = 1}, {"core_basalt.png"}, "Basalt Stair", "Basalt Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("basalt_brick", "core:basalt_brick", {cracky = 1}, {"core_basalt_brick_top.png", "core_basalt_brick_top.png", "core_basalt_brick.png", "core_basalt_brick.png", "core_basalt_brick_bottom.png", "core_basalt_brick_bottom.png"}, "Basalt Brick Stair", "Basalt Brick Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("obsidian", "core:obsidian", {cracky = 1}, {"core_obsidian.png"}, "Obsidian Stair", "Obsidian Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("obsidian_brick", "core:obsidian_brick", {cracky = 1}, {"core_obsidian_brick_top.png", "core_obsidian_brick_top.png", "core_obsidian_brick.png", "core_obsidian_brick.png", "core_obsidian_brick_bottom.png", "core_obsidian_brick_bottom.png"}, "Obsidian Brick Stair", "Obsidian Brick Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("obsidian_glass", "core:obsidian_glass", {cracky = 1}, {"core_obsidian_glass.png"}, "Obsidian Glass Stair", "Obsidian Glass Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("mossycobble", "core:mossycobble", {cracky = 2}, {"core_cobble_mossy.png"}, "Mossy Cobblestone Stair", "Mossy Cobblestone Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("sandstone", "core:sandstone", {cracky = 2}, {"core_sandstone.png"}, "Sandstone Stair", "Sandstone Slab", mcore.sound_stone)
+
+stairs.register_stair_and_slab("snow", "core:snowblock", {crumbly = 3, puts_out_fire = 1}, {"core_snow.png"}, "Snow Stair", "Snow Slab", mcore.sound_snow)
+
+stairs.register_stair_and_slab("ice", "core:ice", {cracky = 3, puts_out_fire = 1}, {"core_ice.png"}, "Ice Stair", "Ice Slab", mcore.sound_glass)
+
+stairs.register_stair_and_slab("glass", "core:glass", {oddly_breakable_by_hand = 3}, {"core_glass.png"}, "Glass Stair", "Glass Slab", mcore.sound_glass)
+
+-- logs?
+
+stairs.register_stair_and_slab("pine_log", "core:pine_log", {choppy = 3, flammable = 2}, {"core_pine_log.png"}, "Pine Log Stair", "Pine Log Slab", mcore.sound_wood)
+stairs.register_stair_and_slab("pine_log_grassy", "core:pine_log_grassy", {choppy = 3, flammable = 2}, {"core_pine_log.png^core_long_grass_1.png"}, "Pine Log (Grassy) Stair", "Pine Log (Grassy) Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("oak_log", "core:oak_log", {choppy = 3, flammable = 2}, {"core_oak_log.png"}, "Oak Log Stair", "Oak Log Slab", mcore.sound_wood)
+stairs.register_stair_and_slab("oak_log_grassy", "core:oak_log_grassy", {choppy = 3, flammable = 2}, {"core_oak_log.png^core_long_grass_1.png"}, "Oak Log (Grassy) Stair", "Oak Log (Grassy) Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("birch_log", "core:birch_log", {choppy = 3, flammable = 2}, {"core_birch_log.png"}, "Birch Log Stair", "Birch Log Slab", mcore.sound_wood)
+stairs.register_stair_and_slab("birch_log_grassy", "core:birch_log_grassy", {choppy = 3, flammable = 2}, {"core_birch_log.png^core_long_grass_1.png"}, "Birch Log (Grassy) Stair", "Birch Log (Grassy) Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("cherry_log", "core:cherry_log", {choppy = 3, flammable = 2}, {"core_cherry_log.png"}, "Cherry Log Stair", "Cherry Log Slab", mcore.sound_wood)
+stairs.register_stair_and_slab("cherry_log_grassy", "core:cherry_log_grassy", {choppy = 3, flammable = 2}, {"core_cherry_log.png^core_long_grass_1.png"}, "Cherry Log (Grassy) Stair", "Cherry Log (Grassy) Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("acacia_log", "core:acacia_log", {choppy = 3, flammable = 2}, {"core_acacia_log.png"}, "Acacia Log Stair", "Acacia Log Slab", mcore.sound_wood)
+stairs.register_stair_and_slab("acacia_log_grassy", "core:acacia_log_grassy", {choppy = 3, flammable = 2}, {"core_acacia_log.png^core_long_grass_1.png"}, "Acacia Log (Grassy) Stair", "Acacia Log (Grassy) Slab", mcore.sound_wood)
+
+-- planks
+
+stairs.register_stair_and_slab("pine_planks", "core:pine_planks", {choppy = 3, flammable = 2}, {"core_pine_planks.png"}, "Pine Planks Stair", "Pine Planks Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("oak_planks", "core:oak_planks", {choppy = 3, flammable = 2}, {"core_oak_planks.png"}, "Oak Planks Stair", "Oak Planks Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("birch_planks", "core:birch_planks", {choppy = 3, flammable = 2}, {"core_birch_planks.png"}, "Birch Planks Stair", "Birch Planks Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("cherry_planks", "core:cherry_planks", {choppy = 3, flammable = 2}, {"core_cherry_planks.png"}, "Cherry Planks Stair", "Cherry Planks Slab", mcore.sound_wood)
+
+stairs.register_stair_and_slab("acacia_planks", "core:acacia_planks", {choppy = 3, flammable = 2}, {"core_acacia_planks.png"}, "Acacia Planks Stair", "Acacia Planks Slab", mcore.sound_wood)
+
+-- leaves?
+
+stairs.register_stair_and_slab("pine_needles", "core:pine_needles", {snappy = 3, flammable = 2}, {"core_pine_needles.png"}, "Pine Needles Stair", "Pine Needles Slab", mcore.sound_plants)
+stairs.register_stair_and_slab("pine_needles_snowy", "core:pine_needles_snowy", {snappy = 3, flammable = 2}, {"core_pine_needles_snowy.png"}, "Pine Needles (Snowy) Stair", "Pine Needles (Snowy) Slab", mcore.sound_plants)
+
+stairs.register_stair_and_slab("oak_leaves", "core:oak_leaves", {snappy = 3, flammable = 2}, {"core_oak_leaves.png"}, "Oak Leaves Stair", "Oak Leaves Slab", mcore.sound_plants)
+
+stairs.register_stair_and_slab("birch_leaves", "core:birch_leaves", {snappy = 3, flammable = 2}, {"core_birch_leaves.png"}, "Birch Leaves Stair", "Birch Leaves Slab", mcore.sound_plants)
+
+stairs.register_stair_and_slab("cherry_leaves", "core:cherry_leaves", {snappy = 3, flammable = 2}, {"core_cherry_leaves.png"}, "Cherry Leaves Stair", "Cherry Leaves Slab", mcore.sound_plants)
+
+stairs.register_stair_and_slab("acacia_leaves", "core:acacia_leaves", {snappy = 3, flammable = 2}, {"core_acacia_leaves.png"}, "Acacia Leaves Stair", "Acacia Leaves Slab", mcore.sound_plants)
+
+-- uhh?
+
+stairs.register_stair_and_slab("grass", "core:grass_1", {snappy = 3}, {"core_grass.png"}, "Grass Stair", "Grass Slab", mcore.sound_grass)
+
+stairs.register_stair_and_slab("grass_wildlands", "core:grass_wild_1", {snappy = 3}, {"core_grass_wild.png"}, "Wildlands Grass Stair", "Wildlands Grass Slab", mcore.sound_grass)

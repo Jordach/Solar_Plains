@@ -70,7 +70,7 @@ minetest.register_node("core:obsidian_brick", {
 
 minetest.register_node("core:obsidian_glass", {
 	tiles = {"core_obsidian_glass.png"},
-	description = "Obsidian",
+	description = "Obsidian Glass",
 	drawtype = "glasslike",
 	paramtype = "light",
 	groups = {cracky=1, solid=1},
