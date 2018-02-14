@@ -113,7 +113,7 @@ minetest.register_node("core:icestone", {
 	paramtype = "light",
 	is_ground_content = true,
 	drop = "core:icestone",
-	groups = {cracky=2, solid=1, stone=1},
+	groups = {cracky=2, solid=1, stone=1, slippery=3},
 	sounds = mcore.sound_glass,
 })
 
@@ -186,7 +186,7 @@ minetest.register_node("core:grass_snow", {
 	description = "Dirt with Snowy Grass",
 	is_ground_content = true,
 	drop = "core:dirt",
-	groups = {crumbly=3, solid=1, soil=1},
+	groups = {crumbly=3, solid=1, soil=1, slippery=1},
 	sounds = mcore.sound_snow,
 })
 
@@ -204,7 +204,7 @@ minetest.register_node("core:snow", {
 			{-0.5, -0.5, -0.5, 0.5, -0.25, 0.5},
 		},
 	},
-	groups = {crumbly = 3, falling_node = 1, puts_out_fire = 1},
+	groups = {crumbly = 3, falling_node = 1, puts_out_fire = 1, slippery=2},
 	
 	sounds = mcore.sound_snow;
 	walkable = false,
@@ -221,7 +221,7 @@ minetest.register_node("core:snowblock", {
 	tiles = {"core_snow.png"},
 	is_ground_content = true,
 	paramtype = "light",
-	groups = {crumbly=3, puts_out_fire=1, solid=1},
+	groups = {crumbly=3, puts_out_fire=1, solid=1, slippery=2},
 	sounds = mcore.sound_snow,
 })
 
@@ -231,7 +231,7 @@ minetest.register_node("core:ice", {
 	is_ground_content = true,
 	paramtype = "light",
 	drawtype = "glasslike",
-	groups = {cracky=2, puts_out_fire=1, solid=1},
+	groups = {cracky=2, puts_out_fire=1, solid=1, slippery=4},
 	sounds = mcore.sound_glass,
 })
 
