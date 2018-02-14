@@ -204,7 +204,7 @@ minetest.register_node("core:snow", {
 			{-0.5, -0.5, -0.5, 0.5, -0.25, 0.5},
 		},
 	},
-	groups = {crumbly = 3, falling_node = 1, puts_out_fire = 1, slippery=2},
+	groups = {crumbly = 3, falling_node = 1, puts_out_fire = 1, slippery=1},
 	
 	sounds = mcore.sound_snow;
 	walkable = false,
