@@ -420,10 +420,12 @@ function doors.register(name, def)
 	_doors.registered_doors[name .. "_b"] = true
 end
 
-doors.register("door_wood", {
+-- register wooden doors here:
+
+doors.register("door_wood", { -- i'd use door_oak but to preserve backwards compatability, i'll keep it door_wood
 		tiles = {{ name = "doors_door_wood.png", backface_culling = true }},
-		description = "Wooden Door",
-		inventory_image = "doors_item_wood.png",
+		description = "Oak Door",
+		inventory_image = "doors_item_oak.png",
 		groups = { choppy = 2, oddly_breakable_by_hand = 2, flammable = 2 },
 		recipe = {
 			{"core:oak_planks", "core:oak_planks"},
@@ -433,55 +435,97 @@ doors.register("door_wood", {
 		sounds = mcore.sound_wood,
 })
 
---[[
+doors.register("door_pine", {
 
-doors.register("door_steel", {
-		tiles = {{ name = "doors_door_steel.png", backface_culling = true }},
-		description = "Steel Door",
-		inventory_image = "doors_item_steel.png",
-		protected = true,
-		groups = { cracky = 1, level = 2 },
-		sounds = default.node_sound_stone_defaults(),
-		sound_open = "doors_steel_door_open",
-		sound_close = "doors_steel_door_close",
-		recipe = {
-			{"default:steel_ingot", "default:steel_ingot"},
-			{"default:steel_ingot", "default:steel_ingot"},
-			{"default:steel_ingot", "default:steel_ingot"},
-		}
+	tiles = {{ name = "doors_door_pine.png", backface_culling = true }},
+	description = "Pine Door",
+	inventory_image = "doors_item_pine.png",
+	groups = { choppy = 2, oddly_breakable_by_hand = 2, flammable = 2 },
+	recipe = {
+		{"core:pine_planks", "core:pine_planks"},
+		{"core:pine_planks", "core:pine_planks"},
+		{"core:pine_planks", "core:pine_planks"},
+	},
+	sounds = mcore.sound_wood,
+
 })
+
+doors.register("door_birch", {
+
+	tiles = {{ name = "doors_door_birch.png", backface_culling = true }},
+	description = "Birch Door",
+	inventory_image = "doors_item_birch.png",
+	groups = { choppy = 2, oddly_breakable_by_hand = 2, flammable = 2 },
+	recipe = {
+		{"core:birch_planks", "core:birch_planks"},
+		{"core:birch_planks", "core:birch_planks"},
+		{"core:birch_planks", "core:birch_planks"},
+	},
+	sounds = mcore.sound_wood,
+
+})
+
+doors.register("door_cherry", {
+
+	tiles = {{ name = "doors_door_cherry.png", backface_culling = true }},
+	description = "Cherry Door",
+	inventory_image = "doors_item_cherry.png",
+	groups = { choppy = 2, oddly_breakable_by_hand = 2, flammable = 2 },
+	recipe = {
+		{"core:cherry_planks", "core:cherry_planks"},
+		{"core:cherry_planks", "core:cherry_planks"},
+		{"core:cherry_planks", "core:cherry_planks"},
+	},
+	sounds = mcore.sound_wood,
+
+})
+
+doors.register("door_acacia", {
+
+	tiles = {{ name = "doors_door_acacia.png", backface_culling = true }},
+	description = "Acacia Door",
+	inventory_image = "doors_item_acacia.png",
+	groups = { choppy = 2, oddly_breakable_by_hand = 2, flammable = 2 },
+	recipe = {
+		{"core:acacia_planks", "core:acacia_planks"},
+		{"core:acacia_planks", "core:acacia_planks"},
+		{"core:acacia_planks", "core:acacia_planks"},
+	},
+	sounds = mcore.sound_wood,
+
+})
+
+-- register glass doors here:
 
 doors.register("door_glass", {
 		tiles = { "doors_door_glass.png"},
 		description = "Glass Door",
 		inventory_image = "doors_item_glass.png",
 		groups = { cracky = 3, oddly_breakable_by_hand = 3 },
-		sounds = default.node_sound_glass_defaults(),
+		sounds = mcore.sound_glass,
 		sound_open = "doors_glass_door_open",
 		sound_close = "doors_glass_door_close",
 		recipe = {
-			{"default:glass", "default:glass"},
-			{"default:glass", "default:glass"},
-			{"default:glass", "default:glass"},
+			{"core:glass", "core:glass"},
+			{"core:glass", "core:glass"},
+			{"core:glass", "core:glass"},
 		}
 })
 
 doors.register("door_obsidian_glass", {
-		tiles = { "doors_door_obsidian_glass.png" },
+		tiles = { "doors_door_glass_obsidian.png" },
 		description = "Obsidian Glass Door",
 		inventory_image = "doors_item_obsidian_glass.png",
 		groups = { cracky = 3 },
-		sounds = default.node_sound_glass_defaults(),
+		sounds = mcore.sound_glass,
 		sound_open = "doors_glass_door_open",
 		sound_close = "doors_glass_door_close",
 		recipe = {
-			{"default:obsidian_glass", "default:obsidian_glass"},
-			{"default:obsidian_glass", "default:obsidian_glass"},
-			{"default:obsidian_glass", "default:obsidian_glass"},
+			{"core:obsidian_glass", "core:obsidian_glass"},
+			{"core:obsidian_glass", "core:obsidian_glass"},
+			{"core:obsidian_glass", "core:obsidian_glass"},
 		},
 })
-
-]]--
 
 -- Capture mods using the old API as best as possible.
 function doors.register_door(name, def)
