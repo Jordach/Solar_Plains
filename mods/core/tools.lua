@@ -388,7 +388,7 @@ minetest.register_tool("core:wooden_pickaxe", {
 
 minetest.register_tool("core:wooden_shovel", {
 	description = "Wooden Shovel",
-	inventory_image = "core_wooden_shovel.png^[transformR90",
+	inventory_image = "core_wooden_shovel.png",
 	tool_capabilities = {
 		full_punch_interval = 0.5,
 		max_drop_level = 0,
@@ -446,7 +446,7 @@ minetest.register_tool("core:stone_pickaxe", {
 
 minetest.register_tool("core:stone_shovel", {
 	description = "Stone Shovel",
-	inventory_image = "core_stone_shovel.png^[transformR90",
+	inventory_image = "core_stone_shovel.png",
 	tool_capabilities = {
 		full_punch_interval = 2.0,
 		max_drop_level = 0,
@@ -505,7 +505,7 @@ minetest.register_tool("core:iron_pickaxe", {
 
 minetest.register_tool("core:iron_shovel", {
 	description = "Iron Shovel",
-	inventory_image = "core_iron_shovel.png^[transformR90",
+	inventory_image = "core_iron_shovel.png",
 	tool_capabilities = {
 		full_punch_interval = 4.0,
 		max_drop_level = 0,
@@ -564,7 +564,7 @@ minetest.register_tool("core:ironze_pickaxe", {
 
 minetest.register_tool("core:ironze_shovel", {
 	description = "Ironze Shovel",
-	inventory_image = "core_ironze_shovel.png^[transformR90",
+	inventory_image = "core_ironze_shovel.png",
 	tool_capabilities = {
 		full_punch_interval = 4.0,
 		max_drop_level = 0,
@@ -629,7 +629,7 @@ minetest.register_tool("core:diamond_pickaxe", {
 
 minetest.register_tool("core:diamond_shovel", {
 	description = "Diamond Shovel",
-	inventory_image = "core_diamond_shovel.png^[transformR90",
+	inventory_image = "core_diamond_shovel.png",
 	tool_capabilities = {
 		full_punch_interval = 4.0,
 		max_drop_level = 0,
