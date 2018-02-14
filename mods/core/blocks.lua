@@ -1717,3 +1717,11 @@ mcore.register_fence("core:fence_cherry", {
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 	sounds = mcore.sound_wood,
 })
+
+mcore.register_fence("core:fence_acacia", {
+	description = "Acacia Fence",
+	texture = "core_acacia_planks.png",
+	material = "core:acacia_planks",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = mcore.sound_wood,	
+})

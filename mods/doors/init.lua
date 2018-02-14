@@ -885,6 +885,14 @@ doors.register_fencegate("doors:gate_pine_wood", {
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
 })
 
+doors.register_fencegate("doors:gate_acacia_wood", {
+	description = "Acacia Fence Gate",
+	texture = "core_acacia_planks.png",
+	material = "core:acacia_planks",
+	sounds = mcore.sound_wood,
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2}
+})
+
 ----fuels----
 
 minetest.register_craft({
