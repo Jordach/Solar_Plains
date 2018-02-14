@@ -34,6 +34,28 @@ else
 		
 		--print(":newhand:" .. v)
 		
+		if v == "Virtuoel" then
+		
+			minetest.register_node(":newhand:virtuoel", {
+			
+				description = "",
+				tiles = {
+					"wardrobe_player_virtuoel.png",
+				},
+				on_place = function(itemstack, placer, pointed_thing)
+					local stack = ItemStack(":")
+					local ret = minetest.item_place(stack, placer, pointed_thing)
+					return ItemStack("newhand:virtuoel" .. itemstack:get_count())
+				end,
+				
+				drawtype = "mesh",
+				mesh = "hand.b3d",
+				node_placement_prediction = "",
+				
+			})
+		
+		else
+		
 		minetest.register_node(":newhand:" .. v, {
 			description = "",
 		
@@ -50,7 +72,7 @@ else
 			on_place = function(itemstack, placer, pointed_thing)
 				local stack = ItemStack(":")
 				local ret = minetest.item_place(stack, placer, pointed_thing)
-				return ItemStack("newhand:hand "..itemstack:get_count())
+				return ItemStack("newhand:" .. v ..itemstack:get_count())
 			end,
 			
 			--sunlight_propagates = true,
@@ -61,7 +83,9 @@ else
 			mesh = "hand.b3d",
 			node_placement_prediction = "",
 		})
-
+		
+		end
+		
 	end
 
 end
