@@ -933,41 +933,43 @@ function wardrobe.apply_to_player(player, fields)
 		
 	else
 	
-	player:set_properties({
-			textures = {
-				"ptextures_transparent.png",
-					"(wardrobe_skin"..                                                   ".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][1]..  ")^"..
-					"(wardrobe_eyes_white_"..  wardrobe.formspec_selections[pname][1]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][2]..  ")^"..
-					"(wardrobe_eyes_pupil_"..  wardrobe.formspec_selections[pname][2]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][3]..  ")^"..
-					"(wardrobe_hair_"..        wardrobe.formspec_selections[pname][3]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][4]..  ")^"..
-					"(wardrobe_mouth_"..       wardrobe.formspec_selections[pname][4]  ..".png)^"..
-					"(wardrobe_under_shirt_".. wardrobe.formspec_selections[pname][5]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][5]..  ")^"..
-					"(wardrobe_under_shirt_".. wardrobe.formspec_selections[pname][6]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][6]..  ")^"..
-					"(wardrobe_leggings_"..    wardrobe.formspec_selections[pname][7]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][7]..  ")^"..
-					"(wardrobe_leggings_"..    wardrobe.formspec_selections[pname][8]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][8]..  ")^"..
-					"(wardrobe_socks_"..       wardrobe.formspec_selections[pname][9]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][9]..  ")^"..
-					"(wardrobe_socks_"..       wardrobe.formspec_selections[pname][10] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][10].. ")^"..
-					"(wardrobe_shirt_"..       wardrobe.formspec_selections[pname][11] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][11].. ")^"..
-					"(wardrobe_shirt_"..       wardrobe.formspec_selections[pname][12] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][12].. ")^"..
-					"(wardrobe_trousers_"..    wardrobe.formspec_selections[pname][13] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][13].. ")^"..
-					"(wardrobe_trousers_"..    wardrobe.formspec_selections[pname][14] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][14].. ")^"..		
-					"(wardrobe_shoes_"..       wardrobe.formspec_selections[pname][15] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][15].. ")^"..
-					"(wardrobe_shoes_"..       wardrobe.formspec_selections[pname][16] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][16].. ")^"..
-					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][17] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][17].. ")^"..
-					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][18] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][18].. ")^"..
-					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][19] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][19].. ")^"..
-					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][20] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][20].. ")^"..
-					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][21] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][21].. ")^"..
-					"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][22] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][22].. ")",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-			}
-		})
+		player:set_properties({
+				textures = {
+					"ptextures_transparent.png",
+						"(wardrobe_skin"..                                                   ".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][1]..  ")^"..
+						"(wardrobe_eyes_white_"..  wardrobe.formspec_selections[pname][1]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][2]..  ")^"..
+						"(wardrobe_eyes_pupil_"..  wardrobe.formspec_selections[pname][2]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][3]..  ")^"..
+						"(wardrobe_hair_"..        wardrobe.formspec_selections[pname][3]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][4]..  ")^"..
+						"(wardrobe_mouth_"..       wardrobe.formspec_selections[pname][4]  ..".png)^"..
+						"(wardrobe_under_shirt_".. wardrobe.formspec_selections[pname][5]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][5]..  ")^"..
+						"(wardrobe_under_shirt_".. wardrobe.formspec_selections[pname][6]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][6]..  ")^"..
+						"(wardrobe_leggings_"..    wardrobe.formspec_selections[pname][7]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][7]..  ")^"..
+						"(wardrobe_leggings_"..    wardrobe.formspec_selections[pname][8]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][8]..  ")^"..
+						"(wardrobe_socks_"..       wardrobe.formspec_selections[pname][9]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][9]..  ")^"..
+						"(wardrobe_socks_"..       wardrobe.formspec_selections[pname][10] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][10].. ")^"..
+						"(wardrobe_shirt_"..       wardrobe.formspec_selections[pname][11] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][11].. ")^"..
+						"(wardrobe_shirt_"..       wardrobe.formspec_selections[pname][12] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][12].. ")^"..
+						"(wardrobe_trousers_"..    wardrobe.formspec_selections[pname][13] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][13].. ")^"..
+						"(wardrobe_trousers_"..    wardrobe.formspec_selections[pname][14] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][14].. ")^"..		
+						"(wardrobe_shoes_"..       wardrobe.formspec_selections[pname][15] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][15].. ")^"..
+						"(wardrobe_shoes_"..       wardrobe.formspec_selections[pname][16] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][16].. ")^"..
+						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][17] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][17].. ")^"..
+						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][18] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][18].. ")^"..
+						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][19] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][19].. ")^"..
+						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][20] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][20].. ")^"..
+						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][21] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][21].. ")^"..
+						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][22] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][22].. ")",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+				}
+			})
+		
+		wardrobe.save_user_data(player)
 	
-	wardrobe.save_user_data(player)
+	end
 end
 	
 function wardrobe.table_incrementer(arraynum, operator, player, maxval)
