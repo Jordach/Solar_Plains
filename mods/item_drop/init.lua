@@ -13,7 +13,7 @@ if pickup then
   minetest.register_globalstep(function(dtime)
 
     timer = timer + dtime
-    if timer < 0.2 then return end
+    if timer < 1.2 then return end
     timer = 0
 
     for _,player in ipairs(minetest.get_connected_players()) do
