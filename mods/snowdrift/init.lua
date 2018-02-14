@@ -8,7 +8,7 @@ local GSCYCLE = 0.5 -- Globalstep cycle (seconds)
 local FLAKES = 32 -- Snowflakes per cycle
 local DROPS = 96 -- Raindrops per cycle
 local RAINGAIN = 0.12 -- Rain sound volume
-local COLLIDE = false -- Whether particles collide with nodes
+local COLLIDE = true -- Whether particles collide with nodes
 local NISVAL = 39 -- Clouds RGB value at night
 local DASVAL = 175 -- Clouds RGB value in daytime
 
