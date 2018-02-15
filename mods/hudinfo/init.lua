@@ -200,11 +200,8 @@ local function update_huds()
 		
 		local locale, temparature, humid, weather_str = hudinfo.player_env_data(player)
 		
-		if hudinfo.player_data[name].temp == nil then
+		if hudinfo.player_data[name] == nil then
 			--fail
-		elseif hudinfo.player_data[name].humid == nil then -- fail prevention
-		elseif hudinfo.player_data[name].locale == nil then
-		elseif hudinfo.player_data[name].weather_str == nil then
 		else
 		
 			player:hud_change(hudinfo.player_data[name].temp, "text", tonumber(string.format("%.1f", temparature)) .. " C,")
