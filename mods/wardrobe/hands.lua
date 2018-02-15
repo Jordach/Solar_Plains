@@ -54,7 +54,7 @@ else
 		
 		--print(":newhand:" .. v)
 		
-		if p_skin[v] then
+		if wardrobe.hand_textures:get_string("skin") ~= "" and p_skin[v] then
 			
 			local tex_string = "wardrobe_player_" .. v .. ".png"
 			
@@ -79,7 +79,7 @@ else
 				
 			})
 				
-		else
+		elseif wardrobe.hand_textures:get_string("c") ~= "" then
 		
 			minetest.register_node(":newhand:" .. v, {
 				description = "",
