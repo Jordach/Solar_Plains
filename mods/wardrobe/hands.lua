@@ -23,8 +23,20 @@ local count = 1
 if wardrobe.hand_textures:get_string("c") == "" then
 
 else
-
-	for k, v in pairs(p_skin) do
+	
+	local iter
+	
+	if wardrobe.hand_textures:get_string("c") == "" then
+	
+		iter = p_skin
+		
+	elseif wardrobe.hand_textures:get_string("skin") == "" then
+	
+		iter = p_choice
+	
+	end
+	
+	for k, v in pairs(iter) do
 		
 		player_names[count] = k
 		
