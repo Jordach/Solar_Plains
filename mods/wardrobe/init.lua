@@ -1120,7 +1120,7 @@ function wardrobe.load_user_data(player)
 	else
 		
 		wardrobe.player_skin_size[pname] = 64 -- we use this for the hands module
-		
+		wardrobe.player_has_skin[pname] = false
 		-- setup the wardrobe API because no custom skin was found
 	
 		-- create from template clothing		 --0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2
