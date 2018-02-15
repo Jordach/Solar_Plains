@@ -1115,8 +1115,6 @@ function wardrobe.load_user_data(player)
 			print ("[Wardrobe] " .. pname .. " has a 64x64 type skin!")
 		end
 		
-		
-		
 	else
 		
 		wardrobe.player_skin_size[pname] = 64 -- we use this for the hands module

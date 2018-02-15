@@ -140,6 +140,8 @@ minetest.register_on_joinplayer(function(player)
 	
 	player:get_inventory():set_stack("hand", 1, "newhand:_default_") -- normally we get a default hand if we don't have a custom appearance yet
 	
+	if wardrobe.hand_textures:get_string("skin") == "" or wardrobe.hand_textures:get_string("c") == "" then return end	
+	
 	for k, v in pairs(player_names) do -- iterate over the table to make sure the joining player has a skin
 	
 		if v == player:get_player_name() then -- and if they do -- we get to give them their custom arm.
