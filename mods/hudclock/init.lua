@@ -32,6 +32,8 @@ function hudclock.update_time()
 	for _,p in ipairs(minetest.get_connected_players()) do
 		local name = p:get_player_name();
 		
+		if hudclock.player_hud[name] = nil then break end
+		
 		p:hud_change(hudclock.player_hud[name].timev, "text", get_time())
 		p:hud_change(hudclock.player_hud[name].datev, "text", hudclock.day .. "/" .. hudclock.month .. "/" .. hudclock.year)
 	
