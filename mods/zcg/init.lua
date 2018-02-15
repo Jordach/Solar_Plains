@@ -37,10 +37,25 @@ zcg.add_craft = function(input, output, groups)
 		return
 	end
 	if not groups then groups = {} end
+	
+	local stack_num = ItemStack(nil)
+	
+	if input.output == nil then
+		-- prevent a crash indexing nil
+	else
+	
+		stack_num = ItemStack(input.output):get_count()
+	
+	end
+
+	--print(stack_num:get_count(), input.output)
+	
 	local c = {}
 	c.width = input.width
 	c.type = input.type
 	c.items = input.items
+	c.number = stack_num
+	
 	if c.items == nil then return end
 	for i, item in pairs(c.items) do
 		if item:sub(0,6) == "group:" then
@@ -54,7 +69,8 @@ zcg.add_craft = function(input, output, groups)
 					zcg.add_craft({
 						width = c.width,
 						type = c.type,
-						items = table_copy(c.items)
+						items = table_copy(c.items),
+						output = input.output
 					}, output, g2) -- it is needed to copy the table, else groups won't work right
 				end
 				return
@@ -109,14 +125,12 @@ zcg.formspec = function(pn)
 	.. "listcolors[#573b2e;#de9860;#ffffff;#3f2832;#ffffff]"
 	
 	if zcg.users[pn].history.index > 1 then
-		formspec = formspec .. "button[0,2;1.55,1;zcg_previous;Last Recipe]"
+		formspec = formspec .. "button[0,3.1;2.25,1;zcg_previous;Last Recipe]"
 	else
-		--formspec = formspec .. "image[0,1;1,1;zcg_previous_inactive.png]"
 	end
 	if zcg.users[pn].history.index < #zcg.users[pn].history.list then
-		formspec = formspec .. "button[1.45,2;1.55,1;zcg_next;Next Recipe]"
+		formspec = formspec .. "button[2.25,3.1;2.25,1;zcg_next;Next Recipe]"
 	else
-		--formspec = formspec .. "image[1,1;1,1;zcg_next_inactive.png]"
 	end
 	-- Show craft recipe
 	if current_item ~= "" then
@@ -146,6 +160,11 @@ zcg.formspec = function(pn)
 				end
 				formspec = formspec .. "image[6,1;1,1;core_crafting_arrow.png]"
 				formspec = formspec .. "item_image_button[7,1;1,1;"..zcg.users[pn].current_item..";;]"
+				
+				formspec = formspec .. "label[7.8,1.5;" .. tostring(c.number) .. "]"
+				
+				--print (dump(zcg.crafts["stairs:slab_grass_wildlands"]))
+				
 			end
 		end
 	end
@@ -159,8 +178,10 @@ zcg.formspec = function(pn)
 			if i >= npp then break end
 			formspec = formspec .. "item_image_button["..(i%8)..","..(math.floor(i/8)+5)..";1,1;"..name..";zcg:"..name..";]"
 			i = i+1
+			
 		end
 	end
+	
 	if page > 0 then
 		formspec = formspec .. "button[0,8.1;2.25,1;zcg_page:"..(page-1)..";Previous Page]"
 	end

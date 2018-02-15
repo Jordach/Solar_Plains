@@ -6,9 +6,17 @@ local p_choice = {}
 
 local p_rgb = {}
 
+local p_skin = {}
+
+local p_size = {}
+
 p_choice = minetest.deserialize(wardrobe.hand_textures:get_string("c"))
 
 p_rgb = minetest.deserialize(wardrobe.hand_textures:get_string("rgb"))
+
+p_skin = minetest.deserialize(wardrobe.hand_textures:get_string("skin"))
+
+p_size = minetest.deserialize(wardrobe.hand_textures:get_string("size"))
 
 local count = 1
 
@@ -16,7 +24,7 @@ if wardrobe.hand_textures:get_string("c") == "" then
 
 else
 
-	for k, v in pairs(p_choice) do
+	for k, v in pairs(p_skin) do
 		
 		player_names[count] = k
 		
@@ -34,18 +42,23 @@ else
 		
 		--print(":newhand:" .. v)
 		
-		if v == "Virtuoel" then
-		
-			minetest.register_node(":newhand:Virtuoel", {
+		if p_skin[v] ~= nil then
+			
+			local tex_string = "wardrobe_player_" .. v .. ".png"
+			
+			if p_size[v] == 32 then tex_string = "[combine:64x64:0,0=" .. tex_string end -- caution, will not support larger than 64 wide skins
+			
+			minetest.register_node(":newhand:" .. v, {
 			
 				description = "",
 				tiles = {
-					"wardrobe_player_virtuoel.png",
+					tex_string
 				},
+				
 				on_place = function(itemstack, placer, pointed_thing)
 					local stack = ItemStack(":")
 					local ret = minetest.item_place(stack, placer, pointed_thing)
-					return ItemStack("newhand:virtuoel" .. itemstack:get_count())
+					return ItemStack("newhand:" .. v ..itemstack:get_count())
 				end,
 				
 				drawtype = "mesh",
@@ -53,36 +66,32 @@ else
 				node_placement_prediction = "",
 				
 			})
-		
+				
 		else
 		
-		minetest.register_node(":newhand:" .. v, {
-			description = "",
-		
-			tiles = {
-		
-				"(wardrobe_skin.png^[multiply:#".. p_rgb[v][1].. ")^"..
-				"(wardrobe_under_shirt_" .. p_choice[v][5] .. ".png^[multiply:#".. p_rgb[v][5].. ")^"..
-				"(wardrobe_under_shirt_" .. p_choice[v][6] .. ".png^[multiply:#".. p_rgb[v][6].. ")^"..
-				"(wardrobe_shirt_" .. p_choice[v][11] .. ".png^[multiply:#".. p_rgb[v][11].. ")^"..
-				"(wardrobe_shirt_" .. p_choice[v][12] .. ".png^[multiply:#".. p_rgb[v][12]..")",
-		
-			},
-		
-			on_place = function(itemstack, placer, pointed_thing)
-				local stack = ItemStack(":")
-				local ret = minetest.item_place(stack, placer, pointed_thing)
-				return ItemStack("newhand:" .. v ..itemstack:get_count())
-			end,
+			minetest.register_node(":newhand:" .. v, {
+				description = "",
 			
-			--sunlight_propagates = true,
-			--visual_scale = 1,
-			--wield_scale = {x=1,y=1,z=1},
-			--paramtype = "light",
-			drawtype = "mesh",
-			mesh = "hand.b3d",
-			node_placement_prediction = "",
-		})
+				tiles = {
+			
+					"(wardrobe_skin.png^[multiply:#".. p_rgb[v][1].. ")^"..
+					"(wardrobe_under_shirt_" .. p_choice[v][5] .. ".png^[multiply:#".. p_rgb[v][5].. ")^"..
+					"(wardrobe_under_shirt_" .. p_choice[v][6] .. ".png^[multiply:#".. p_rgb[v][6].. ")^"..
+					"(wardrobe_shirt_" .. p_choice[v][11] .. ".png^[multiply:#".. p_rgb[v][11].. ")^"..
+					"(wardrobe_shirt_" .. p_choice[v][12] .. ".png^[multiply:#".. p_rgb[v][12]..")",
+			
+				},
+			
+				on_place = function(itemstack, placer, pointed_thing)
+					local stack = ItemStack(":")
+					local ret = minetest.item_place(stack, placer, pointed_thing)
+					return ItemStack("newhand:" .. v ..itemstack:get_count())
+				end,
+				
+				drawtype = "mesh",
+				mesh = "hand.b3d",
+				node_placement_prediction = "",
+			})
 		
 		end
 		

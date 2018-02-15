@@ -675,7 +675,7 @@ function doors.register_trapdoor(name, def)
 end
 
 doors.register_trapdoor("doors:trapdoor", {
-	description = "Trapdoor",
+	description = "Oak Trapdoor",
 	inventory_image = "doors_trapdoor.png",
 	wield_image = "doors_trapdoor.png",
 	tile_front = "doors_trapdoor.png",
@@ -685,7 +685,7 @@ doors.register_trapdoor("doors:trapdoor", {
 })
 
 doors.register_trapdoor("doors:trapdoor_steel", {
-	description = "Steel Trapdoor",
+	description = "Iron Trapdoor",
 	inventory_image = "doors_trapdoor_steel.png",
 	wield_image = "doors_trapdoor_steel.png",
 	tile_front = "doors_trapdoor_steel.png",
@@ -700,9 +700,8 @@ doors.register_trapdoor("doors:trapdoor_steel", {
 minetest.register_craft({
 	output = 'doors:trapdoor 2',
 	recipe = {
-		{'group:wood', 'group:wood', 'group:wood'},
-		{'group:wood', 'group:wood', 'group:wood'},
-		{'', '', ''},
+		{'core:oak_planks', 'core:oak_planks', 'core:oak_planks'},
+		{'core:oak_planks', 'core:oak_planks', 'core:oak_planks'},
 	}
 })
 
@@ -712,79 +711,6 @@ minetest.register_craft({
 		{'core:iron_ingot', 'core:iron_ingot'},
 		{'core:iron_ingot', 'core:iron_ingot'},
 	}
-})
-
-
------key tool-----
-
-minetest.register_tool("doors:key", {
-	description = "Key Tool",
-	inventory_image = "doors_key.png",
-
-	on_use = function(itemstack, user, pointed_thing)
-
-		local pos = pointed_thing.under
-
-		if pointed_thing.type ~= "node"
-		or not doors.get(pos) then
-			return
-		end
-
-		local player_name = user:get_player_name()
-		local meta = minetest.get_meta(pos) ; if not meta then return end
-		local owner = meta:get_string("doors_owner")
-		local prot = meta:get_string("doors_protected")
-		local ok = 0
-		local infotext = ""
-
-		if prot == ""
-		and owner == "" then
-
-			-- flip normal to owned
-			if minetest.is_protected(pos, player_name) then
-				minetest.record_protection_violation(pos, player_name)
-			else
-				infotext = "Owned by " .. player_name
-				owner = player_name
-				prot = ""
-				ok = 1
-			end
-
-		elseif prot == ""
-		and owner ~= "" then
-
-			-- flip owned to protected
-			if player_name == owner then
-				infotext = "Protected by " .. player_name
-				owner = ""
-				prot = player_name
-				ok = 1
-			end
-
-		elseif prot ~= ""
-		and owner == "" then
-
-			-- flip protected to normal
-			if player_name == prot then
-				owner = ""
-				prot = ""
-				ok = 1
-			end
-		end
-
-		if ok == 1 then
-
-			meta:set_string("infotext", infotext)
-			meta:set_string("doors_owner", owner)
-			meta:set_string("doors_protected", prot)
-
-			if not minetest.setting_getbool("creative_mode") then
-				itemstack:add_wear(65535 / 50)
-			end
-		end
-
-		return itemstack
-	end,
 })
 
 ----fence gate----

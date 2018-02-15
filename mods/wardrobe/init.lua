@@ -50,7 +50,33 @@ else -- if the serialized data does exist, load it into memory
 	
 end
 
+if wardrobe.hand_textures:get_string("skin") == "" then
+	
+	wardrobe.player_has_skin = {}
+	wardrobe.player_skin_size = {}
+	
+else
 
+	wardrobe.player_has_skin = minetest.deserialize(wardrobe.hand_textures:get_string("skin"))
+	wardrobe.player_skin_size = minetest.deserialize(wardrobe.hand_textures:get_string("size"))
+
+end
+
+local function get_size(w) -- ported from a fork
+	local file = io.open(w)
+	if file then
+	
+		file:seek("set", 16)
+		local widthstr, heightstr = file:read(4), file:read(4)
+	
+		local width=widthstr:sub(1,1):byte()*16777216+widthstr:sub(2,2):byte()*65536+widthstr:sub(3,3):byte()*256+widthstr:sub(4,4):byte()
+		local height=heightstr:sub(1,1):byte()*16777216+heightstr:sub(2,2):byte()*65536+heightstr:sub(3,3):byte()*256+heightstr:sub(4,4):byte()
+	
+		file:close()
+	
+		return width, height
+	end
+end
 
 -- initalize the external hands module.
 
@@ -794,6 +820,12 @@ function wardrobe.update_dummy(pos, player, fields)
 	local pname = player:get_player_name()
 	local entity = minetest.get_objects_inside_radius({x=pos.x, y=pos.y+0.5, z=pos.z}, 0.1)
 	
+	if wardrobe.player_has_skin[pname] then
+		
+		return
+	
+	end
+	
 	if fields ~= nil then
 	
 	wardrobe.save_text_fields(fields, pname)
@@ -854,7 +886,7 @@ function wardrobe.close_eyes(player)
 	
 		local pname = player:get_player_name()
 		
-		if pname == "Virtuoel" then
+		if wardrobe.player_has_skin[pname] then
 		
 			return
 		
@@ -909,29 +941,47 @@ function wardrobe.apply_to_player(player, fields)
 	
 	local pname = player:get_player_name()
 	
-	if fields ~= nil then
-	
-		wardrobe.save_text_fields(fields, pname)
-	
-	end
-	
-	if pname == "Virtuoel" then
+	if wardrobe.player_has_skin[pname] then
 		
-		player:set_properties({
-			textures = {
-				"ptextures_transparent.png",
-				"wardrobe_player_virtuoel.png",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-				"ptextures_transparent.png",
-			}
-		})
+		if wardrobe.player_skin_size[pname] == 32 then
 		
-		return
+			player:set_properties({
+			
+				textures = {
+					"wardrobe_player_" .. pname .. ".png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+				},
+			})
+		
+		elseif wardrobe.player_skin_size[pname] == 64 then
+		
+			player:set_properties({
+			
+				textures = {
+					"ptextures_transparent.png",
+					"wardrobe_player_" .. pname .. ".png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+					"ptextures_transparent.png",
+				},
+			})
+		
+		end
 		
 	else
+	
+		if fields ~= nil then
+		
+			wardrobe.save_text_fields(fields, pname)
+		
+		end
 	
 		player:set_properties({
 				textures = {
@@ -1037,61 +1087,102 @@ end
 
 function wardrobe.load_user_data(player)
 	
+	-- let's check if the user has a pre-installed skin first!
 	local pname = player:get_player_name()
 	
-	-- load non-RGB choices					 --0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2
-											 --1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
-	if player:get_attribute("wardrobe_choices") == nil then
-		wardrobe.formspec_selections[pname] = {2,2,2,1,2,1,2,1,2,1,2,1,1,1,2,1,1,1,1,1,1,1}
-		print ("[Wardrobe] Failed Loading Texture Data for Player: " .. pname)
+	local f = io.open(wardrobe.texture_path.."wardrobe_player_"..pname..".png")
+	
+	if f then
 		
-		player:set_attribute("wardrobe_choices", minetest.serialize(wardrobe.formspec_selections))
+		f:close()
+		
+		wardrobe.player_has_skin[pname] = true
+		
+		print ("[Wardrobe] " .. pname .. " has a custom user skin!")
+		
+		local w, h = get_size(wardrobe.texture_path.."wardrobe_player_"..pname..".png")
+		
+		if w / h == 2 then -- this is a 64x32 type skin
+		
+			wardrobe.player_skin_size[pname] = 32
+			
+			print ("[Wardrobe] " .. pname .. " has a 64x32 type skin!")
+			
+		elseif w / h == 1 then -- this is a square 64x64 type skin;
+			
+			wardrobe.player_skin_size[pname] = 64
+			
+			print ("[Wardrobe] " .. pname .. " has a 64x64 type skin!")
+		end
+		
+		
 		
 	else
-		wardrobe.formspec_selections[pname] = minetest.deserialize(player:get_attribute("wardrobe_choices"))
-		print ("[Wardrobe] Loaded Texture Data for Player: " .. pname)
+		
+		wardrobe.player_skin_size[pname] = 64 -- we use this for the hands module
+		
+		-- setup the wardrobe API because no custom skin was found
+	
+		-- create from template clothing		 --0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 2 2 2
+												 --1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+		if player:get_attribute("wardrobe_choices") == nil then
+			wardrobe.formspec_selections[pname] = {2,2,2,1,2,1,2,1,2,1,2,1,1,1,2,1,1,1,1,1,1,1}
+			print ("[Wardrobe] Failed Loading Texture Data for Player: " .. pname)
+			
+			player:set_attribute("wardrobe_choices", minetest.serialize(wardrobe.formspec_selections))
+			
+		else
+			wardrobe.formspec_selections[pname] = minetest.deserialize(player:get_attribute("wardrobe_choices"))
+			print ("[Wardrobe] Loaded Texture Data for Player: " .. pname)
+			
+		end
+		
+		-- create from template RGB
+		
+		if player:get_attribute("wardrobe_rgb") == nil then
+			
+			wardrobe.formspec_selections_rgb[pname] = {}
+			
+			wardrobe.formspec_selections_rgb[pname][1] = "e3c0a3"
+			wardrobe.formspec_selections_rgb[pname][2] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][3] = "3636eb"
+			wardrobe.formspec_selections_rgb[pname][4] = "4a301b"
+			wardrobe.formspec_selections_rgb[pname][5] = "dddddd"
+			wardrobe.formspec_selections_rgb[pname][6] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][7] = "1b275d"
+			wardrobe.formspec_selections_rgb[pname][8] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][9] = "777777"
+			wardrobe.formspec_selections_rgb[pname][10] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][11] = "39881c"
+			wardrobe.formspec_selections_rgb[pname][12] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][13] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][14] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][15] = "141414"
+			wardrobe.formspec_selections_rgb[pname][16] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][17] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][18] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][19] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][20] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][21] = "ffffff"
+			wardrobe.formspec_selections_rgb[pname][22] = "ffffff"
+			
+			print ("[Wardrobe] Failed Loading RGB Data for Player: " .. pname)
+			player:set_attribute("wardrobe_rgb", minetest.serialize(wardrobe.formspec_selections_rgb[pname]))
+			
+			--wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
+			
+		else
+			wardrobe.formspec_selections_rgb[pname] = minetest.deserialize(player:get_attribute("wardrobe_rgb"))	
+			print ("[Wardrobe] Loaded RGB Data for Player: " .. pname)
+			
+		end
 		
 	end
 	
-	-- load RGB
-	
-	if player:get_attribute("wardrobe_rgb") == nil then
-		
-		wardrobe.formspec_selections_rgb[pname] = {}
-		
-		wardrobe.formspec_selections_rgb[pname][1] = "e3c0a3"
-		wardrobe.formspec_selections_rgb[pname][2] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][3] = "3636eb"
-		wardrobe.formspec_selections_rgb[pname][4] = "4a301b"
-		wardrobe.formspec_selections_rgb[pname][5] = "dddddd"
-		wardrobe.formspec_selections_rgb[pname][6] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][7] = "1b275d"
-		wardrobe.formspec_selections_rgb[pname][8] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][9] = "777777"
-		wardrobe.formspec_selections_rgb[pname][10] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][11] = "39881c"
-		wardrobe.formspec_selections_rgb[pname][12] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][13] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][14] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][15] = "141414"
-		wardrobe.formspec_selections_rgb[pname][16] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][17] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][18] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][19] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][20] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][21] = "ffffff"
-		wardrobe.formspec_selections_rgb[pname][22] = "ffffff"
-		
-		print ("[Wardrobe] Failed Loading RGB Data for Player: " .. pname)
-		player:set_attribute("wardrobe_rgb", minetest.serialize(wardrobe.formspec_selections_rgb[pname]))
-		
-		--wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
-		
-	else
-		wardrobe.formspec_selections_rgb[pname] = minetest.deserialize(player:get_attribute("wardrobe_rgb"))	
-		print ("[Wardrobe] Loaded RGB Data for Player: " .. pname)
-		
-	end
+	wardrobe.hand_textures:set_string("c", minetest.serialize(wardrobe.formspec_selections))
+	wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
+	wardrobe.hand_textures:set_string("skin", minetest.serialize(wardrobe.player_has_skin))
+	wardrobe.hand_textures:set_string("size", minetest.serialize(wardrobe.player_skin_size))
 	
 end
 
@@ -1100,6 +1191,9 @@ function wardrobe.save_user_data(player)
 	
 	wardrobe.hand_textures:set_string("c", minetest.serialize(wardrobe.formspec_selections))
 	wardrobe.hand_textures:set_string("rgb", minetest.serialize(wardrobe.formspec_selections_rgb))
+	wardrobe.hand_textures:set_string("skin", minetest.serialize(wardrobe.player_has_skin))
+	wardrobe.hand_textures:set_string("size", minetest.serialize(wardrobe.player_skin_size))
+	
 	
 	player:set_attribute("wardrobe_choices", minetest.serialize(wardrobe.formspec_selections[pname]))
 	player:set_attribute("wardrobe_rgb", minetest.serialize(wardrobe.formspec_selections_rgb[pname]))
@@ -1108,6 +1202,6 @@ end
 
 minetest.register_on_joinplayer(function(player)	
 	wardrobe.load_user_data(player)
-	
+
 	wardrobe.apply_to_player(player)
 end)
