@@ -250,7 +250,7 @@ end
 
 minetest.register_node("atvomat:sorter", {
 
-	description = "Sorter (Sorts things based on items inside of it.)",
+	description = "Sorter",
 	paramtype = "light",
 	tiles = {"atvomat_sorter_mesh.png"},
 	drawtype = "mesh",

@@ -86,6 +86,13 @@ atvomat.mover_input["atvomat:breaker_2"] = {
 
 }
 
+atvomat.mover_input["atvomat:logger"] = {
+
+	16,
+	"main"
+
+}
+
 -- registration of insertable containers:
 
 atvomat.mover_output["core:chest"] = {
@@ -126,6 +133,20 @@ atvomat.mover_output["atvomat:sorter"] = {
 	
 }
 
+atvomat.mover_output["atvomat:logger"] = {
+
+	"main",
+	"fuel",
+	true
+}
+
+atvomat.mover_output["atvomat:placer"] = {
+
+	"main",
+	"main",
+	true
+}
+
 local atmover = 
 
 	"size[8,9]" ..
@@ -143,7 +164,7 @@ local atmover =
 -- end
 
 minetest.register_node("atvomat:mover",{
-	description = "Mover (Moves Items from Red to Green)",
+	description = "Mover",
 	drawtype = "mesh",
 	mesh = "atvomat_mover.b3d",
 	paramtype2 = "facedir",

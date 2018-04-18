@@ -1,7 +1,7 @@
 -- avtomat - (automatico, automation)
 -- part of solar plains, by jordach
 
--- table of nodes not to dig or collect;
+-- table of nodes not to dig or collect; supersede this at somepoint by just adding a custom 
 
 atvomat.breaker_blacklist = {}
 
@@ -20,6 +20,7 @@ atvomat.breaker_blacklist["ignore"] = ""
 atvomat.breaker_blacklist["atvomat:breaker_1"] = ""
 atvomat.breaker_blacklist["atvomat:breaker_2"] = ""
 atvomat.breaker_blacklist["atvomat:sorter"] = ""
+atvomat.breaker_blacklist["atvomat:placer"] = ""
 atvomat.breaker_blacklist["atvomat:mover"] = ""
 
 local atbreaker = 

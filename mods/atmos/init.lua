@@ -1,8 +1,8 @@
--- atmos, control of skies, weather (when doable.)
+-- atmos, control of skies, weather, and various other visual tasks
 
 atmos = {}
 
-minetest.register_chatcommand("ratio", {
+minetest.register_chatcommand("weather", {
 	
 	description = "debugs the current atmos based weather system",
 	param = "use a number to select the weather type.",
@@ -209,6 +209,10 @@ function atmos.sync_skybox()
 		
 			player:override_day_night_ratio(atmos.weather_light_level[15])
 		
+		elseif player:get_pos().y > 10000 then
+
+			-- change to low orbit skybox here
+
 		else
 		
 			-- sync weather to players that are above -32, lightning effects (and flashes) only affects players above -16
@@ -404,3 +408,310 @@ minetest.after(math.random(43, 156), atmos.thunderstrike)
 lightning.light_level = atmos.weather_light_level
 
 -- abm to remove fires when it's raining, snowing or hailing?
+
+
+
+
+
+
+
+-- logic to support taking damage when either too cold or too hot
+
+hb.register_hudbar("overheat",
+	0xFFFFFF,
+	"Overheat",
+	{bar = "atmos_heatstroke_bar.png", icon = "atmos_heatstroke_icon.png", bgicon = "atmos_heatstroke_icon.png"},
+	0,
+	100,
+	false
+)
+	
+hb.register_hudbar("frostbite",
+	0xFFFFFF,
+	"Frostbite",
+	{bar = "atmos_frostbite_bar.png", icon = "atmos_frostbite_icon.png", bgicon = "atmos_frostbite_icon.png"},
+	0,
+	100,
+	false
+)
+
+minetest.register_on_joinplayer(function(player)
+	
+	hb.init_hudbar(player, "overheat")
+	hb.init_hudbar(player, "frostbite")
+	
+	local meta = player:get_meta()
+
+	if meta:get_int("overheat") == "" then
+
+		meta:set_int("overheat", 0)
+
+	end
+
+	if meta:get_int("frostbite") == "" then
+
+		meta:set_int("frostbite", 0)
+
+	end
+	
+	local frosty = meta:get_int("frostbite")
+	local toasty = meta:get_int("overheat")
+
+	hb.change_hudbar(player, "overheat", toasty)
+	hb.change_hudbar(player, "frostbite", frosty)	
+
+end)
+
+local np_temp = {
+	offset = 50,
+	scale = 50,
+	spread = {x = 1000, y = 1000, z = 1000},
+	seed = 5349,
+	octaves = 3,
+	persist = 0.5,
+	lacunarity = 2.0,
+	--flags = ""
+}
+
+local np_humid = {
+	offset = 50,
+	scale = 50,
+	spread = {x = 1000, y = 1000, z = 1000},
+	seed = 842,
+	octaves = 3,
+	persist = 0.5,
+	lacunarity = 2.0,
+	--flags = ""
+}
+
+local function local_area_stamina()
+
+	for _, player in ipairs(minetest.get_connected_players()) do
+
+		local pos = player:get_pos()
+
+		local pposx = math.floor(pos.x)
+		local pposz = math.floor(pos.z)
+		
+		local nobj_temp = nobj_temp or minetest.get_perlin(np_temp)
+		local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
+
+		local nval_temp = nobj_temp:get2d({x = pposx, y = pposz})
+		local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
+		
+		if nval_humid > 100 then
+			nval_humid = 100
+		elseif nval_humid < 0 then
+			nval_humid = 0
+		end
+		
+		nval_temp = ((nval_temp / 2) - 12) + (nval_humid * 0.02)
+		
+		if hudclock.month == 1 then
+			nval_temp = nval_temp - 20
+		elseif hudclock.month == 2 then
+			nval_temp = nval_temp - 15
+		elseif hudclock.month == 3 then
+			nval_temp = nval_temp - 10
+		elseif hudclock.month == 4 then
+			nval_temp = nval_temp - 5
+		elseif hudclock.month == 5 then
+			nval_temp = nval_temp + 0
+		elseif hudclock.month == 6 then
+			nval_temp = nval_temp + 5
+		elseif hudclock.month == 7 then
+			nval_temp = nval_temp + 5
+		elseif hudclock.month == 8 then
+			nval_temp = nval_temp + 0
+		elseif hudclock.month == 9 then
+			nval_temp = nval_temp - 5
+		elseif hudclock.month == 10 then
+			nval_temp = nval_temp - 10
+		elseif hudclock.month == 11 then
+			nval_temp = nval_temp - 15
+		elseif hudclock.month == 12 then
+			nval_temp = nval_temp - 20
+		end
+
+		-- for every 1 block 0.001c is added to the temparature gauge. any lower than -15km and heat will always be above 
+
+		local y = math.abs(pos.y) * 0.001
+
+		if pos.y < 1 then
+
+			nval_temp = nval_temp + y
+
+		else
+
+			nval_temp = nval_temp - y
+
+		end
+
+		if pos.y >= 10000 then
+	
+			nval_temp = -271
+			
+			nval_humid = 0
+			
+		end	
+	
+		if pos.y < -14999 then
+	
+			nval_humid = 0
+	
+			nval_temp = nval_temp + 1000
+	
+		end
+
+		-- if the local temp is less than -15 C then decrement frostbite every now and then, if the heatstroke bar is not at 100,
+		-- then start replenishing it
+		-- if the local temp is more than +35 C then decrement heatstroke every now and then, if the frostbite bar is not at 100,
+		-- then start replenishing it
+		-- if not under or over those values, slowly restore the bar to 0. 
+		-- environmental timer is 15 seconds
+		
+		local meta = player:get_meta()
+		
+		local frosty = meta:get_int("frostbite") -- nice combo into uppercut, just wait for the kahn.
+		local toasty = meta:get_int("overheat")
+
+		if nval_temp < -15 then
+
+			if toasty > 0 then
+			
+				meta:set_int("overheat", toasty - 1)
+
+			else
+
+				meta:set_int("frostbite", frosty + 1)
+
+			end
+
+		elseif nval_temp > 35 then
+
+			if frosty > 0 then
+
+				meta:set_int("frostbite", frosty - 1)
+
+			else
+
+				meta:set_int("overheat", toasty + 1)
+
+			end
+
+		else
+
+			frosty = meta:get_int("frostbite")
+			toasty = meta:get_int("overheat")
+
+			frosty = frosty - 1
+			toasty = toasty - 1
+
+			if toasty > 100 then toasty = 100 end
+			if toasty < 0 then toasty = 0 end
+
+			if frosty > 100 then frosty = 100 end
+			if frosty < 0 then frosty = 0 end
+
+			meta:set_int("overheat", toasty)
+			meta:set_int("frostbite", frosty)
+
+		end
+
+		frosty = meta:get_int("frostbite")
+		toasty = meta:get_int("overheat")
+
+		hb.change_hudbar(player, "overheat", toasty)
+		hb.change_hudbar(player, "frostbite", frosty)
+
+		if frosty > 94 then
+
+			player:set_hp(player:get_hp() - 15, "atmos_frostbite")
+
+		elseif frosty > 89 then
+
+			player:set_hp(player:get_hp() - 5, "atmos_frostbite")
+
+		elseif frosty > 79 then
+
+			player:set_hp(player:get_hp() - 2, "atmos_frostbite") -- do 1 hearts worth of damage
+
+		end
+
+		if toasty > 94 then
+
+			player:set_hp(player:get_hp() - 15, "atmos_overheat")
+
+		elseif toasty > 89 then
+
+			player:set_hp(player:get_hp() - 5, "atmos_overheat")
+
+		elseif toasty > 80 then
+
+			player:set_hp(player:get_hp() - 2, "atmos_overheat")
+
+		end
+
+	end
+
+	minetest.after(math.random(15, 30), local_area_stamina)
+
+end
+
+local_area_stamina()
+
+minetest.register_chatcommand("frosty", {
+	
+	description = "debugs the current frostbite level",
+	param = "use 0-100 to set frostbite level.",
+	func = function(name, param)
+		
+		if not minetest.check_player_privs(name, "server") then
+			return false, "You are not allowed to be more or less frosty, you scrub. \n \n This incident WILL be reported."
+		end
+		
+		local player = minetest.get_player_by_name(name)
+
+		player:get_meta():set_int("frostbite", tonumber(param))
+
+		hb.change_hudbar(player, "frostbite", tonumber(param))
+		
+		return true, "Current frostbite levels updated."
+	end,
+
+})
+
+minetest.register_chatcommand("toasty", {
+	
+	description = "debugs the current overheat level",
+	param = "use 0-100 to set overheat level.",
+	func = function(name, param)
+		
+		if not minetest.check_player_privs(name, "server") then
+			return false, "You are not allowed to be more or less toasty, you scrub. \n \n This incident WILL be reported."
+		end
+		
+		local player = minetest.get_player_by_name(name)
+
+		player:get_meta():set_int("overheat", tonumber(param))
+
+		hb.change_hudbar(player, "overheat", tonumber(param))
+		
+		return true, "Current overheat levels updated."
+	end,
+
+})
+
+-- handle dying so that values are set to 1/4 of what they were when the player dies
+
+minetest.register_on_dieplayer(function(player)
+
+	local meta = player:get_meta()
+
+	local frosty = meta:get_int("frostbite")
+	local toasty = meta:get_int("overheat")
+
+	meta:set_int("overheat", math.floor(toasty / 4))
+	meta:set_int("frostbite", math.floor(frosty / 4))
+
+end)

@@ -4,7 +4,7 @@ hudinfo = {} -- namespaces;
 
 hudinfo.player_data = {}
 
--- paramat's snowdrif to get mapgen heat and humidity since get_heat() doesn't work?
+-- paramat's snowdrift to get mapgen heat and humidity since get_heat() doesn't work?
 
 local np_temp = {
 	offset = 50,
@@ -42,44 +42,30 @@ function hudinfo.player_env_data(player)
 	if pos.y < -16000 then
 	
 		locale = "Eterra Deep Core,"
-		
-		icon = "hudinfo_eterra_deep_core.png"
 	
 	elseif pos.y >= -16000 and pos.y < -32  then
 	
 		locale = "Eterra Underground,"
 		
-		icon = "hudinfo_eterra_underground.png"
-		
 	elseif pos.y >= -32 and pos.y < 10000 then
 	
 		locale = "Eterra Surface,"
-		
-		icon = "hudinfo_eterra_surface.png"
 	
 	elseif pos.y >= 10000 and pos.y < 26000 then
 	
 		locale = "Eterra Orbit,"
 		
-		icon = "hudinfo_eterra_orbit.png"
-		
 	elseif pos.y >= 26000 and pos.y < 28000 then
 	
 		locale = "Arkhos Asteroid Fields,"
-		
-		icon = "hudinfo_arkhos_asteroids.png"
 	
 	elseif pos.y >= 28000 and pos.y < 30000 then
 	
 		locale = "Z12X!C34VB5'6NM7&&8QASW%E^^DFR)TGH(YUJKIO_+LP?,"
 		
-		icon = "hudinfo_unknown.png"
-		
 	elseif pos.y >= 30000 then
 	
 		locale = "Aetherus."
-		
-		icon = "hudinfo_aetherus.png"
 	
 	end
 	
@@ -152,6 +138,19 @@ function hudinfo.player_env_data(player)
 		nval_temp = nval_temp - 20
 	end
 	
+	local y = math.abs(pos.y) * 0.001
+
+	if pos.y < 1 then
+
+		nval_temp = nval_temp + y
+
+	else
+
+		nval_temp = nval_temp - y
+
+	end
+
+
 	if pos.y >= 10000 then
 	
 		nval_temp = -271
@@ -159,6 +158,14 @@ function hudinfo.player_env_data(player)
 		nval_humid = 0
 		
 	end	
+
+	if pos.y < -14999 then
+
+		nval_humid = 0
+
+		nval_temp = nval_temp + 1000
+
+	end
 	
 	-- let's understand the current weather from atmos:
 	

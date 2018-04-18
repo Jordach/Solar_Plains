@@ -1,3 +1,1 @@
-player_monoids?
-hudbars?
-hbhunger?
+hudbars

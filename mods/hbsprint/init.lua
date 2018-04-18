@@ -88,10 +88,15 @@ minetest.register_globalstep(function(dtime)
 	breath_timer = breath_timer + dtime
 	
 	local timer_latch = false
-	
+
 	if sprint_timer >= sprint_timer_step then
 		for _,player in pairs(minetest.get_connected_players()) do
-	
+			
+			local meta = player:get_meta()
+
+			local frosty = meta:get_int("frostbite")
+			local toasty = meta:get_int("overheat")
+
 			local ctrl = player:get_player_control()
 		    local key_press = ctrl.aux1 and ctrl.up
 
@@ -106,25 +111,41 @@ minetest.register_globalstep(function(dtime)
 				local name = player:get_player_name()
 				local pos = player:get_pos()
 				local ground = minetest.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
-				local player_stamina = tonumber(player:get_attribute("stamina"))
+				local player_stamina = tonumber(meta:get_string("stamina"))
 				
 				if player_stamina > 1 then
 
 					player:set_physics_override({speed = speed, jump = jump})
 					
-					player:set_attribute("stamina", player_stamina - stamina_drain)
-										
-					if hudbars then
+					meta:set_string("stamina", player_stamina - stamina_drain)
 				
-						if autohide and player_stamina < 20 then hb.unhide_hudbar(player, "stamina") end
+					if autohide and player_stamina < 20 then hb.unhide_hudbar(player, "stamina") end
 						
-						hb.change_hudbar(player, "stamina", player_stamina - stamina_drain)
-						
-						
-					end
+					hb.change_hudbar(player, "stamina", player_stamina - stamina_drain)
 					
 					create_particles(player, name, pos, ground)
 					
+					-- generate overheat or reduce frostbite
+
+					if frosty > 0 then
+
+						frosty = frosty - 1
+
+					else
+
+						toasty = toasty + 1
+
+					end
+
+					if toasty > 100 then toasty = 100 end
+					if frosty < 0 then frosty = 0 end
+
+					meta:set_int("overheat", toasty)
+					meta:set_int("frostbite", frosty)
+
+					hb.change_hudbar(player, "overheat", toasty)
+					hb.change_hudbar(player, "frostbite", frosty)
+
 				else
 					
 					player:set_physics_override({speed = 1, jump = 1})
@@ -137,11 +158,11 @@ minetest.register_globalstep(function(dtime)
 				
 				if stamina_timer >= replenish then
 					
-					local player_stamina = tonumber(player:get_attribute("stamina"))
+					local player_stamina = tonumber(meta:get_string("stamina"))
 					
 					if player_stamina < 20 then
 						
-						player:set_attribute("stamina", player_stamina + stam_charge)
+						meta:set_string("stamina", player_stamina + stam_charge)
 					
 					end
   

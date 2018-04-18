@@ -4,6 +4,7 @@
 atvomat = {} -- i like global namespaces for people who like making silly dependancies
 
 dofile(minetest.get_modpath("atvomat").."/breaker.lua") -- automated block breaker
+dofile(minetest.get_modpath("atvomat").."/placer.lua") -- automated block breaker
 dofile(minetest.get_modpath("atvomat").."/compressor.lua") -- compresses ingots/gems into block form
 dofile(minetest.get_modpath("atvomat").."/crusher.lua") -- crushes ore blocks, and other blocks
 dofile(minetest.get_modpath("atvomat").."/logger.lua") -- automatically kills and plants trees

@@ -43,6 +43,6 @@ if sorting ~= nil then
 		hb.settings.sorting_reverse[tonumber(v)] = k
 	end
 else
-	hb.settings.sorting = { ["health"] = 0, ["satiation"] = 1, ["stamina"] = 2, ["breath"] = 3 }
+	hb.settings.sorting = { ["health"] = 0, ["satiation"] = 1, ["overheat"] = 3, ["frostbite"] = 2, ["stamina"] = 4, ["breath"] = 5 }
 	hb.settings.sorting_reverse = { [0] = "health", [1] = "breath" }
 end

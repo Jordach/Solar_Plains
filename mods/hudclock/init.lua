@@ -10,7 +10,7 @@ local last_time = os.time()
 local totaldays = 1
 
 hudclock.day = 1
-hudclock.month = 1
+hudclock.month = 6
 hudclock.year = 1
 
 ymd = {}
