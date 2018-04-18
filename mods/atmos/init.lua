@@ -488,179 +488,188 @@ local function local_area_stamina()
 
 	for _, player in ipairs(minetest.get_connected_players()) do
 
-		local pos = player:get_pos()
-
-		local pposx = math.floor(pos.x)
-		local pposz = math.floor(pos.z)
+		if player:is_player() == false then --uh skip? in case of we dont have players active, eg starting a server
 		
-		local nobj_temp = nobj_temp or minetest.get_perlin(np_temp)
-		local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
-
-		local nval_temp = nobj_temp:get2d({x = pposx, y = pposz})
-		local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
-		
-		if nval_humid > 100 then
-			nval_humid = 100
-		elseif nval_humid < 0 then
-			nval_humid = 0
-		end
-		
-		nval_temp = ((nval_temp / 2) - 12) + (nval_humid * 0.02)
-		
-		if hudclock.month == 1 then
-			nval_temp = nval_temp - 20
-		elseif hudclock.month == 2 then
-			nval_temp = nval_temp - 15
-		elseif hudclock.month == 3 then
-			nval_temp = nval_temp - 10
-		elseif hudclock.month == 4 then
-			nval_temp = nval_temp - 5
-		elseif hudclock.month == 5 then
-			nval_temp = nval_temp + 0
-		elseif hudclock.month == 6 then
-			nval_temp = nval_temp + 5
-		elseif hudclock.month == 7 then
-			nval_temp = nval_temp + 5
-		elseif hudclock.month == 8 then
-			nval_temp = nval_temp + 0
-		elseif hudclock.month == 9 then
-			nval_temp = nval_temp - 5
-		elseif hudclock.month == 10 then
-			nval_temp = nval_temp - 10
-		elseif hudclock.month == 11 then
-			nval_temp = nval_temp - 15
-		elseif hudclock.month == 12 then
-			nval_temp = nval_temp - 20
-		end
-
-		-- for every 1 block 0.001c is added to the temparature gauge. any lower than -15km and heat will always be above 
-
-		local y = math.abs(pos.y) * 0.001
-
-		if pos.y < 1 then
-
-			nval_temp = nval_temp + y
-
 		else
 
-			nval_temp = nval_temp - y
+			local pos = player:get_pos()
 
-		end
-
-		if pos.y >= 10000 then
-	
-			nval_temp = -271
+			local pposx = math.floor(pos.x)
+			local pposz = math.floor(pos.z)
 			
-			nval_humid = 0
+			local nobj_temp = nobj_temp or minetest.get_perlin(np_temp) -- paramats black magic
+			local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
+
+			local nval_temp = nobj_temp:get2d({x = pposx, y = pposz}) -- more noisy black magic
+			local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
 			
-		end	
-	
-		if pos.y < -14999 then
-	
-			nval_humid = 0
-	
-			nval_temp = nval_temp + 1000
-	
-		end
-
-		-- if the local temp is less than -15 C then decrement frostbite every now and then, if the heatstroke bar is not at 100,
-		-- then start replenishing it
-		-- if the local temp is more than +35 C then decrement heatstroke every now and then, if the frostbite bar is not at 100,
-		-- then start replenishing it
-		-- if not under or over those values, slowly restore the bar to 0. 
-		-- environmental timer is 15 seconds
-		
-		local meta = player:get_meta()
-		
-		local frosty = meta:get_int("frostbite") -- nice combo into uppercut, just wait for the kahn.
-		local toasty = meta:get_int("overheat")
-
-		if nval_temp < -15 then
-
-			if toasty > 0 then
+			if nval_humid > 100 then -- we cap it from going over 100%
+				nval_humid = 100
+			elseif nval_humid < 0 then -- this includes going under 0%
+				nval_humid = 0
+			end
 			
-				meta:set_int("overheat", toasty - 1)
+			nval_temp = ((nval_temp / 2) - 12) + (nval_humid * 0.02) -- calculate the temparature based on local area and humidity 
+			
+			if hudclock.month == 1 then -- todo turn this into a mcore function
+				nval_temp = nval_temp - 20
+			elseif hudclock.month == 2 then
+				nval_temp = nval_temp - 15
+			elseif hudclock.month == 3 then
+				nval_temp = nval_temp - 10
+			elseif hudclock.month == 4 then
+				nval_temp = nval_temp - 5
+			elseif hudclock.month == 5 then
+				nval_temp = nval_temp + 0
+			elseif hudclock.month == 6 then
+				nval_temp = nval_temp + 5
+			elseif hudclock.month == 7 then
+				nval_temp = nval_temp + 5
+			elseif hudclock.month == 8 then
+				nval_temp = nval_temp + 0
+			elseif hudclock.month == 9 then
+				nval_temp = nval_temp - 5
+			elseif hudclock.month == 10 then
+				nval_temp = nval_temp - 10
+			elseif hudclock.month == 11 then
+				nval_temp = nval_temp - 15
+			elseif hudclock.month == 12 then
+				nval_temp = nval_temp - 20
+			end
+
+			-- for every 1 block 0.001c is added to the temparature gauge. any lower than -15km and heat will always be above 
+			-- local temparature plus 1000C
+			-- for low orbit and higher, -271C is used.
+
+			local y = math.abs(pos.y) * 0.001
+
+			if pos.y < 1 then -- we do this because going over the two altitudes will add the height values on to it,
+							  -- as i'm not sure if uh, temps below -271C exist in this world.
+
+				nval_temp = nval_temp + y
 
 			else
 
-				meta:set_int("frostbite", frosty + 1)
+				nval_temp = nval_temp - y
 
 			end
 
-		elseif nval_temp > 35 then
-
-			if frosty > 0 then
-
-				meta:set_int("frostbite", frosty - 1)
-
-			else
-
-				meta:set_int("overheat", toasty + 1)
-
+			if pos.y >= 10000 then
+		
+				nval_temp = -271
+				
+				nval_humid = 0
+				
+			end	
+		
+			if pos.y < -14999 then
+		
+				nval_humid = 0
+		
+				nval_temp = nval_temp + 1000
+		
 			end
 
-		else
+			-- if the local temp is less than -15 C then decrement frostbite every now and then, if the heatstroke bar is not at 100,
+			-- then start replenishing it
+			-- if the local temp is more than +35 C then decrement heatstroke every now and then, if the frostbite bar is not at 100,
+			-- then start replenishing it
+			-- if not under or over those values, slowly restore the bar to 0. 
+			-- environmental timer is 15 seconds
+			
+			local meta = player:get_meta()
+			
+			local frosty = meta:get_int("frostbite") -- nice combo into uppercut, just wait for the kahn.
+			local toasty = meta:get_int("overheat")
+
+			if nval_temp < -15 then -- do frostbite bar 
+
+				if toasty > 0 then
+				
+					meta:set_int("overheat", toasty - 1)
+
+				else
+
+					meta:set_int("frostbite", frosty + 1)
+
+				end
+
+			elseif nval_temp > 35 then -- do the overheat bar
+
+				if frosty > 0 then
+
+					meta:set_int("frostbite", frosty - 1)
+
+				else
+
+					meta:set_int("overheat", toasty + 1)
+
+				end
+
+			else -- otherwise, let's cool off and remove frostbite
+
+				frosty = meta:get_int("frostbite")
+				toasty = meta:get_int("overheat")
+
+				frosty = frosty - 1
+				toasty = toasty - 1
+
+				if toasty > 100 then toasty = 100 end
+				if toasty < 0 then toasty = 0 end
+
+				if frosty > 100 then frosty = 100 end
+				if frosty < 0 then frosty = 0 end
+
+				meta:set_int("overheat", toasty)
+				meta:set_int("frostbite", frosty)
+
+			end
 
 			frosty = meta:get_int("frostbite")
 			toasty = meta:get_int("overheat")
 
-			frosty = frosty - 1
-			toasty = toasty - 1
+			hb.change_hudbar(player, "overheat", toasty) -- deal with our hudbars
+			hb.change_hudbar(player, "frostbite", frosty)
 
-			if toasty > 100 then toasty = 100 end
-			if toasty < 0 then toasty = 0 end
+			if frosty > 94 then -- we do damage in this order because while 94 is higher than 79, the 15hp would never activate.
 
-			if frosty > 100 then frosty = 100 end
-			if frosty < 0 then frosty = 0 end
+				player:set_hp(player:get_hp() - 15, "atmos_frostbite")
 
-			meta:set_int("overheat", toasty)
-			meta:set_int("frostbite", frosty)
+			elseif frosty > 89 then
 
-		end
+				player:set_hp(player:get_hp() - 5, "atmos_frostbite")
 
-		frosty = meta:get_int("frostbite")
-		toasty = meta:get_int("overheat")
+			elseif frosty > 79 then
 
-		hb.change_hudbar(player, "overheat", toasty)
-		hb.change_hudbar(player, "frostbite", frosty)
+				player:set_hp(player:get_hp() - 2, "atmos_frostbite") -- do 1 hearts worth of damage
 
-		if frosty > 94 then
+			end
 
-			player:set_hp(player:get_hp() - 15, "atmos_frostbite")
+			if toasty > 94 then -- read the above comment on L634
 
-		elseif frosty > 89 then
+				player:set_hp(player:get_hp() - 15, "atmos_overheat")
 
-			player:set_hp(player:get_hp() - 5, "atmos_frostbite")
+			elseif toasty > 89 then
 
-		elseif frosty > 79 then
+				player:set_hp(player:get_hp() - 5, "atmos_overheat")
 
-			player:set_hp(player:get_hp() - 2, "atmos_frostbite") -- do 1 hearts worth of damage
+			elseif toasty > 80 then
 
-		end
+				player:set_hp(player:get_hp() - 2, "atmos_overheat")
 
-		if toasty > 94 then
-
-			player:set_hp(player:get_hp() - 15, "atmos_overheat")
-
-		elseif toasty > 89 then
-
-			player:set_hp(player:get_hp() - 5, "atmos_overheat")
-
-		elseif toasty > 80 then
-
-			player:set_hp(player:get_hp() - 2, "atmos_overheat")
-
+			end
+		
 		end
 
 	end
 
-	minetest.after(math.random(15, 30), local_area_stamina)
+	minetest.after(math.random(15, 30), local_area_stamina) -- restart the loop at a random time to simulate reality. (not really)
 
 end
 
 local_area_stamina()
 
-minetest.register_chatcommand("frosty", {
+minetest.register_chatcommand("frosty", { -- admin commands to debug the values for testing
 	
 	description = "debugs the current frostbite level",
 	param = "use 0-100 to set frostbite level.",

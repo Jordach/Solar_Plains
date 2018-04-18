@@ -129,7 +129,7 @@ lightning.strike = function(pos)
 		glow = 14,
 	})
 
-	minetest.sound_play({ pos = pos, name = "lightning_thunder", gain = 10, max_hear_distance = 500 })
+	minetest.sound_play({ pos = pos, name = "lightning_thunder", gain = 10, max_hear_distance = 2000 })
 
 	-- damage nearby objects, player or not
 	for _, obj in ipairs(minetest.get_objects_inside_radius(pos, 5)) do

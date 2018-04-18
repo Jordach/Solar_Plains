@@ -861,6 +861,7 @@ minetest.register_node("core:cactus", {
 	drawtype = "mesh",
 	paramtype = "light",
 	mesh = "core_cactus.b3d",
+	
 	groups = {choppy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_wood,
 	damage_per_second = 1,
