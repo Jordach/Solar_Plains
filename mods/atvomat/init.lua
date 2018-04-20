@@ -53,17 +53,17 @@ atvomat.crusher_recipes["reddye"] =       {"", 1,  "dye:red",        4}
 atvomat.crusher_recipes["brown"] =        {"", 1,  "dye:brown",      4}
 atvomat.crusher_recipes["orangedye"] =    {"", 1,  "dye:orange",     4}
 atvomat.crusher_recipes["yellowdye"] =    {"", 1,  "dye:yellow",     4}
-atvomat.crusher_recipes["limedye"] =      {"", 1,  "dye:lime",       4}
 atvomat.crusher_recipes["greendye"] =     {"", 1,  "dye:green",      4}
 atvomat.crusher_recipes["darkgreendye"] = {"", 1,  "dye:dark_green", 4}
 atvomat.crusher_recipes["cyandye"] =      {"", 1,  "dye:cyan",       4}
-atvomat.crusher_recipes["bluedye"] =      {"", 1,  "dye:blue",       4}
-atvomat.crusher_recipes["magenta"] =      {"", 1,  "dye:magenta",    4}
+atvomat.crusher_recipes["skybluedye"] =   {"", 1,  "dye:sky_blue",   4}
+atvomat.crusher_recipes["sea_blue"] =     {"", 1,  "dye:sea_blue",   4}
+atvomat.crusher_recipes["cherry"] =       {"", 1,  "dye:cherry",     4}
 atvomat.crusher_recipes["purple"] =       {"", 1,  "dye:purple",     4}
 atvomat.crusher_recipes["violet"] =       {"", 1,  "dye:violet",     4}
 atvomat.crusher_recipes["white"] =        {"", 1,  "dye:white",      4}
 atvomat.crusher_recipes["lightgrey"] =    {"", 1,  "dye:light_grey", 4}
-atvomat.crusher_recipes["grey"] =         {"", 1,  "dye:grey",       4}
+atvomat.crusher_recipes["darkgrey"] =     {"", 1,  "dye:dark_grey",  4}
 atvomat.crusher_recipes["black"] =        {"", 1,  "dye:black",      4}
 
 -- logger control, register trees here, format: tree_log, leaves, sapling_name
