@@ -48,8 +48,9 @@ atvomat.crusher_recipes["silver"] =  {"core:silver_ore",  1, "core:silver_dust",
 atvomat.crusher_recipes["mese"] =    {"core:mese_ore",    1, "core:mese_crystal", 4}
 atvomat.crusher_recipes["diamond"] = {"core:diamond_ore", 1, "core:diamond",      4}
 
--- dyes (15 colours currently)
+-- dyes (16 colours currently)
 atvomat.crusher_recipes["reddye"] =       {"", 1,  "dye:red",        4}
+atvomat.crusher_recipes["brown"] =        {"", 1,  "dye:brown",      4}
 atvomat.crusher_recipes["orangedye"] =    {"", 1,  "dye:orange",     4}
 atvomat.crusher_recipes["yellowdye"] =    {"", 1,  "dye:yellow",     4}
 atvomat.crusher_recipes["limedye"] =      {"", 1,  "dye:lime",       4}
