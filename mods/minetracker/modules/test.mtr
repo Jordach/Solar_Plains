@@ -1,0 +1,53 @@
+Experimental Demo Beats
+Jordach
+Solar Plains OST
+135
+return {{["sample"] = "kick", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "snare", ["vol"] = 10.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "kick", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat2", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "kick2", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "snare", ["vol"] = 10.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "kick", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat2", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "kick2", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "snare", ["vol"] = 10.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "kick", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat2", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "kick2", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "snare", ["vol"] = 10.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "kick", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "hat2", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "kick", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 0.9}}
+return {{["sample"] = "kick", ["vol"] = 0.2, ["fade"] = 0.0, ["pitch"] = 0.8}}
+return {{["sample"] = "kick", ["vol"] = 0.15, ["fade"] = 0.0, ["pitch"] = 0.7}}
+return {{["sample"] = "kick", ["vol"] = 0.1, ["fade"] = 0.0, ["pitch"] = 0.6}}
+return {{["sample"] = "kick", ["vol"] = 0.05, ["fade"] = 0.0, ["pitch"] = 0.5}, {["sample"] = "hat", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "hat", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "snare", ["vol"] = 10.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "kick", ["vol"] = 0.05, ["fade"] = 0.0, ["pitch"] = 0.5}, {["sample"] = "hat", ["vol"] = 75.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "kick", ["vol"] = 0.1, ["fade"] = 0.0, ["pitch"] = 0.6}}
+return {{["sample"] = "kick", ["vol"] = 0.15, ["fade"] = 0.0, ["pitch"] = 0.7}}
+return {{["sample"] = "kick", ["vol"] = 0.2, ["fade"] = 0.0, ["pitch"] = 0.8}}
+return {{["sample"] = "kick", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 0.9}}
+return {{["sample"] = "snare", ["vol"] = 10.0, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {{["sample"] = "kick2", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
+return {{["sample"] = "kick2", ["vol"] = 0.25, ["fade"] = 0.0, ["pitch"] = 1.0}}
+return {["gap"] = 0}
