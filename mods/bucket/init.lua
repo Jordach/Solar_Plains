@@ -151,3 +151,4 @@ end
 
 
 bucket.register_bucket("water", "bucket_water.png", "core:water_source", "Bucket of Water", "core:water_source")
+bucket.register_bucket("lava", "bucket_lava.png", "core:lava_source", "Bucket of Lava", "core:lava_source")

@@ -1,4 +1,4 @@
--- minetracker, a small mod for solar plains that enables JSON-like line based playback of upto 12 instruments
+-- minetracker, a small mod for solar plains that enables JSON-like line based playback of upto an endless amount of instruments
 
 local song_storage = minetest.get_modpath("minetracker").."/modules/"
 

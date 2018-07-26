@@ -17,7 +17,6 @@ Times returned from "minetest.get_timeofday()"
 0.5  is 12:00 PM
 0.75 is 18:00 or 6:00 PM
 0.79 is 19:00 or 7:00 PM
-
 ]]--
 
 -- time to set the "alarm clock" for sleeping players; use table above for more information.

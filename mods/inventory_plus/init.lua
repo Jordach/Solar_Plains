@@ -98,6 +98,7 @@ inventory_plus.get_formspec = function(player, page)
 
 		formspec = formspec
 			.. "button[0,0;2.15,1;cguide;Crafting Guide]"
+			.. "button[0,1;2.15,1;quickslots;QuickSlots]"
 			.. "list[current_player;craftpreview;7,1;1,1;]"
 			.. "list[current_player;craft;3,0;3,3;]"
 			.. "listring[current_name;craft]"
@@ -109,36 +110,24 @@ inventory_plus.get_formspec = function(player, page)
 			--.. "image[1.1,2.1;0.8,0.8;trash_icon.png]"
 	end
 
-	-- main page
-	if page == "main" then
+	if page == "quickslots" then
 
-		local name = player:get_player_name()
-		local num = 0
+		formspec = formspec ..
+		"button[0,0;3,1;main;Return to Inventory]" ..
+		"button[0,1;3,1;main;Save Slot Modes]" ..
+		"label[4,0;punch = item acts as if punched]"..
+		"label[4,0.3;use = item acts as if used]" ..
+		"label[4,0.6;place = item acts as if placed]" ..
+		"dropdown[0.95,2.85;1;slot1;Use,Punch,Place;1]" ..
+		--"field[1.28,3;1,1;slot1;;use]" ..
+		"field[2.28,3;1,1;slot2;;use]" ..
+		"field[3.28,3;1,1;slot3;;use]" ..
+		"field[4.28,3;1,1;slot4;;use]" ..
+		"field[5.28,3;1,1;slot5;;use]" ..
+		"field[6.28,3;1,1;slot6;;use]" ..
+		"list[current_player;quickslots;1,2;6,1]" ..
+		"background[-0.45,-0.5;8.9,10;core_inv_plus_guide.png]"
 
-		-- count buttons
-		for k, v in pairs( inventory_plus.buttons[name] ) do
-			num = num + 1
-		end
-
-		-- buttons
-		local x = 0
-		local f = math.ceil(num / 4)
-		local y = 0
-
-		for k, v in pairs( inventory_plus.buttons[name] ) do
-
-			formspec = formspec .. "image_button[" .. x .. ","
-				 .. y .. ";2,1;core_button_wood.png;" .. k .. ";" .. v .. ";false;false;core_button_wood_pressed.png]"
-
-			x = x + 2
-
-			if x == 8 then
-				x = 0
-				y = y + 1
-			end
-		end
-		
-		formspec = formspec .. "background[-0.45,-0.5;8.9,10;core_inv_plus.png]"
 	end
 
 	return formspec
@@ -169,6 +158,15 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		inventory_plus.set_inventory_formspec(player, zcg.formspec(player:get_player_name()))
 
 		return
+		
+	end
+
+	-- quickslots
+
+	if fields.quickslots then
+
+		inventory_plus.set_inventory_formspec(player,
+			inventory_plus.get_formspec(player, "quickslots"))
 		
 	end
 
