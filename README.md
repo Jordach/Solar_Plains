@@ -1,5 +1,11 @@
 # Solar_Plains
 
+# Performance Issues:
+
+Please note, Solar Plains requires the server to be as recent as Intel's HASWELL processors, starting at model 4250U.
+
+For clients connecting to a server, this requirement is lower, anything as recent as the Intel Core 2 Quad should be capable of running this game fine, as either singleplayer or client.
+
 # Code Styling:
 
 Use tabs - any editor can configure a single tab into X amount of spaces.
