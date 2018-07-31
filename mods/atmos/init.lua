@@ -14,11 +14,11 @@ minetest.register_chatcommand("weather", {
 		
 		atmos.current_weather = 0 + param
 		
-		local player = minetest.get_player_by_name(name)
+		--local player = minetest.get_player_by_name(name)
 
-		player:set_sky("#000000", "skybox", {"core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png"}, false, true)
+		--player:set_sky("#000000", "skybox", {"core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png"}, false, true)
 		
-		player:override_day_night_ratio(0)
+		--player:override_day_night_ratio(0)
 		
 		--atmos.set_skybox(player)
 		
@@ -92,29 +92,32 @@ function atmos.set_skybox(player)
 	--local skybox = atmos.get_weather_skybox()
 	local ctime = minetest.get_timeofday() * 100
 
-	ctime = ctime - (ctime % 1)
+	local ctime2 = ctime - math.floor(ctime)
 
-	print (ctime)
+	local fade_factor = 255 * ctime2
+
+	ctime = math.floor(ctime)
+
+	local side_string = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")^" .. "(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")"
+	local side_string_new = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")^" .. "(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime+1].top .. ")"
+
+	local sky_top = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")^(atmos_sky_top_radial.png^[multiply:".. atmos_clear_weather[ctime].top .. ")"
+	local sky_top_new = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")^(atmos_sky_top_radial.png^[multiply:".. atmos_clear_weather[ctime+1].top .. ")"
+
+	local sky_bottom = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")"
+	local sky_bottom_new = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")"
 
 	player:set_sky(atmos_clear_weather[ctime].base, "skybox", {
-		"atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].top,
-		"atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom,
+		
+		sky_top .. "^(" .. sky_top_new .. "^[opacity:" .. fade_factor .. ")",
+		sky_bottom .. "^(" .. sky_bottom_new .. "^[opacity:" .. fade_factor .. ")",
 
-			"(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].base .. ")^" ..
-				"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")^" ..
-				"(atmos_sky_bottom.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")",
-			
-			"(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].base .. ")^" ..
-				"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")^" ..
-				"(atmos_sky_bottom.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")",
+		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
+		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
+		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
+		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
 
-			"(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].base .. ")^" ..
-				"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")^" ..
-				"(atmos_sky_bottom.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")",
 
-			"(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].base .. ")^" ..
-				"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")^" ..
-				"(atmos_sky_bottom.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")"
 		
 	}, true)
 		
@@ -160,7 +163,7 @@ function atmos.sync_skybox()
 	
 	end
 	
-	minetest.after(1, atmos.sync_skybox)
+	minetest.after(0.1, atmos.sync_skybox)
 end
 
 -- table of weathers; even numbers above 5 are night time version (but not this table)
@@ -261,12 +264,6 @@ minetest.after(1, atmos.sync_skybox)
 lightning.light_level = atmos.weather_light_level
 
 -- abm to remove fires when it's raining, snowing or hailing?
-
-
-
-
-
-
 
 -- logic to support taking damage when either too cold or too hot
 
@@ -506,7 +503,7 @@ local function local_area_stamina()
 
 				player:set_hp(player:get_hp() - 5, "atmos_overheat")
 
-			elseif toasty > 80 then
+			elseif toasty > 79 then
 
 				player:set_hp(player:get_hp() - 2, "atmos_overheat")
 

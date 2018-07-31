@@ -13,6 +13,9 @@ hudclock.day = 1
 hudclock.month = 6
 hudclock.year = 1
 
+hudclock.minute = 0
+hudclock.hours = 0
+
 ymd = {}
 
 local function floormod ( x, y )
@@ -22,9 +25,9 @@ end
 local function get_time()
 	local secs = (60*60*24*minetest.get_timeofday());
 	local seconds = floormod(secs, 60);
-	local minutes = floormod(secs/60, 60);
-	local hours = floormod(secs/3600, 60);
-	return ("%02d:%02d"):format(hours, minutes);
+	hudclock.minute = floormod(secs/60, 60);
+	hudclock.hours = floormod(secs/3600, 60);
+	return ("%02d:%02d"):format(hudclock.hours, hudclock.minute);
 end
 
 function hudclock.update_time()
