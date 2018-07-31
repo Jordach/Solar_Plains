@@ -99,3 +99,4 @@ return {["top"] = "#010109", ["bottom"] = "#010214", ["base"] = "#00010D", ["lig
 return {["top"] = "#010109", ["bottom"] = "#010214", ["base"] = "#00010D", ["light"] = 0.05}
 return {["top"] = "#010109", ["bottom"] = "#010214", ["base"] = "#00010D", ["light"] = 0.05}
 return {["top"] = "#010109", ["bottom"] = "#010214", ["base"] = "#00010D", ["light"] = 0.05}
+return {["top"] = "#010109", ["bottom"] = "#010214", ["base"] = "#00010D", ["light"] = 0.05}

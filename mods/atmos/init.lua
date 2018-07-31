@@ -92,11 +92,15 @@ function atmos.set_skybox(player)
 	--local skybox = atmos.get_weather_skybox()
 	local ctime = minetest.get_timeofday() * 100
 
+	-- figure out our multiplier since get_timeofday returns 0->1, we can use the sig figs as a 0-100 percentage multiplier
+
 	local ctime2 = ctime - math.floor(ctime)
 
 	local fade_factor = 255 * ctime2
 
-	ctime = math.floor(ctime)
+	ctime = math.floor(ctime) -- remove the sig figs, since we're accessing table points
+
+	-- assemble the skyboxes to fade neatly
 
 	local side_string = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")^" .. "(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")"
 	local side_string_new = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")^" .. "(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime+1].top .. ")"
@@ -107,7 +111,88 @@ function atmos.set_skybox(player)
 	local sky_bottom = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")"
 	local sky_bottom_new = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")"
 
-	player:set_sky(atmos_clear_weather[ctime].base, "skybox", {
+	-- let's convert the base colour to convert it into our transitioning fog colour:
+
+	local fog = {}
+
+	fog.current = {} -- we need two tables for comparing, as any matching pairs of hex will be skipped.
+	fog.next = {}
+	fog.result = {}
+
+	fog.current.red = 0
+	fog.current.grn = 0
+	fog.current.blu = 0
+
+	fog.next.red = 0
+	fog.next.grn = 0
+	fog.next.blu = 0
+
+	fog.result.red = 0
+	fog.result.grn = 0
+	fog.result.blu = 0
+
+	-- convert our hex into compatible minetest.rgba components:
+	-- we need these to make our lives easier when it comes to uh, things.
+
+	fog.current.red = tonumber("0x" .. atmos_clear_weather[ctime].base:sub(2,3))
+	fog.current.grn = tonumber("0x" .. atmos_clear_weather[ctime].base:sub(4,5))
+	fog.current.blu = tonumber("0x" .. atmos_clear_weather[ctime].base:sub(6,7))
+
+	fog.next.red = tonumber("0x" .. atmos_clear_weather[ctime+1].base:sub(2,3))
+	fog.next.grn = tonumber("0x" .. atmos_clear_weather[ctime+1].base:sub(4,5))
+	fog.next.blu = tonumber("0x" .. atmos_clear_weather[ctime+1].base:sub(6,7))
+
+	if atmos_clear_weather[ctime].base ~= atmos_clear_weather[ctime+1].base then
+
+		-- we compare colours the same way we do it for the light level
+
+		if fog.current.red < fog.next.red then -- check if we're darker than the next skybox frame
+
+			local ratio = (fog.next.red - fog.current.red) * ctime2
+			fog.result.red = fog.current.red + ratio
+		
+		else -- we darken instead, this repeats for the next two if, else statements
+
+			local ratio = (fog.current.red - fog.next.red) * ctime2
+			fog.result.red = fog.current.red - ratio
+		
+		end
+
+		if fog.current.grn < fog.next.grn then
+
+			local ratio = (fog.next.grn - fog.current.grn) * ctime2
+			fog.result.grn = fog.current.grn + ratio
+		
+		else
+
+			local ratio = (fog.current.grn - fog.next.grn) * ctime2
+			fog.result.grn = fog.current.grn - ratio
+		
+		end
+
+		if fog.current.blu < fog.next.blu then
+
+			local ratio = (fog.next.blu - fog.current.blu) * ctime2
+			fog.result.blu = fog.current.blu + ratio
+
+		else
+
+			local ratio = (fog.current.blu - fog.next.blu) * ctime2
+			fog.result.blu = fog.current.blu - ratio
+		
+		end
+
+	else
+
+		fog.result.red = fog.current.red
+		fog.result.grn = fog.current.grn
+		fog.result.blu = fog.current.blu
+
+	end
+
+	print (fog.result.red, fog.result.grn, fog.result.blu)
+	
+	player:set_sky(minetest.rgba(fog.result.red, fog.result.grn, fog.result.blu), "skybox", {
 		
 		sky_top .. "^(" .. sky_top_new .. "^[opacity:" .. fade_factor .. ")",
 		sky_bottom .. "^(" .. sky_bottom_new .. "^[opacity:" .. fade_factor .. ")",
@@ -115,9 +200,7 @@ function atmos.set_skybox(player)
 		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
 		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
 		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
-		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")",
-
-
+		side_string .. "^(" .. side_string_new .. "^[opacity:" .. fade_factor .. ")"
 		
 	}, true)
 		
@@ -129,8 +212,32 @@ function atmos.set_skybox(player)
 		height = 210,
 	
 	})
+	
+	local light_ratio = 0
+	local light_level = 0
+
+	if atmos_clear_weather[ctime].light < atmos_clear_weather[ctime+1].light then -- we do dark to light fade
+
+		light_ratio = (atmos_clear_weather[ctime+1].light - atmos_clear_weather[ctime].light) * ctime2
+
+		light_level = atmos_clear_weather[ctime].light + light_ratio
+
+	elseif atmos_clear_weather[ctime].light == atmos_clear_weather[ctime+1].light then -- we do nothing, because there's nothing worth doing
 		
-	player:override_day_night_ratio(atmos_clear_weather[ctime].light)
+		light_level = atmos_clear_weather[ctime].light
+
+	else -- we do the light to dark fade 
+
+		light_ratio = (atmos_clear_weather[ctime].light - atmos_clear_weather[ctime+1].light) * ctime2
+
+		light_level = atmos_clear_weather[ctime].light - light_ratio
+	
+	end
+
+	if light_level > 1 then light_level = 1 end -- sanity checks, going over 1 makes it dark again
+	if light_level < 0 then light_level = 0 end -- going under 0 makes it bright again
+
+	player:override_day_night_ratio(light_level)
 	
 end
 
