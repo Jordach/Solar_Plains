@@ -189,8 +189,6 @@ function atmos.set_skybox(player)
 		fog.result.blu = fog.current.blu
 
 	end
-
-	print (fog.result.red, fog.result.grn, fog.result.blu)
 	
 	player:set_sky(minetest.rgba(fog.result.red, fog.result.grn, fog.result.blu), "skybox", {
 		
