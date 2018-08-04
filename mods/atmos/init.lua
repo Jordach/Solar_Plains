@@ -117,9 +117,7 @@ function atmos.set_skybox(player)
 	if ctime2 == 0 then ctime2 = 0.01 end -- anti sudden skybox change syndrome
 
 	local fade_factor =  math.floor(255 * ctime2)
-
-	print (ctime2, fade_factor)
-
+	
 	ctime = math.floor(ctime) -- remove the sig figs, since we're accessing table points
 
 	-- assemble the skyboxes to fade neatly
