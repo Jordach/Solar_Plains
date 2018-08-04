@@ -87,6 +87,22 @@ for line in io.lines(storage.."skybox_clear_gradient"..".atm") do
 
 end
 
+local function atmos_ratio(current, next, ctime2)
+
+	if current < next then -- check if we're darker than the next skybox frame
+
+		local ratio = (next - current) * ctime2
+		return (current + ratio)
+	
+	else -- we darken instead, this repeats for the next two if, else statements
+
+		local ratio = (current - next) * ctime2
+		return (current - ratio)
+	
+	end	
+
+end
+
 function atmos.set_skybox(player)
 
 	--local skybox = atmos.get_weather_skybox()
@@ -94,9 +110,15 @@ function atmos.set_skybox(player)
 
 	-- figure out our multiplier since get_timeofday returns 0->1, we can use the sig figs as a 0-100 percentage multiplier
 
-	local ctime2 = ctime - math.floor(ctime)
+	-- contributed by @rubenwardy
 
-	local fade_factor = 255 * ctime2
+	local ctime2 = math.floor((ctime - math.floor(ctime)) * 100) / 100
+
+	if ctime2 == 0 then ctime2 = 0.01 end -- anti sudden skybox change syndrome
+
+	local fade_factor =  math.floor(255 * ctime2)
+
+	print (ctime2, fade_factor)
 
 	ctime = math.floor(ctime) -- remove the sig figs, since we're accessing table points
 
@@ -146,41 +168,9 @@ function atmos.set_skybox(player)
 
 		-- we compare colours the same way we do it for the light level
 
-		if fog.current.red < fog.next.red then -- check if we're darker than the next skybox frame
-
-			local ratio = (fog.next.red - fog.current.red) * ctime2
-			fog.result.red = fog.current.red + ratio
-		
-		else -- we darken instead, this repeats for the next two if, else statements
-
-			local ratio = (fog.current.red - fog.next.red) * ctime2
-			fog.result.red = fog.current.red - ratio
-		
-		end
-
-		if fog.current.grn < fog.next.grn then
-
-			local ratio = (fog.next.grn - fog.current.grn) * ctime2
-			fog.result.grn = fog.current.grn + ratio
-		
-		else
-
-			local ratio = (fog.current.grn - fog.next.grn) * ctime2
-			fog.result.grn = fog.current.grn - ratio
-		
-		end
-
-		if fog.current.blu < fog.next.blu then
-
-			local ratio = (fog.next.blu - fog.current.blu) * ctime2
-			fog.result.blu = fog.current.blu + ratio
-
-		else
-
-			local ratio = (fog.current.blu - fog.next.blu) * ctime2
-			fog.result.blu = fog.current.blu - ratio
-		
-		end
+		fog.result.red = atmos_ratio(fog.current.red, fog.next.red, ctime2)
+		fog.result.grn = atmos_ratio(fog.current.grn, fog.next.grn, ctime2)
+		fog.result.blu = atmos_ratio(fog.current.blu, fog.next.blu, ctime2)
 
 	else
 
@@ -188,6 +178,12 @@ function atmos.set_skybox(player)
 		fog.result.grn = fog.current.grn
 		fog.result.blu = fog.current.blu
 
+	end
+
+	if atmos_clear_weather[ctime].bottom == atmos_clear_weather[ctime+1].bottom then -- prevent more leakage
+		if atmos_clear_weather[ctime].top == atmos_clear_weather[ctime+1].top then
+			fade_factor = 0
+		end
 	end
 	
 	player:set_sky(minetest.rgba(fog.result.red, fog.result.grn, fog.result.blu), "skybox", {
@@ -214,22 +210,14 @@ function atmos.set_skybox(player)
 	local light_ratio = 0
 	local light_level = 0
 
-	if atmos_clear_weather[ctime].light < atmos_clear_weather[ctime+1].light then -- we do dark to light fade
-
-		light_ratio = (atmos_clear_weather[ctime+1].light - atmos_clear_weather[ctime].light) * ctime2
-
-		light_level = atmos_clear_weather[ctime].light + light_ratio
-
-	elseif atmos_clear_weather[ctime].light == atmos_clear_weather[ctime+1].light then -- we do nothing, because there's nothing worth doing
+	if atmos_clear_weather[ctime].light == atmos_clear_weather[ctime+1].light then -- we do nothing, because there's nothing worth doing
 		
 		light_level = atmos_clear_weather[ctime].light
 
 	else -- we do the light to dark fade 
 
-		light_ratio = (atmos_clear_weather[ctime].light - atmos_clear_weather[ctime+1].light) * ctime2
-
-		light_level = atmos_clear_weather[ctime].light - light_ratio
-	
+		light_level = atmos_ratio(atmos_clear_weather[ctime].light, atmos_clear_weather[ctime+1].light, ctime2)
+		
 	end
 
 	if light_level > 1 then light_level = 1 end -- sanity checks, going over 1 makes it dark again
