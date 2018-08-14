@@ -47,7 +47,7 @@ minetest.register_decoration({
 	decoration = {"plants:carnation", "plants:bells_of_terra", "plants:daylilly"},
 	sidelen = 80,
 	fill_ratio = 0.001,
-	biomes = {"plains", "plains_forest"},
+	biomes = {"plains", "plains_forest", "highlands", "jungle"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -60,7 +60,7 @@ minetest.register_decoration({
 	decoration = {"plants:bluebells", "plants:lily_of_the_dream", "plants:angelface"},
 	sidelen = 80,
 	fill_ratio = 0.001,
-	biomes = {"plains", "plains_forest"},
+	biomes = {"plains", "plains_forest", "highlands"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -73,7 +73,7 @@ minetest.register_decoration({
 	decoration = {"plants:violet", "plants:pansy", "plants:crocus"},
 	sidelen = 80,
 	fill_ratio = 0.001,
-	biomes = {"plains", "plains_forest"},
+	biomes = {"plains", "plains_forest", "jungle"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -86,7 +86,7 @@ minetest.register_decoration({
 	decoration = {"plants:lilac", "plants:allium", "plants:camellia"},
 	sidelen = 80,
 	fill_ratio = 0.001,
-	biomes = {"plains", "plains_forest"},
+	biomes = {"plains", "plains_forest", "jungle"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -113,7 +113,7 @@ minetest.register_decoration({
 	decoration = {"plants:hellebore", "plants:black_rose", "plants:daylia"},
 	sidelen = 80,
 	fill_ratio = 0.001,
-	biomes = {"plains", "plains_forest"},
+	biomes = {"plains", "plains_forest", "highlands"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })

@@ -1062,7 +1062,7 @@ minetest.register_decoration({
 	decoration = {"core:grass_1", "core:grass_2", "core:grass_3"},
 	sidelen = 16,
 	fill_ratio = 0.2,
-	biomes = {"plains", "plains_forest", "plains_floral", "jungle"},
+	biomes = {"plains", "plains_forest", "jungle", "highlands"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -1096,7 +1096,7 @@ minetest.register_decoration({
 	decoration = {"plants:daisy"},
 	sidelen = 16,
 	fill_ratio = 0.02,
-	biomes = {"plains", "plains_floral"},
+	biomes = {"plains", "highlands"},
 	height = 1,
 })
 
