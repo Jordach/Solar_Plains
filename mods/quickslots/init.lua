@@ -75,59 +75,27 @@ function quickslots.get_quick_slots(player)
 	--print(dump(pkeys))
 
 	if pkeys.sneak then
-
 		if pkeys.aux1 then
-
 			if pkeys.LMB then
-
-				print("left mouse, sneak and aux1")
-
 				return 6
-
 			else
-
-				print("right mouse, sneak and aux1")
-
-				return 3
-
+				return 3 -- right mouse
 			end
-
 		else
-
 			if pkeys.LMB then
-
-				print("left mouse, sneak")
-
 				return 4
-
 			else
-
-				print("right mouse, sneak")
-
-				return 1
-
+				return 1 -- right mouse
 			end
-
 		end
 
 	elseif pkeys.aux1 then
-		
 		if pkeys.LMB then
-
-			print("left mouse, aux1")
-
 			return 5
-
 		else
-			
-			print("right mouse, aux1")
-
-			return 2
-		
+			return 2 -- right mouse
 		end
-
 	end
-
 end
 
 --[[
@@ -157,11 +125,11 @@ end
 
 	Support using sneak and right mouse, alongside using the on_use function.
 
-	Use quicktools.on_use(quicktools.player_controls(), user, pointed_thing) for on_use.
+	Use quicktools.on_use(quicktools.get_quick_slots(user), user, pointed_thing) for on_use.
 	
-	Use quicktools.on_sec_use(quicktools.player_controls(), user, pointed_thing) for on_secondary_use.
+	Use quicktools.on_sec_use(quicktools.get_quick_slots(user), user, pointed_thing) for on_secondary_use.
 
-	Use quicktools.on_place(quicktools.player_controls(), user, pointed_thing) for on_place.
+	Use quicktools.on_place(quicktools.get_quick_slots(user), user, pointed_thing) for on_place.
 	
 	See the below example for implementing this yourself. If the tool has an alternate mode that requires sneak or aux1,
 	perform the action and do not process quicktools. 
@@ -182,7 +150,7 @@ minetest.register_craftitem("quickslots:test", {
 		-- get our player's settings for the current slot, if it's in on_use, on_place or on_sec_use
 		--placer:get_int("quickslots_slot_" .. slotnum)
 
-
+		
 
 	end,
 
@@ -195,6 +163,45 @@ minetest.register_craftitem("quickslots:test", {
 	on_place = function(itemstack, placer, pointed_thing)
 
 		slotnum = quickslots.get_quick_slots(placer)
+
+	end,
+
+})
+
+minetest.register_craftitem("quickslots:test_use", {
+
+	description = "Tests the on_use function",
+	inventory_image = "core_water.png",
+
+	_quickslots_use_l = function(itemstack, placer, pointed_thing)
+
+		minetest.chat_send_all("on_use quickslots test used")
+
+	end,
+
+})
+
+minetest.register_craftitem("quickslots:test_use_r", {
+
+	description = "Tests the on_sec_use function",
+	inventory_image = "core_lava.png",
+
+	_quickslots_use_r = function(itemstack, placer, pointed_thing)
+
+		minetest.chat_send_all("on_sec_use quickslots test used")
+
+	end,
+
+})
+
+minetest.register_craftitem("quickslots:test_place", {
+
+	description = "Tests the on_place function",
+	inventory_image = "core_cobble.png",
+
+	_quickslots_place = function(itemstack, placer, pointed_thing)
+
+		minetest.chat_send_all("on_place quickslots test used")
 
 	end,
 

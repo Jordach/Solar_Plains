@@ -1,2 +1,3 @@
 atmos
 hudclock
+core

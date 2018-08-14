@@ -115,17 +115,24 @@ inventory_plus.get_formspec = function(player, page)
 		formspec = formspec ..
 		"button[0,0;3,1;main;Return to Inventory]" ..
 		"button[0,1;3,1;main;Save Slot Modes]" ..
-		"label[4,0;punch = item acts as if punched]"..
-		"label[4,0.3;use = item acts as if used]" ..
-		"label[4,0.6;place = item acts as if placed]" ..
-		"dropdown[0.95,2.85;1;slot1;Use,Punch,Place;1]" ..
-		--"field[1.28,3;1,1;slot1;;use]" ..
-		"field[2.28,3;1,1;slot2;;use]" ..
-		"field[3.28,3;1,1;slot3;;use]" ..
-		"field[4.28,3;1,1;slot4;;use]" ..
-		"field[5.28,3;1,1;slot5;;use]" ..
-		"field[6.28,3;1,1;slot6;;use]" ..
-		"list[current_player;quickslots;1,2;6,1]" ..
+		"label[0,2;Punch = item acts as if punched]"..
+		"label[0,2.3;Use = item acts as if used]" ..
+		"label[0,2.6;Place = item acts as if placed]" ..
+		"label[0,2.9;Note, Place will be used automatically for blocks]" ..
+	
+		"dropdown[3.95,0.15;1;slot1;Use,Punch,Place;1]" ..
+		"dropdown[3.95,1.15;1;slot1;Use,Punch,Place;1]" ..
+		"dropdown[3.95,2.15;1;slot1;Use,Punch,Place;1]" ..
+		"dropdown[5.95,0.15;1;slot1;Use,Punch,Place;1]" ..
+		"dropdown[5.95,1.15;1;slot1;Use,Punch,Place;1]" ..
+		"dropdown[5.95,2.15;1;slot1;Use,Punch,Place;1]" ..
+
+		"list[current_player;quickslots;3,0;1,1;0]" ..
+		"list[current_player;quickslots;3,1;1,1;1]" ..
+		"list[current_player;quickslots;3,2;1,1;2]" ..
+		"list[current_player;quickslots;7,0;1,1;3]" ..
+		"list[current_player;quickslots;7,1;1,1;4]" ..
+		"list[current_player;quickslots;7,2;1,1;5]" ..
 		"background[-0.45,-0.5;8.9,10;core_inv_plus_guide.png]"
 
 	end

@@ -403,27 +403,6 @@ minetest.register_on_joinplayer(function(player)
 
 end)
 
-local np_temp = {
-	offset = 50,
-	scale = 50,
-	spread = {x = 1000, y = 1000, z = 1000},
-	seed = 5349,
-	octaves = 3,
-	persist = 0.5,
-	lacunarity = 2.0,
-	--flags = ""
-}
-
-local np_humid = {
-	offset = 50,
-	scale = 50,
-	spread = {x = 1000, y = 1000, z = 1000},
-	seed = 842,
-	octaves = 3,
-	persist = 0.5,
-	lacunarity = 2.0,
-	--flags = ""
-}
 
 local function local_area_stamina()
 
@@ -433,83 +412,8 @@ local function local_area_stamina()
 		
 		else
 
-			local pos = player:get_pos()
-
-			local pposx = math.floor(pos.x)
-			local pposz = math.floor(pos.z)
-			
-			local nobj_temp = minetest.get_perlin(np_temp) -- paramats black magic
-			local nobj_humid = minetest.get_perlin(np_humid)
-
-			local nval_temp = nobj_temp:get2d({x = pposx, y = pposz}) -- more noisy black magic
-			local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
-			
-			if nval_humid > 100 then -- we cap it from going over 100%
-				nval_humid = 100
-			elseif nval_humid < 0 then -- this includes going under 0%
-				nval_humid = 0
-			end
-			
-			nval_temp = ((nval_temp / 2) - 12) + (nval_humid * 0.02) -- calculate the temparature based on local area and humidity 
-			
-			if hudclock.month == 1 then -- todo turn this into a mcore function
-				nval_temp = nval_temp - 20
-			elseif hudclock.month == 2 then
-				nval_temp = nval_temp - 15
-			elseif hudclock.month == 3 then
-				nval_temp = nval_temp - 10
-			elseif hudclock.month == 4 then
-				nval_temp = nval_temp - 5
-			elseif hudclock.month == 5 then
-				nval_temp = nval_temp + 0
-			elseif hudclock.month == 6 then
-				nval_temp = nval_temp + 5
-			elseif hudclock.month == 7 then
-				nval_temp = nval_temp + 5
-			elseif hudclock.month == 8 then
-				nval_temp = nval_temp + 0
-			elseif hudclock.month == 9 then
-				nval_temp = nval_temp - 5
-			elseif hudclock.month == 10 then
-				nval_temp = nval_temp - 10
-			elseif hudclock.month == 11 then
-				nval_temp = nval_temp - 15
-			elseif hudclock.month == 12 then
-				nval_temp = nval_temp - 20
-			end
-
-			-- for every 1 block 0.001c is added to the temparature gauge. any lower than -15km and heat will always be above 
-			-- local temparature plus 1000C
-			-- for low orbit and higher, -271C is used.
-
-			local y = math.abs(pos.y) * 0.001
-
-			if pos.y < 1 then -- we do this because going over the two altitudes will add the height values on to it,
-							  -- as i'm not sure if uh, temps below -271C exist in this world.
-
-				nval_temp = nval_temp + y
-
-			else
-
-				nval_temp = nval_temp - y
-
-			end
-
-			if pos.y >= 10000 then
 		
-				nval_temp = -271
-				
-				nval_humid = 0
-				
-			end	
-		
-			if pos.y < -14999 then
-		
-				nval_humid = 0
-		
-				nval_temp = nval_temp + 1000
-		
-			end
+			local heat, humid, latch = mcore.get_heat_humidity(player)
 
 			-- if the local temp is more than -15 C then decrement frostbite every now and then, if the heatstroke bar is not at 100,
 			-- then start replenishing it
@@ -523,7 +427,7 @@ local function local_area_stamina()
 			local frosty = meta:get_int("frostbite") -- nice combo into uppercut, just wait for the kahn.
 			local toasty = meta:get_int("overheat")
 
-			if nval_temp < -15 then -- do frostbite bar 
+			if heat < -15 then -- do frostbite bar 
 
 				if toasty > 0 then
 				
@@ -535,7 +439,7 @@ local function local_area_stamina()
 
 				end
 
-			elseif nval_temp > 35 then -- do the overheat bar
+			elseif heat > 35 then -- do the overheat bar
 
 				if frosty > 0 then
 

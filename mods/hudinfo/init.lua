@@ -4,33 +4,6 @@ hudinfo = {} -- namespaces;
 
 hudinfo.player_data = {}
 
--- paramat's snowdrift to get mapgen heat and humidity since get_heat() doesn't work?
-
-local np_temp = {
-	offset = 50,
-	scale = 50,
-	spread = {x = 1000, y = 1000, z = 1000},
-	seed = 5349,
-	octaves = 3,
-	persist = 0.5,
-	lacunarity = 2.0,
-	--flags = ""
-}
-
-local np_humid = {
-	offset = 50,
-	scale = 50,
-	spread = {x = 1000, y = 1000, z = 1000},
-	seed = 842,
-	octaves = 3,
-	persist = 0.5,
-	lacunarity = 2.0,
-	--flags = ""
-}
-
-local nobj_temp = nil
-local nobj_humid = nil
-
 function hudinfo.player_env_data(player)
 
 	local pos = player:get_pos()
@@ -51,7 +24,7 @@ function hudinfo.player_env_data(player)
 	
 		locale = "Eterra Surface,"
 	
-	elseif pos.y >= 10000 and pos.y < 26000 then
+	elseif pos.y >= 12000 and pos.y < 26000 then
 	
 		locale = "Eterra Orbit,"
 		
@@ -68,108 +41,12 @@ function hudinfo.player_env_data(player)
 		locale = "Aetherus."
 	
 	end
-	
-	-- let's get a temparature reading for the local area.
-	
-	--[[
-	
-		some notes on temparature scaling in Solar Plains:
-		
-		temparature grading goes from 10 (-25C) to 75 (40C) 50 sits at a cool 20C
-		
-		humidity modifies the actual "feel" of the temparature.
-		
-		20 + (50 * 0.02) = 21
-	
-	]]--
-	
-	local pposx = math.floor(pos.x)
-	local pposz = math.floor(pos.z)
-	
-	local nobj_temp = nobj_temp or minetest.get_perlin(np_temp)
-	local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
 
-	local nval_temp = nobj_temp:get2d({x = pposx, y = pposz})
-	local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
-	
-	local latch = false
-	
-	if nval_temp <= 40.5 then
-	
-		latch = true
-	
-	end
-	
-	if nval_humid > 100 then
-	
-		nval_humid = 100
-		
-	elseif nval_humid < 0 then
-	
-		nval_humid = 0
-	
-	end
-	
-	nval_temp = ((nval_temp / 2) - 12) + (nval_humid * 0.02)
-	
-	if hudclock.month == 1 then
-		nval_temp = nval_temp - 20
-	elseif hudclock.month == 2 then
-		nval_temp = nval_temp - 15
-	elseif hudclock.month == 3 then
-		nval_temp = nval_temp - 10
-	elseif hudclock.month == 4 then
-		nval_temp = nval_temp - 5
-	elseif hudclock.month == 5 then
-		nval_temp = nval_temp + 0
-	elseif hudclock.month == 6 then
-		nval_temp = nval_temp + 5
-	elseif hudclock.month == 7 then
-		nval_temp = nval_temp + 5
-	elseif hudclock.month == 8 then
-		nval_temp = nval_temp + 0
-	elseif hudclock.month == 9 then
-		nval_temp = nval_temp - 5
-	elseif hudclock.month == 10 then
-		nval_temp = nval_temp - 10
-	elseif hudclock.month == 11 then
-		nval_temp = nval_temp - 15
-	elseif hudclock.month == 12 then
-		nval_temp = nval_temp - 20
-	end
-	
-	local y = math.abs(pos.y) * 0.001
-
-	if pos.y < 1 then
-
-		nval_temp = nval_temp + y
-
-	else
-
-		nval_temp = nval_temp - y
-
-	end
-
-
-	if pos.y >= 10000 then
-	
-		nval_temp = -271
-		
-		nval_humid = 0
-		
-	end	
-
-	if pos.y < -14999 then
-
-		nval_humid = 0
-
-		nval_temp = nval_temp + 1000
-
-	end
+	local heat, temp, latch = mcore.get_heat_humidity(player)
 	
 	-- let's understand the current weather from atmos:
 	
-	local weather_str, weather_icon
+	local weather_str = ""
 	
 	local atmw = atmos.current_weather
 	
@@ -194,8 +71,8 @@ function hudinfo.player_env_data(player)
 	elseif atmw == 9 then
 		weather_str = "Hailstorm,"
 	end
-	
-	return locale, nval_temp, nval_humid, weather_str
+
+	return locale, heat, temp, weather_str
 	
 end
 

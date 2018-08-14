@@ -699,6 +699,27 @@ minetest.register_biome({
 
 minetest.register_biome({
 
+	name = "highlands",
+	
+	node_top = "core:grass",
+	depth_top = 1,
+	
+	node_filler = "core:dirt",
+	depth_filler = 3,
+	
+	y_min = 1,
+	y_max = 120,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
+	heat_point = 50,
+	humidity_point = 25,
+
+})
+
+minetest.register_biome({
+
 	name = "plains_forest",
 	
 	node_top = "core:grass",
@@ -713,8 +734,8 @@ minetest.register_biome({
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 40,
-	humidity_point = 55,
+	heat_point = 50,
+	humidity_point = 75,
 
 })
 
@@ -734,8 +755,8 @@ minetest.register_biome({
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 60,
-	humidity_point = 75,
+	heat_point = 85,
+	humidity_point = 50,
 
 })
 
@@ -756,8 +777,29 @@ minetest.register_biome({
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 45,
-	humidity_point = 45,
+	heat_point = 50,
+	humidity_point = 50,
+
+})
+
+minetest.register_biome({
+
+	name = "gravel_beach",
+	
+	node_top = "core:gravel",
+	depth_top = 1,
+	
+	node_filler = "core:gravel",
+	depth_filler = 3,
+	
+	y_min = 0,
+	y_max = 4,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
+	heat_point = 50,
+	humidity_point = 25,
 
 })
 
@@ -782,8 +824,8 @@ minetest.register_biome({
 	node_water_top = "core:ice",
 	depth_water_top = 1,
 	
-	heat_point = 10,
-	humidity_point = 55,
+	heat_point = 15,
+	humidity_point = 50,
 
 })
 
@@ -808,8 +850,8 @@ minetest.register_biome({
 	y_min = 4,
 	y_max = 150,
 	
-	heat_point = 10,
-	humidity_point = 55,
+	heat_point = 15,
+	humidity_point = 50,
 
 })
 
@@ -857,7 +899,7 @@ minetest.register_biome({
 	node_water_top = "core:ice",
 	depth_water_top = 1,
 	
-	heat_point = 25,
+	heat_point = 15,
 	humidity_point = 75,
 
 })
@@ -882,10 +924,12 @@ minetest.register_biome({
 	y_min = 4,
 	y_max = 1000,
 	
-	heat_point = 75,
+	heat_point = 85,
 	humidity_point = 25,
 
 })
+
+
 
 minetest.register_biome({
 
@@ -903,33 +947,33 @@ minetest.register_biome({
 	y_min = 0,
 	y_max = 4,
 	
-	heat_point = 75,
-	humidity_point = 25,
+	heat_point = 85,
+	humidity_point = 50,
 
 })
 
 minetest.register_biome({
 
-	name = "desert_cacti_forest",
+	name = "jungle",
 	
-	node_top = "core:sand",
+	node_top = "core:grass",
 	depth_top = 1,
 	
-	node_filler = "core:sandstone",
+	node_filler = "core:dirt",
 	depth_filler = 3,
-	
-	node_water = "core:water_source",
-	node_river_water = "core:water_source",
 	
 	y_min = 4,
 	y_max = 120,
 	
-	node_stone = "core:sandstone",
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
 	
-	heat_point = 75,
-	humidity_point = 25,
+	heat_point = 85,
+	humidity_point = 75,
 
 })
+
+-- ocean
 
 minetest.register_biome({
 		name = "ocean",
@@ -957,8 +1001,18 @@ minetest.register_decoration({
 	place_on = "core:grass_snow",
 	decoration = {"core:mg_pine_snowy_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.01,
+	fill_ratio = 0.02,
 	biomes = {"snowy_forest"},
+	height = 1,
+})
+
+minetest.register_decoration({
+	deco_type = "simple",
+	place_on = "core:grass",
+	decoration = {"core:mg_pine_sapling"},
+	sidelen = 16,
+	fill_ratio = 0.025,
+	biomes = {"highlands"},
 	height = 1,
 })
 
@@ -967,7 +1021,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_oak_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.009,
+	fill_ratio = 0.01,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -977,7 +1031,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_birch_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.007,
+	fill_ratio = 0.006,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -987,7 +1041,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_cherry_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.001,
+	fill_ratio = 0.003,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -1008,7 +1062,7 @@ minetest.register_decoration({
 	decoration = {"core:grass_1", "core:grass_2", "core:grass_3"},
 	sidelen = 16,
 	fill_ratio = 0.2,
-	biomes = {"plains", "plains_forest", "plains_floral"},
+	biomes = {"plains", "plains_forest", "plains_floral", "jungle"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -1054,7 +1108,7 @@ minetest.register_decoration({
 	decoration = {"core:cactus"},
 	sidelen = 20,
 	fill_ratio = 0.0004,
-	biomes = {"desert", "desert_cacti_forest"},
+	biomes = {"desert"},
 	height = 3,
 	y_max = 4,
 })

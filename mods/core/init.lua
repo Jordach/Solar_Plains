@@ -447,6 +447,135 @@ function mcore.rotate_axis(itemstack, placer, pointed_thing)
     return itemstack
 end
 
+-- default noise controls:
+
+local np_temp = {
+	offset = 50,
+	scale = 50,
+	spread = {x = 1000, y = 1000, z = 1000},
+	seed = 5349,
+	octaves = 3,
+	persist = 0.5,
+	lacunarity = 2.0,
+	--flags = ""
+}
+
+local np_humid = {
+	offset = 50,
+	scale = 50,
+	spread = {x = 1000, y = 1000, z = 1000},
+	seed = 842,
+	octaves = 3,
+	persist = 0.5,
+	lacunarity = 2.0,
+	--flags = ""
+}
+
+function mcore.get_heat_humidity(player)
+
+	-- let's get a temparature reading for the local area.
+
+	local pos = player:get_pos()
+	
+	local pposx = math.floor(pos.x)
+	local pposz = math.floor(pos.z)
+	
+	local nobj_temp = nobj_temp or minetest.get_perlin(np_temp)
+	local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
+
+	local nval_temp = nobj_temp:get2d({x = pposx, y = pposz})
+	local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
+	
+	local latch = false
+
+	if nval_humid > 100 then
+	
+		nval_humid = 100
+		
+	elseif nval_humid < 0 then
+	
+		nval_humid = 0
+	
+	end
+	
+	nval_humid = math.floor(100 * (nval_humid/100))
+
+	nval_temp = math.floor(45 * (nval_temp/100)) + (nval_humid * 0.02)
+
+	if hudclock.month == 1 then
+		nval_temp = nval_temp - 20
+	elseif hudclock.month == 2 then
+		nval_temp = nval_temp - 15
+	elseif hudclock.month == 3 then
+		nval_temp = nval_temp - 10
+	elseif hudclock.month == 4 then
+		nval_temp = nval_temp - 5
+	elseif hudclock.month == 5 then
+		nval_temp = nval_temp + 0
+	elseif hudclock.month == 6 then
+		nval_temp = nval_temp + 5
+	elseif hudclock.month == 7 then
+		nval_temp = nval_temp + 5
+	elseif hudclock.month == 8 then
+		nval_temp = nval_temp + 0
+	elseif hudclock.month == 9 then
+		nval_temp = nval_temp - 5
+	elseif hudclock.month == 10 then
+		nval_temp = nval_temp - 10
+	elseif hudclock.month == 11 then
+		nval_temp = nval_temp - 15
+	elseif hudclock.month == 12 then
+		nval_temp = nval_temp - 20
+	end
+	
+	local y = math.abs(pos.y) / 50000
+
+	-- altitude changes heat and humidity
+
+	if pos.y < 0.5 then -- heading into the underground increases heat
+		
+		nval_temp = nval_temp + (10000 * y)
+
+	else -- going into the atmosphere reduces heat
+
+		nval_temp = nval_temp + (-1556 * y)
+
+	end
+
+	nval_humid = nval_humid + (-600 * y)
+
+	if nval_temp < -271 then
+
+		nval_temp = -271
+		nval_humid = 0
+
+	elseif nval_temp > 3000 then
+
+		nval_temp = 3000
+		nval_humid = 0
+
+	end
+
+	if nval_humid > 100 then
+	
+		nval_humid = 100
+		
+	elseif nval_humid < 0 then
+	
+		nval_humid = 0
+	
+	end
+
+	if nval_temp <= 4 then
+	
+		latch = true
+	
+	end
+
+	return nval_temp, nval_humid, latch
+
+end
+
 -- dofiles for loading files required by "core"
 dofile(minetest.get_modpath("core").."/abm_timer.lua")
 dofile(minetest.get_modpath("core").."/sounds.lua")
