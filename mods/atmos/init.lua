@@ -12,15 +12,7 @@ minetest.register_chatcommand("weather", {
 			return false, "You are not allowed to control the weather, you scrub. \n \n This incident WILL be reported."
 		end
 		
-		atmos.current_weather = 0 + param
-		
-		--local player = minetest.get_player_by_name(name)
-
-		--player:set_sky("#000000", "skybox", {"core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png", "core_glass.png"}, false, true)
-		
-		--player:override_day_night_ratio(0)
-		
-		--atmos.set_skybox(player)
+		atmos.current_weather = 0 + param -- somehow it performs tonumber() on it's own?
 		
 		return true, "Current weather updated."
 	end,

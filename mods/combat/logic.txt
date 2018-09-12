@@ -1,0 +1,39 @@
+I'm writing this so I can get things logically sorted when working through this monster of a component:
+
+Initiate Battlefield with objects low and high.
+Dispatch entities to render on the battlefield.
+Invite players that are partied with the user.
+Wait until party invites expire (30 sec or 2 minutes)
+Grab player skin data (and render this to the models)
+	Make an API for wardrobe to return this information?
+Hide any player nametags.
+Randomly choose attacking order except for the first person to start it.
+
+Battle loop:
+
+Build the new HUD elements that are restricted to combat only.
+	Check for player inputs here, do not move the player.
+	Allow the player to use two camera modes, free mode, and over the shoulder.
+	Display options that can be used.
+	Check for unlocked skills and hide locked ones. (They can view it in their codex later.)
+	If choosing to attack a target, a HUD element shows the player to attack. AoE attacks uses an entity renderer.
+		The AoE and freeform targeter will point at the square, and have your players head visible over the top of it.
+		Users in stealth are NOT shown on the HUD.
+	If melee, an AP cost is shown to move in range of the target.
+Wait for all connected players to perform their actions, any disconnected players are considered dead.
+Perform skills and player movements in the order defined at init.
+	Players move first, then perform the skills.
+		Skills must check for in cover, but AP will still be consumed when moving.
+		Skills also check for dodge percentages and any active stealth users. AP will also still be consumed when performing these.
+			Untargeted AoE attacks will hit any users that are actively using stealth and dodging.
+	Cycle through the turns until nobody is left player wise.
+	AI entities in PvE will always attack last, even if they initiate the battle.
+		AIs attacks will always be in a random order, unlike players.
+		AIs also have to perform the same skill checks as players do.
+	If an attack hits, damage processing occurs here:
+		Resistances to light, dark, radiation, fire, ice, biological, electrical, plasma, laser and physical are done here.
+		Buffs and passives are added onto base resistances last.
+	Players taking damage will emit a hit noise, and display HP lost over their heads.
+	Players or AI that are killed will be removed from the battle immediately.
+	If partied players are the only ones surviving, then end the battle, and grant XP to the survivors and end the battle loop.
+Return to battle loop start:

@@ -1108,7 +1108,7 @@ function wardrobe.load_user_data(player)
 			
 			print ("[Wardrobe] " .. pname .. " has a 64x32 type skin!")
 			
-		elseif w / h == 1 then -- this is a square 64x64 type skin;
+		else -- this is a square 64x64 type skin;
 			
 			wardrobe.player_skin_size[pname] = 64
 			

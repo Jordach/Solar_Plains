@@ -98,12 +98,11 @@ minetest.register_on_newplayer(give_initial_stuff.give)
 local mob = {
 
 	visual = "mesh",
-	mesh = "entity.x",
+	mesh = "lmao.b3d",
+	use_texture_alpha = true,
 	textures = {
-		
 	},
-	visual_size = {x=1, y=1},
-	anim_type = 1,
+	visual_size = {x=10, y=10},
 }
 
 local mob_anim = {}
@@ -129,7 +128,7 @@ function mob:on_rightclick(clicker)
 		
 	end
 	
-	self.object:set_animation(mob_anim[self.anim_type], 30, 0, false)
+	--self.object:set_animation(mob_anim[self.anim_type], 30, 0, false)
 end
 
 minetest.register_entity("core:tester", mob)
