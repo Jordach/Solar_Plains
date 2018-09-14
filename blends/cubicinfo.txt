@@ -1,0 +1,7 @@
+CharacterCubic information:
+
+Frame rate is 30fps;
+Cubical arms and legs are 
+
+New anim frame ranges:
+

@@ -88,242 +88,155 @@ mcore.mese_swing_speed[4] = 0.75
 mcore.mese_swing_speed[5] = 0.375
 
 function mcore.give_mese_exp(itemstack, user, node, digparams)
-	
 	if itemstack:get_name() == "core:mese_pickaxe_5" or itemstack:get_name() == "core:mese_shovel_5" or itemstack:get_name() == "core:mese_axe_5" or itemstack:get_name() == "core:mese_sword_5" then
-		
 		itemstack:add_wear(digparams.wear)
-		
+	
         return itemstack
-
 	end
 	
 	local capital, item_string = ""
 	
 	for x=1, 4 do
-		
 		if x == 1 then
-		
 			item_string = "pickaxe"
 			capital = "Pickaxe"
-		
 		elseif x == 2 then
-		
 			item_string = "axe"
 			capital = "Axe"
-		
 		elseif x == 3 then
-		
 			item_string = "shovel"
 			capital = "Shovel"
-		
 		elseif x == 4 then
-		
 			item_string = "sword"
 			capital = "Sword"
-		
 		end
 		
 		for i=1, 4 do
-			
 			if itemstack:get_name() == "core:mese_" .. item_string .. "_" .. i and itemstack:get_wear() < 1 then
-				
 				itemstack:set_name("core:mese_" .. item_string .. "_" .. i+1)
 				
 				if i ~= 4 then
-				
 					local meta = itemstack:get_meta()
 					
 					if i == 4 then
-					
 						meta:set_string("description", "MESE " .. capital .. " (Level 5)") -- Level 5 no longer need the exp information
-						
 						itemstack:set_wear(0) -- reset wear to full durability, we don't need the bar anymore
-						
 					else
-						
 						itemstack:set_wear(65535) -- reset wear to 0, to reset the exp bar
-						
 						meta:set_string("description", "MESE " .. capital .. " (Level " .. i+1 .. ")\n\nExp: 0/" .. mcore.mese_wear_level[i+1] .. "  (0%)")
-						
 					end
 					
 					meta:set_string("exp", "0")
 					
 					minetest.sound_play("core_tool_levelling", {
-					
 						to_player = user:get_player_name(),
 						gain = 6.0,
-					
 					})
-					
-				else
-				
-					--......
-				
 				end
 			
 				return itemstack
-			
 			elseif itemstack:get_name() == "core:mese_" .. item_string .. "_" .. i then
-				
 				local meta = itemstack:get_meta()
-				
 				local exp_count = tonumber(meta:get_string("exp"))
 				
 				if exp_count == nil then exp_count = 0 end
-				
 				exp_count = exp_count + 1
 				
 				meta:set_string("exp", tostring(exp_count))
 				
 				local add_to = -65535 / mcore.mese_wear_level[i]
-				
 				itemstack:add_wear(add_to)
 				
 				local perc = (exp_count / mcore.mese_wear_level[i]) * 100
-				
 				meta:set_string("description", "MESE " .. capital .. " (Level " .. i .. ")\n\nExp: " .. exp_count .. "/" .. mcore.mese_wear_level[i] .. "  (" .. tonumber(string.format("%.2f", perc)) .. "%)")
 		
 				return itemstack
-			
 			end
-		
 		end
-	
 	end
-	
-	
 end
 
 function mcore.diamonds_are_not_forever(itemstack, user, node, digparams)
-
 	local chance = math.random(1,1024)
-	
 	if chance == 1 then
-	
 		-- damage the tool by adding 10% on top of the current wear level
-		
 		itemstack:add_wear(itemstack:get_wear() * 1.10)
 		
 		minetest.sound_play("core_glass_break", {
-					
 			to_player = user:get_player_name(),
 			gain = 6.0,
-		
 		})
-		
-		return itemstack
-	
-	else
-		
-		itemstack:add_wear(65535/8192)	
-	
-		return itemstack
-	
-	end
 
+		return itemstack
+	else
+		itemstack:add_wear(65535/8192)	
+		return itemstack
+	end
 end
 
 local function register_mese_toolsets()
-
 	for i=1, 5 do
-		
 		minetest.register_tool("core:mese_pickaxe_" .. i, {
-		
 			description = "MESE Pickaxe (Level " .. i .. ")\n\nExp: 0/" .. mcore.mese_wear_level[i] .. "  (0%)",
 			inventory_image = "core_mese_pickaxe_".. i .. ".png",
 			tool_capabilities = {
-			
 				full_punch_interval = mcore.mese_swing_speed[i] + 0.75,
-				
 				max_drop_level = 0,
-				
 				groupcaps = mcore.mese_dig_spd_pick[i],
-				
 				damage_groups = mcore.mese_dmg_sword[i] / 2,
 			},
 			
 			after_use = function(itemstack, user, node, digparams)
-			
 				mcore.give_mese_exp(itemstack, user, node, digparams)
-			
 			end,
 			
 		})
 		
 		minetest.register_tool("core:mese_axe_" .. i, {
-		
 			description = "MESE Axe (Level " .. i .. ")\n\nExp: 0/" .. mcore.mese_wear_level[i] .. "  (0%)",
 			inventory_image = "core_mese_axe_" .. i .. ".png",
-			
 			tool_capabilities = {
-			
 				full_punch_interval = mcore.mese_swing_speed[i] + 0.5,
-				
 				max_drop_level = 0,
-				
 				groupcaps = mcore.mese_dig_spd_axe[i],
-				
 				damage_groups = mcore.mese_dmg_sword[i] - 2,
-			
 			},
 		
 			after_use = function(itemstack, user, node, digparams)
-			
 				mcore.give_mese_exp(itemstack, user, node, digparams)
-			
 			end,
 		})
 		
 		minetest.register_tool("core:mese_shovel_" .. i, {
-		
 			description = "MESE Shovel (Level " .. i .. ")\n\nExp: 0/" .. mcore.mese_wear_level[i] .. "  (0%)",
 			inventory_image = "core_mese_shovel_" .. i .. ".png",
 			tool_capabilities = {
-			
 				full_punch_interval = mcore.mese_swing_speed[i] + 1.5,
-				
 				max_drop_level = 0,
-				
 				groupcaps = mcore.mese_dig_spd_shovel[i],
-				
 				damage_groups = (mcore.mese_dmg_sword[i] / 2) - 1,
 			},
 			
 			after_use = function(itemstack, user, node, digparams)
-			
 				mcore.give_mese_exp(itemstack, user, node, digparams)
-			
 			end,
-			
 		})
 		
 		minetest.register_tool("core:mese_sword_" .. i, {
-		
 			description = "MESE Sword (Level " .. i .. ")\n\nExp: 0/" .. mcore.mese_wear_level[i] .. "  (0%)",
 			inventory_image = "core_mese_sword_" .. i .. ".png",
 			tool_capabilities = {
-			
 				full_punch_interval = mcore.mese_swing_speed[i],
-				
 				max_drop_level = 0,
-				
 				groupcaps = mcore.mese_dig_spd_sword[i],
-				
 				damage_groups = mcore.mese_dmg_sword[i],
-			
 			},
 			
 			after_use = function(itemstack, user, node, digparams)
-			
 				mcore.give_mese_exp(itemstack, user, node, digparams)
-			
 			end,
-			
 		})
-		
 	end
-
 end
 
 register_mese_toolsets()
@@ -336,7 +249,6 @@ minetest.override_item("core:mese_sword_5", {description = "MESE Sword (Level 5)
 minetest.register_item(":", {
 	type = "none",
 	wield_image = "wieldhand.png",
-	--wield_scale = {x=1,y=3,z=4},
 	tool_capabilities = {
 		full_punch_interval = 0.25,
 		max_drop_level = 0,
@@ -348,9 +260,7 @@ minetest.register_item(":", {
 		},
 		damage_groups = {fleshy=1},
 	},
-	
 	range = 6,
-	
 })
 
 -- items
@@ -359,14 +269,6 @@ minetest.register_craftitem("core:clay_lump", {
 	description = "Clay Lump",
 	inventory_image = "core_clay_lump.png",
 	wield_image = "core_clay_lump.png",
-	
-	on_place = function(itemstack, user, pointed_thing)
-	
-		mcore.create_acacia_tree(pointed_thing.under)
-		
-		return itemstack
-	
-	end
 })
 
 -- wood tier
@@ -378,9 +280,7 @@ minetest.register_tool("core:wooden_pickaxe", {
 		full_punch_interval = 0.5,
 		max_drop_level = 0,
 		groupcaps = {
-		
 			cracky = {times={[1]=9.00, [2]=4.00, [3]=1.50}, uses=0, maxlevel=0}
-		
 		},
 		damage_groups = {fleshy=1},
 	}
@@ -411,7 +311,6 @@ minetest.register_tool("core:wooden_axe", {
 		},
 		damage_groups = {fleshy=1},
 	}
-	
 })
 
 minetest.register_tool("core:wooden_sword", {
@@ -425,7 +324,6 @@ minetest.register_tool("core:wooden_sword", {
 		},
 		damage_groups = {fleshy=1},
 	},
-	
 })
 
 -- stone tier
@@ -441,7 +339,6 @@ minetest.register_tool("core:stone_pickaxe", {
 		},
 		damage_groups = {fleshy=2},
 	},
-	
 })
 
 minetest.register_tool("core:stone_shovel", {
@@ -455,7 +352,6 @@ minetest.register_tool("core:stone_shovel", {
 		},
 		damage_groups = {fleshy=2},
 	},
-	
 })
 
 minetest.register_tool("core:stone_axe", {
@@ -470,7 +366,6 @@ minetest.register_tool("core:stone_axe", {
 		},
 		damage_groups = {fleshy=2},
 	},
-	
 })
 
 minetest.register_tool("core:stone_sword", {
@@ -484,7 +379,6 @@ minetest.register_tool("core:stone_sword", {
 		},
 		damage_groups = {fleshy=2},
 	},
-	
 })
 
 -- iron tier
@@ -500,7 +394,6 @@ minetest.register_tool("core:iron_pickaxe", {
 		},
 		damage_groups = {fleshy=4},
 	},
-	
 })
 
 minetest.register_tool("core:iron_shovel", {
@@ -514,7 +407,6 @@ minetest.register_tool("core:iron_shovel", {
 		},
 		damage_groups = {fleshy=3},
 	},
-	
 })
 
 minetest.register_tool("core:iron_axe", {
@@ -529,7 +421,6 @@ minetest.register_tool("core:iron_axe", {
 		},
 		damage_groups = {fleshy=5},
 	},
-	
 })
 
 minetest.register_tool("core:iron_sword", {
@@ -543,7 +434,6 @@ minetest.register_tool("core:iron_sword", {
 		},
 		damage_groups = {fleshy=6},
 	},
-	
 })
 
 -- ironze tier
@@ -559,7 +449,6 @@ minetest.register_tool("core:ironze_pickaxe", {
 		},
 		damage_groups = {fleshy=4},
 	},
-	
 })
 
 minetest.register_tool("core:ironze_shovel", {
@@ -573,7 +462,6 @@ minetest.register_tool("core:ironze_shovel", {
 		},
 		damage_groups = {fleshy=3},
 	},
-	
 })
 
 minetest.register_tool("core:ironze_axe", {
@@ -588,7 +476,6 @@ minetest.register_tool("core:ironze_axe", {
 		},
 		damage_groups = {fleshy=5},
 	},
-	
 })
 
 minetest.register_tool("core:ironze_sword", {
@@ -602,7 +489,6 @@ minetest.register_tool("core:ironze_sword", {
 		},
 		damage_groups = {fleshy=6},
 	},
-	
 })
 
 -- diamond tier
@@ -620,11 +506,8 @@ minetest.register_tool("core:diamond_pickaxe", {
 	},
 	
 	after_use = function(itemstack, user, node, digparams)
-			
 		mcore.diamonds_are_not_forever(itemstack, user, node, digparams)
-	
 	end,
-	
 })
 
 minetest.register_tool("core:diamond_shovel", {
@@ -640,9 +523,7 @@ minetest.register_tool("core:diamond_shovel", {
 	},
 	
 	after_use = function(itemstack, user, node, digparams)
-			
 		mcore.diamonds_are_not_forever(itemstack, user, node, digparams)
-	
 	end,
 })
 
@@ -660,9 +541,7 @@ minetest.register_tool("core:diamond_axe", {
 	},
 	
 	after_use = function(itemstack, user, node, digparams)
-			
 		mcore.diamonds_are_not_forever(itemstack, user, node, digparams)
-	
 	end,
 })
 
@@ -679,8 +558,6 @@ minetest.register_tool("core:diamond_sword", {
 	},
 	
 	after_use = function(itemstack, user, node, digparams)
-			
 		mcore.diamonds_are_not_forever(itemstack, user, node, digparams)
-	
 	end,
 })

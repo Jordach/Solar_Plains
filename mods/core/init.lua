@@ -1,14 +1,8 @@
 --configuration options
 
 mcore = {}
-
-give_initial_stuff = {}
-
+local give_initial_stuff = {}
 default = {}
-
---dofile(minetest.get_modpath("core").."/")
---dofile(minetest.get_modpath("core").."/")
---dofile(minetest.get_modpath("core").."/")
 
 -- base mapgen requirements
 
@@ -96,7 +90,6 @@ minetest.register_on_newplayer(give_initial_stuff.give)
 -- special entity tester
 
 local mob = {
-
 	visual = "mesh",
 	mesh = "lmao.b3d",
 	use_texture_alpha = true,
@@ -113,40 +106,29 @@ mob_anim[3] = {x=166, y=191}
 mob_anim[4] = {x=201, y=231}
 
 function mob:on_rightclick(clicker)
-
 	if not clicker or not clicker:is_player() then
 		return
 	end
 		
 	if self.anim_type == #mob_anim then
-	
 		self.anim_type = 1
-	
 	else
-	
 		self.anim_type = self.anim_type + 1
-		
 	end
-	
-	--self.object:set_animation(mob_anim[self.anim_type], 30, 0, false)
+	self.object:set_animation(mob_anim[self.anim_type], 30, 0, false)
 end
 
 minetest.register_entity("core:tester", mob)
 
 minetest.register_node("core:model_tester", {
-
 	description = "Hax",
 	tiles = {"core_stone.png"},
 	groups = {dig_immediate = 1},
 	drawtype = "mesh",
-	
 	mesh = "chest_unlocked.b3d",
-	
 	paramtype = "light",
 	paramtype2 = "facedir",
-	
 	on_place = mcore.sensible_facedir,
-
 })
 
 -- better facedir than minetest.rotate_and_place
@@ -154,205 +136,129 @@ minetest.register_node("core:model_tester", {
 --use mcore.sensible_facedir_simple for furnaces or mcore.sensible_facedir for those multiple rotation nodes.
 
 function mcore.sensible_facedir(itemstack, placer, pointed_thing)
-	
 	local rpos = ""
 	
 	if minetest.registered_nodes[minetest.get_node(pointed_thing.under).name].buildable_to == true then
-	
 		rpos = pointed_thing.under
-		
 	else
-		
 		rpos = pointed_thing.above
-		
 	end
 	
 	local hor_rot = math.deg(placer:get_look_horizontal()) -- convert radians to degrees
 	local deg_to_fdir = math.floor(((hor_rot * 4 / 360) + 0.5) % 4) -- returns 0, 1, 2 or 3; checks between 90 degrees in a pacman style angle check, it's quite magical.
 	
 	local fdir = 0 -- get initialised, and if we don't ever assign an fdir, then it's safe to ignore?! (probably not a good idea to do so)
-	
 	local px = math.abs(placer:get_pos().x - rpos.x) -- measure the distance from the player to the placed nodes position
-
 	local pz = math.abs(placer:get_pos().z - rpos.z)
 	
 	if px < 2 and pz < 2 then -- if the node is being placed 1 block away from us, then lets place it either upright or upside down
-		
 		local pY = 0
-		
 		if placer:get_pos().y < 0 then
-		
 			pY = math.abs(placer:get_pos().y - 1.14) -- we invert this Y value since we need to go UPWARDS to compare properly.
-		
 		else
-		
 			pY = math.abs(placer:get_pos().y + 2.14) -- we measure the y distance by itself as it may not be needed for wall placed blocks.
-		
 		end
 		
-		print (pY - math.abs(rpos.y))
-		
-		if pY - math.abs(rpos.y) > 1.5 then -- are we being placed on the floor? let's be upright then.
-				
+		if pY - math.abs(rpos.y) > 1.5 then -- are we being placed on the floor? let's be upright then.	
 			if deg_to_fdir == 0 then fdir = 0 -- north
 			elseif deg_to_fdir == 1 then fdir = 3 --east
 			elseif deg_to_fdir == 2 then fdir = 2 -- south
 			elseif deg_to_fdir == 3 then fdir = 1 end -- west
-	
 			return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
-			
 		else -- if not, let's be upside down.
-
 			if deg_to_fdir == 0 then fdir = 20 -- north
 			elseif deg_to_fdir == 1 then fdir = 21 -- east
 			elseif deg_to_fdir == 2 then fdir = 22 -- south
 			elseif deg_to_fdir == 3 then fdir = 23 end -- west
-			
 			return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
-	
 		end 	
-		
 	end
-	
 	-- since we couldn't find a place that isn't either on a ceiling or floor, let's place it onto it's side.
-	
 	if deg_to_fdir == 0 then fdir = 9 -- north
 	elseif deg_to_fdir == 1 then fdir = 12 -- east
 	elseif deg_to_fdir == 2 then fdir = 7 -- south
 	elseif deg_to_fdir == 3 then fdir = 18 end -- west
-	
 	return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
-
 end
 
 function mcore.sensible_facedir_simple(itemstack, placer, pointed_thing)
-	
 	local rpos = ""
-	
+
 	local hor_rot = math.deg(placer:get_look_horizontal())
 	local deg_to_fdir = math.floor(((hor_rot * 4 / 360) + 0.5) % 4) 
 	local fdir = 0
-	
+
 	if deg_to_fdir == 0 then fdir = 0
 	elseif deg_to_fdir == 1 then fdir = 3
 	elseif deg_to_fdir == 2 then fdir = 2
 	elseif deg_to_fdir == 3 then fdir = 1 end
 	
 	return minetest.item_place_node(itemstack, placer, pointed_thing, fdir)
-
 end
 
 -- get 3d facedir to simple axis; 
 -- 0 = y+    1 = z+    2 = z-    3 = x+    4 = x-    5 = y-
 
 function mcore.facedir_stripper(node)
-
 	local number = node.param2/4
-	
 	local chara = tostring(number)
-		
+
 	number = tonumber(chara:sub(1,1))
-	
 	return number
-	
 end
 
 function mcore.get_node_from_front(pos) 
 	--pos is the standard pos table provided by minetest, eg: pos = {x=int, y=int, z=int}
-	
 	local node = minetest.get_node_or_nil(pos)
-	
 	local facedir = mcore.facedir_stripper(node)
-	
 	local npos = pos
 	
 	if facedir == 0 then
-	
-		npos.y = npos.y + 1
-		
+		npos.y = npos.y + 1	
 		return npos
-	
 	elseif facedir == 1 then
-	
 		npos.z = npos.z + 1
-		
 		return npos
-		
 	elseif facedir == 2 then
-	
 		npos.z = npos.z - 1
-
 		return npos
-		
 	elseif facedir == 3 then
-	
 		npos.x = npos.x + 1
-	
 		return npos
-		
 	elseif facedir == 4 then
-	
 		npos.x = npos.x - 1
-		
 		return npos
-		
 	elseif facedir == 5 then
-	
 		npos.y = npos.y - 1
-
 		return npos
-		
 	end
-
 end
 
 function mcore.get_node_from_rear(pos) 
 	--pos is the standard pos table provided by minetest, eg: pos = {x=int, y=int, z=int}
-	
 	local node = minetest.get_node_or_nil(pos)
-	
 	local facedir = mcore.facedir_stripper(node)
 	
 	local npos = pos
-	
 	if facedir == 0 then
-	
 		npos.y = npos.y - 1
-		
 		return npos
-	
 	elseif facedir == 1 then
-	
 		npos.z = npos.z - 1
-		
 		return npos
-		
 	elseif facedir == 2 then
-	
 		npos.z = npos.z + 1
-	
 		return npos
-		
 	elseif facedir == 3 then
-	
 		npos.x = npos.x - 1
-		
 		return npos
-		
 	elseif facedir == 4 then
-	
 		npos.x = npos.x + 1
-		
 		return npos
-		
 	elseif facedir == 5 then
-	
 		npos.y = npos.y + 1
-		
 		return npos
-		
 	end
-
 end
 
 -- borrowed mineclone2's axis facedir:
@@ -406,30 +312,18 @@ function mcore.rotate_axis_and_place(itemstack, placer, pointed_thing, infinites
     local p2
     
 	if is_x and not is_x2 then
-	
 		p2 = 18
-		
 	elseif not is_x and not is_x2 then
-	
 		p2 = 12
-		
 	elseif is_z and not is_z2 then
-       
 		p2 = 9
-		
 	elseif not is_z and not is_z2 then
-	
 		p2 = 7
-	
 	elseif is_y then
-        
 		p2 = 20
-       
 	elseif not is_y then
-	
 		p2 = 0
-	
-    end
+	end
 	
     minetest.set_node(pos, {name = wield_name, param2 = p2})
 
@@ -471,9 +365,7 @@ local np_humid = {
 }
 
 function mcore.get_heat_humidity(player)
-
 	-- let's get a temparature reading for the local area.
-
 	local pos = player:get_pos()
 	
 	local pposx = math.floor(pos.x)
@@ -481,24 +373,17 @@ function mcore.get_heat_humidity(player)
 	
 	local nobj_temp = nobj_temp or minetest.get_perlin(np_temp)
 	local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
-
 	local nval_temp = nobj_temp:get2d({x = pposx, y = pposz})
 	local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
 	
 	local latch = false
-
 	if nval_humid > 100 then
-	
 		nval_humid = 100
-		
 	elseif nval_humid < 0 then
-	
 		nval_humid = 0
-	
 	end
 	
 	nval_humid = math.floor(100 * (nval_humid/100))
-
 	nval_temp = math.floor(45 * (nval_temp/100)) + (nval_humid * 0.02)
 
 	if hudclock.month == 1 then
@@ -528,51 +413,33 @@ function mcore.get_heat_humidity(player)
 	end
 	
 	local y = math.abs(pos.y) / 50000
-
 	-- altitude changes heat and humidity
-
 	if pos.y < 0.5 then -- heading into the underground increases heat
-		
 		nval_temp = nval_temp + (10000 * y)
-
 	else -- going into the atmosphere reduces heat
-
 		nval_temp = nval_temp + (-1556 * y)
-
 	end
 
 	nval_humid = nval_humid + (-600 * y)
-
 	if nval_temp < -271 then
-
 		nval_temp = -271
 		nval_humid = 0
-
 	elseif nval_temp > 3000 then
-
 		nval_temp = 3000
 		nval_humid = 0
-
 	end
 
 	if nval_humid > 100 then
-	
 		nval_humid = 100
-		
 	elseif nval_humid < 0 then
-	
 		nval_humid = 0
-	
 	end
 
 	if nval_temp <= 4 then
-	
 		latch = true
-	
 	end
 
 	return nval_temp, nval_humid, latch
-
 end
 
 -- dofiles for loading files required by "core"
