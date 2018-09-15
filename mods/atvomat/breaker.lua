@@ -65,17 +65,33 @@ minetest.register_node("atvomat:breaker_1", {
 
 	on_timer = function(pos, elapsed)
 		local meta = minetest.get_meta(pos)
-		
 		if meta:get_string("active") == "true" then
 			local inv = meta:get_inventory()
 			local fpos = mcore.get_node_from_front(table.copy(pos))
 			local front_node = minetest.get_node_or_nil(fpos)
-			
+
 			for k, v in pairs(atvomat.breaker_blacklist) do
 				if front_node.name == k then return true end
 			end
-		
-			minetest.remove_node(fpos)
+
+			minetest.remove_node(fpos, {name="air"})
+			
+			local dir = mcore.facedir_stripper(minetest.get_node(pos))
+			
+			if dir == 0 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y+1, z=fpos.z})
+			elseif dir == 1 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y, z=fpos.z+1})
+			elseif dir == 2 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y, z=fpos.z-1})
+			elseif dir == 3 then
+				minetest.check_for_falling({x=fpos.x+1, y=fpos.y, z=fpos.z})
+			elseif dir == 4 then
+				minetest.check_for_falling({x=fpos.x-1, y=fpos.y, z=fpos.z})
+			elseif dir == 5 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y-1, z=fpos.z})
+			end
+
 			local drop = minetest.get_node_drops(front_node.name, "core:mese_pickaxe_5")
 
 			for k, drop in ipairs(drop) do
@@ -129,8 +145,25 @@ minetest.register_node("atvomat:breaker_2", {
 				if front_node.name == k then return true end
 			end
 
-			minetest.remove_node(fpos)
+			minetest.remove_node(fpos, {name="air"})
 			inv:add_item("main", front_node.name)
+			
+			local dir = mcore.facedir_stripper(minetest.get_node(pos))
+
+			if dir == 0 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y+1, z=fpos.z})
+			elseif dir == 1 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y, z=fpos.z+1})
+			elseif dir == 2 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y, z=fpos.z-1})
+			elseif dir == 3 then
+				minetest.check_for_falling({x=fpos.x+1, y=fpos.y, z=fpos.z})
+			elseif dir == 4 then
+				minetest.check_for_falling({x=fpos.x-1, y=fpos.y, z=fpos.z})
+			elseif dir == 5 then
+				minetest.check_for_falling({x=fpos.x, y=fpos.y-1, z=fpos.z})
+			end
+
 			return true
 		else
 			return false

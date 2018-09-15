@@ -10,6 +10,8 @@ dofile(minetest.get_modpath("atvomat").."/compressor.lua") -- compresses ingots/
 dofile(minetest.get_modpath("atvomat").."/crusher.lua") -- crushes ore blocks, and other blocks
 dofile(minetest.get_modpath("atvomat").."/logger.lua") -- automatically chops trees
 dofile(minetest.get_modpath("atvomat").."/mover.lua") -- takes and inserts items into containers
+--dofile(minetest.get_modpath("atvomat").."/logicmover.lua") -- takes and inserts items into containers
+dofile(minetest.get_modpath("atvomat").."/router.lua") -- redistributes all the things, not packets
 dofile(minetest.get_modpath("atvomat").."/scrapper.lua") -- destroys items every now and then
 dofile(minetest.get_modpath("atvomat").."/sorter.lua") -- sorts items all the time, everytime
 dofile(minetest.get_modpath("atvomat").."/tools.lua") -- engineers tools.
