@@ -692,7 +692,7 @@ minetest.register_biome({
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 50,
+	heat_point = 45,
 	humidity_point = 50,
 
 })
@@ -707,14 +707,14 @@ minetest.register_biome({
 	node_filler = "core:dirt",
 	depth_filler = 3,
 	
-	y_min = 1,
-	y_max = 120,
+	y_min = 30,
+	y_max = 220,
 	
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 50,
-	humidity_point = 25,
+	heat_point = 45,
+	humidity_point = 76,
 
 })
 
@@ -728,38 +728,16 @@ minetest.register_biome({
 	node_filler = "core:dirt",
 	depth_filler = 3,
 	
-	y_min = 4,
+	y_min = 10,
 	y_max = 80,
 	
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 50,
-	humidity_point = 75,
+	heat_point = 45,
+	humidity_point = 10,
 
 })
-
-minetest.register_biome({
-
-	name = "wildlands",
-	
-	node_top = "core:grass_wildland",
-	depth_top = 1,
-	
-	node_filler = "core:dirt",
-	depth_filler = 3,
-	
-	y_min = 4,
-	y_max = 120,
-	
-	node_water = "core:water_source",
-	node_river_water = "core:water_source",
-	
-	heat_point = 85,
-	humidity_point = 50,
-
-})
-
 
 minetest.register_biome({
 
@@ -777,8 +755,8 @@ minetest.register_biome({
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 50,
-	humidity_point = 50,
+	heat_point = 45,
+	humidity_point = 35,
 
 })
 
@@ -798,8 +776,8 @@ minetest.register_biome({
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	heat_point = 50,
-	humidity_point = 25,
+	heat_point = 45,
+	humidity_point = 76,
 
 })
 
@@ -824,8 +802,8 @@ minetest.register_biome({
 	node_water_top = "core:ice",
 	depth_water_top = 1,
 	
-	heat_point = 15,
-	humidity_point = 50,
+	heat_point = 20,
+	humidity_point = 35,
 
 })
 
@@ -850,7 +828,7 @@ minetest.register_biome({
 	y_min = 4,
 	y_max = 150,
 	
-	heat_point = 15,
+	heat_point = 20,
 	humidity_point = 50,
 
 })
@@ -890,7 +868,7 @@ minetest.register_biome({
 	node_filler = "core:dirt",
 	depth_filler = 3,
 	
-	y_min = 4,
+	y_min = 50,
 	y_max = 150,
 	
 	node_water = "core:water_source",
@@ -899,12 +877,38 @@ minetest.register_biome({
 	node_water_top = "core:ice",
 	depth_water_top = 1,
 	
-	heat_point = 15,
-	humidity_point = 75,
+	heat_point = 12,
+	humidity_point = 25,
 
 })
 
--- deserts
+
+minetest.register_biome({
+
+	name = "glacier",
+	
+	node_top = "core:ice",
+	depth_top = 1,
+	
+	node_filler = "core:ice",
+	depth_filler = 8,
+	
+	y_min = 100,
+	y_max = 350,
+	
+	node_water = "core:ice",
+	node_river_water = "core:ice",
+	
+	node_water_top = "core:ice",
+	depth_water_top = 1,
+	
+	heat_point = 10,
+	humidity_point = 80,
+
+})
+
+
+-- man's not hot
 
 minetest.register_biome({
 
@@ -921,11 +925,11 @@ minetest.register_biome({
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
-	y_min = 4,
+	y_min = 15,
 	y_max = 1000,
 	
 	heat_point = 85,
-	humidity_point = 25,
+	humidity_point = 75,
 
 })
 
@@ -947,7 +951,7 @@ minetest.register_biome({
 	y_min = 0,
 	y_max = 4,
 	
-	heat_point = 85,
+	heat_point = 75,
 	humidity_point = 50,
 
 })
@@ -956,20 +960,41 @@ minetest.register_biome({
 
 	name = "jungle",
 	
-	node_top = "core:grass",
+	node_top = "core:grass_wildland",
 	depth_top = 1,
 	
 	node_filler = "core:dirt",
 	depth_filler = 3,
 	
 	y_min = 4,
-	y_max = 120,
+	y_max = 60,
 	
 	node_water = "core:water_source",
 	node_river_water = "core:water_source",
 	
 	heat_point = 85,
-	humidity_point = 75,
+	humidity_point = 30,
+
+})
+
+minetest.register_biome({
+
+	name = "wildlands",
+	
+	node_top = "core:grass_wildland",
+	depth_top = 1,
+	
+	node_filler = "core:dirt",
+	depth_filler = 3,
+	
+	y_min = 4,
+	y_max = 60,
+	
+	node_water = "core:water_source",
+	node_river_water = "core:water_source",
+	
+	heat_point = 75,
+	humidity_point = 50,
 
 })
 
