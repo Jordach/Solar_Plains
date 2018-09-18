@@ -868,7 +868,7 @@ minetest.register_biome({
 	node_filler = "core:dirt",
 	depth_filler = 3,
 	
-	y_min = 50,
+	y_min = 30,
 	y_max = 150,
 	
 	node_water = "core:water_source",
@@ -881,32 +881,6 @@ minetest.register_biome({
 	humidity_point = 25,
 
 })
-
-
-minetest.register_biome({
-
-	name = "glacier",
-	
-	node_top = "core:ice",
-	depth_top = 1,
-	
-	node_filler = "core:ice",
-	depth_filler = 8,
-	
-	y_min = 100,
-	y_max = 350,
-	
-	node_water = "core:ice",
-	node_river_water = "core:ice",
-	
-	node_water_top = "core:ice",
-	depth_water_top = 1,
-	
-	heat_point = 10,
-	humidity_point = 80,
-
-})
-
 
 -- man's not hot
 
@@ -932,8 +906,6 @@ minetest.register_biome({
 	humidity_point = 75,
 
 })
-
-
 
 minetest.register_biome({
 
@@ -1056,7 +1028,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_birch_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.006,
+	fill_ratio = 0.008,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -1066,7 +1038,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_cherry_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.003,
+	fill_ratio = 0.001,
 	biomes = {"plains_forest"},
 	height = 1,
 })
@@ -1107,10 +1079,43 @@ minetest.register_decoration({
 	place_on = "core:grass_wildland",
 	decoration = {"core:grass_wild_1", "core:grass_wild_2", "core:grass_wild_3"},
 	sidelen = 20,
-	fill_ratio = 0.002,
+	fill_ratio = 0.005,
 	biomes = {"wildlands"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
+})
+
+minetest.register_decoration({
+	deco_type = "simple",
+	place_on = "core:grass_wildland",
+	decoration = {"core:grass_wild_1", "core:grass_wild_2", "core:grass_wild_3"},
+	sidelen = 20,
+	fill_ratio = 0.01,
+	biomes = {"jungle"},
+	height = 1,
+	param2 = mcore.options("cross", true, true, false),
+})
+
+minetest.register_decoration({
+	deco_type = "simple",
+	place_on = "core:grass_wildland",
+	decoration = {"core:bamboo"},
+	sidelen = 20,
+	fill_ratio = 0.01,
+	biomes = {"wildlands"},
+	height = 4,
+	height_max = 6,
+})
+
+minetest.register_decoration({
+	deco_type = "simple",
+	place_on = "core:grass_wildland",
+	decoration = {"core:cobble"},
+	sidelen = 16,
+	fill_ratio = 0.02,
+	biomes = {"wildlands"},
+	height = 8,
+	height_max = 14,
 })
 
 -- plants items
@@ -1120,7 +1125,7 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"plants:daisy"},
 	sidelen = 16,
-	fill_ratio = 0.02,
+	fill_ratio = 0.12,
 	biomes = {"plains", "highlands"},
 	height = 1,
 })
@@ -1135,7 +1140,7 @@ minetest.register_decoration({
 	fill_ratio = 0.0004,
 	biomes = {"desert"},
 	height = 3,
-	y_max = 4,
+	height_max = 5,
 })
 
 --
@@ -1147,7 +1152,7 @@ minetest.register_decoration({
 	y_min = 1,
 	y_max = 1,
 	height = 2,
-	y_max = 5,
+	height_max = 5,
 	spawn_by = "core:water_source",
 	num_spawn_by = 1,
 	sidelen = 16,
@@ -1169,7 +1174,7 @@ minetest.register_decoration({
 	y_min = 1,
 	y_max = 1,
 	height = 2,
-	y_max = 5,
+	height_max = 5,
 	spawn_by = "core:water_source",
 	num_spawn_by = 1,
 	sidelen = 16,
