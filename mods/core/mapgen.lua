@@ -98,6 +98,14 @@ minetest.register_node("core:mg_acacia_sapling", {
 	groups = {not_in_creative_inventory=1},
 })
 
+minetest.register_node("core:mg_wimba_sapling", {
+	description = "Impossible to get node.",
+	drawtype = "airlike",
+	paramtype = "light",
+	--tiles = {"xfences_space.png"},
+	groups = {not_in_creative_inventory=1},
+})
+
 -- vmanip on generate
 
 local c_mg_birch_sap = minetest.get_content_id("core:mg_birch_sapling")
@@ -108,6 +116,7 @@ local c_mg_pine_snowy_sap = minetest.get_content_id("core:mg_pine_snowy_sapling"
 local c_mg_grass = minetest.get_content_id("core:mg_grass")
 local c_mg_grass_snowy = minetest.get_content_id("core:mg_grass_snowy")
 local c_mg_aca_sap = minetest.get_content_id("core:mg_acacia_sapling")
+local c_mg_wim_sap = minetest.get_content_id("core:mg_wimba_sapling")
 
 minetest.register_on_generated(function(minp, maxp, seed)
 	local timer = os.clock()
@@ -144,7 +153,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 				elseif content_id == c_mg_aca_sap then
 					mcore.create_acacia_tree({x=x, y=y, z=z})
 					trees_grown = trees_grown + 1
-				
+
+				elseif content_id == c_mg_wim_sap then
+					mcore.create_wimba_tree({x=x, y=y, z=z})
+					trees_grown = trees_grown + 1
 				end
 			end
 		end
@@ -155,8 +167,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	vm:set_data(data)
 	vm:calc_lighting()
 	vm:update_liquids()
-	--vm:write_to_map()
-	vm:update_map()		
+	vm:update_map()
 end)
 
 -- tree vmanip function
@@ -207,7 +218,6 @@ function mcore.grow_pine(pos, boolsnow)
 	for yy = maxy - 1, maxy + 1 do
 		for zz = z - dev, z + dev do
 			local vi = a:index(x - dev, yy, zz)
-			local via = a:index(x - dev, yy + 1, zz)
 			for xx = x - dev, x + dev do
 				if math.random() < 0.95 - dev * 0.05 then
 					if boolsnow == false then
@@ -219,7 +229,6 @@ function mcore.grow_pine(pos, boolsnow)
 					end
 				end
 				vi  = vi + 1
-				via = via + 1
 			end
 		end
 		dev = dev - 1
@@ -250,7 +259,6 @@ function mcore.grow_pine(pos, boolsnow)
 		end
 		for zz = zi, zi+1 do
 			local vi = a:index(xi, yy, zz)
-			local via = a:index(xi, yy + 1, zz)
 			for xx = xi, xi + 1 do
 				if boolsnow == false then
 					add_pine_needles(data, vi, c_air, c_ignore)
@@ -261,7 +269,6 @@ function mcore.grow_pine(pos, boolsnow)
 					add_pine_snow(data, vi, c_air, c_ignore)
 				end
 				vi  = vi + 1
-				via = via + 1
 			end
 		end
 	end
@@ -270,7 +277,6 @@ function mcore.grow_pine(pos, boolsnow)
 	for yy = my + 1, my + 2 do
 		for zz = z - dev, z + dev do
 			local vi = a:index(x - dev, yy, zz)
-			local via = a:index(x - dev, yy + 1, zz)
 			for xx = x - dev, x + dev do
 				if random() < 0.95 - dev * 0.05 then
 					if boolsnow == false then
@@ -283,7 +289,6 @@ function mcore.grow_pine(pos, boolsnow)
 					end
 				end
 				vi  = vi + 1
-				via = via + 1
 			end
 		end
 		dev = dev - 1
@@ -442,7 +447,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 2 and zl == -2 then
 				elseif xl == 2 and zl == 2 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -462,7 +467,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 3 and zl == -3 then
 				elseif xl == 3 and zl == 3 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -482,7 +487,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 2 and zl == -2 then
 				elseif xl == 2 and zl == 2 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -502,7 +507,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 3 and zl == -3 then
 				elseif xl == 3 and zl == 3 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -524,7 +529,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 2 and zl == -2 then
 				elseif xl == 2 and zl == 2 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -544,7 +549,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 3 and zl == -3 then
 				elseif xl == 3 and zl == 3 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -572,7 +577,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 2 and zl == -2 then
 				elseif xl == 2 and zl == 2 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -592,7 +597,7 @@ function mcore.create_acacia_tree(pos)
 				elseif xl == 3 and zl == -3 then
 				elseif xl == 3 and zl == 3 then
 				elseif data[vi] == c_air then
-					if math.random (1,100) < 85 then					
+					if math.random (1,100) < 85 then
 						data[vi] = c_leaves
 					end
 				end
@@ -668,6 +673,125 @@ function mcore.grow_tree(pos, is_apple_tree, trunk_node, leaves_node, fallen_lea
 	
 	add_trunk_and_leaves(data, a, pos, c_tree, c_leaves, height, 2, 8, is_apple_tree, log_grass)
 	
+	vm:set_data(data)
+	vm:calc_lighting()
+	vm:write_to_map()
+	vm:update_map()
+end
+
+function mcore.create_wimba_tree(pos)
+	local c_air = minetest.get_content_id("air")
+	local c_dirt = minetest.get_content_id("core:dirt")
+	local c_leaves = minetest.get_content_id("core:wimba_leaves")
+	local c_trunk = minetest.get_content_id("core:wimba_log")
+	local c_trunk_grassy = minetest.get_content_id("core:wimba_log_grassy")
+	local c_vine_co = minetest.get_content_id("core:vine")
+	
+	local x2, y2, z2 = pos.x, pos.y, pos.z
+
+	local height = math.random(8, 16)
+
+	local vm = minetest.get_voxel_manip()
+	local minp, maxp = vm:read_from_map(
+		{x = pos.x - 5, y = pos.y - 1, z = pos.z - 5},
+		{x = pos.x + 5, y = pos.y + height + 1, z = pos.z + 5}
+	)
+
+	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+	local data = vm:get_data()
+
+	for i=0, height do
+		local vi = a:index(x2, y2 + i, z2)
+		if i == 0 then
+			data[vi] = c_trunk_grassy
+		elseif data[vi] == c_air or data[vi] == c_ignore then
+			data[vi] = c_trunk
+		end
+	end
+
+	-- draw the little X shaped trunk at the bottom:
+	local vi = a:index(x2-1, y2-1, z2-1)
+	data[vi] = c_trunk_grassy
+	vi = a:index(x2-1, y2-1, z2+1)
+	data[vi] = c_trunk_grassy
+	vi = a:index(x2+1, y2-1, z2-1)
+	data[vi] = c_trunk_grassy
+	vi = a:index(x2+1, y2-1, z2+1)
+	data[vi] = c_trunk_grassy
+
+	vi = a:index(x2-1, y2, z2-1)
+	data[vi] = c_trunk
+	vi = a:index(x2-1, y2, z2+1)
+	data[vi] = c_trunk
+	vi = a:index(x2+1, y2, z2-1)
+	data[vi] = c_trunk
+	vi = a:index(x2+1, y2, z2+1)
+	data[vi] = c_trunk
+
+	for xl=-4, 4 do -- lower leaves
+		for zl=-4, 4 do
+			vi = a:index(x2 + xl, y2 + height, z2 + zl)
+			
+			if xl == -4 and zl == -4 then
+			elseif xl == -4 and zl == 4 then
+			elseif xl == 4 and zl == -4 then
+			elseif xl == 4 and zl == 4 then
+			elseif data[vi] == c_air then
+				if math.random (1,100) < 92 then
+					data[vi] = c_leaves
+				end
+			end
+
+			-- RIP vine.co
+			if xl == -4 and zl == -4 then
+			elseif xl == -4 and zl == 4 then
+			elseif xl == 4 and zl == -4 then
+			elseif xl == 4 and zl == 4 then
+			else
+				if math.random (1,12) == 1 then
+					for y1 = 1, math.random(5, height-1) do
+						vi = a:index(x2 + xl, y2 + height - y1, z2 + zl)
+						if data[vi] == c_air then
+							data[vi] = c_vine_co
+						end
+					end
+				end
+			end
+		end
+	end
+
+	for xl=-3, 3 do -- top part 
+		for zl=-3, 3 do
+			local vi = a:index(x2 + xl, y2 + height + 1, z2 + zl)
+			
+			if xl == -3 and zl == -3 then
+			elseif xl == -3 and zl == 3 then
+			elseif xl == 3 and zl == -3 then
+			elseif xl == 3 and zl == 3 then
+			elseif data[vi] == c_air then
+				if math.random (1,100) < 85 then
+					data[vi] = c_leaves
+				end
+			end
+		end
+	end
+
+	for xl=-2, 2 do -- top part 
+		for zl=-2, 2 do
+			local vi = a:index(x2 + xl, y2 + height + 2, z2 + zl)
+			
+			if xl == -2 and zl == -2 then
+			elseif xl == -2 and zl == 2 then
+			elseif xl == 2 and zl == -2 then
+			elseif xl == 2 and zl == 2 then
+			elseif data[vi] == c_air then
+				if math.random (1,100) < 85 then
+					data[vi] = c_leaves
+				end
+			end
+		end
+	end
+
 	vm:set_data(data)
 	vm:calc_lighting()
 	vm:write_to_map()
@@ -1045,7 +1169,7 @@ minetest.register_decoration({
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass",
+	place_on = {"core:grass"},
 	decoration = {"core:mg_oak_sapling", "core:mg_cherry_sapling", "core:mg_birch_sapling"},
 	sidelen = 80,
 	fill_ratio = 0.0001,
@@ -1059,7 +1183,7 @@ minetest.register_decoration({
 	decoration = {"core:grass_1", "core:grass_2", "core:grass_3"},
 	sidelen = 16,
 	fill_ratio = 0.2,
-	biomes = {"plains", "plains_forest", "jungle", "highlands"},
+	biomes = {"plains", "plains_forest", "highlands"},
 	height = 1,
 	param2 = mcore.options("cross", true, true, false),
 })
@@ -1079,10 +1203,10 @@ minetest.register_decoration({
 	place_on = "core:grass_wildland",
 	decoration = {"core:grass_wild_1", "core:grass_wild_2", "core:grass_wild_3"},
 	sidelen = 20,
-	fill_ratio = 0.005,
+	fill_ratio = 0.02,
 	biomes = {"wildlands"},
 	height = 1,
-	param2 = mcore.options("cross", true, true, false),
+	param2 = mcore.options("cross", true, true, true),
 })
 
 minetest.register_decoration({
@@ -1090,10 +1214,10 @@ minetest.register_decoration({
 	place_on = "core:grass_wildland",
 	decoration = {"core:grass_wild_1", "core:grass_wild_2", "core:grass_wild_3"},
 	sidelen = 20,
-	fill_ratio = 0.01,
+	fill_ratio = 0.3,
 	biomes = {"jungle"},
 	height = 1,
-	param2 = mcore.options("cross", true, true, false),
+	param2 = mcore.options("cross", true, true, true),
 })
 
 minetest.register_decoration({
@@ -1101,8 +1225,8 @@ minetest.register_decoration({
 	place_on = "core:grass_wildland",
 	decoration = {"core:bamboo"},
 	sidelen = 20,
-	fill_ratio = 0.01,
-	biomes = {"wildlands"},
+	fill_ratio = 0.02,
+	biomes = {"jungle"},
 	height = 4,
 	height_max = 6,
 })
@@ -1110,12 +1234,13 @@ minetest.register_decoration({
 minetest.register_decoration({
 	deco_type = "simple",
 	place_on = "core:grass_wildland",
-	decoration = {"core:cobble"},
+	decoration = {"core:mg_wimba_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.02,
-	biomes = {"wildlands"},
-	height = 8,
-	height_max = 14,
+	fill_ratio = 0.08,
+	biomes = {"jungle"},
+	height = 1,
+	--height = 8,
+	--height_max = 14,
 })
 
 -- plants items

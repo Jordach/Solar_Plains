@@ -705,8 +705,13 @@ minetest.register_node("core:oak_sapling", {
 	tiles = {"core_oak_sapling.png"},
 	waving = 1,
 	walkable = false,
+	paramtype2 = "meshoptions",
 	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("core:pine_sapling", {
@@ -716,8 +721,13 @@ minetest.register_node("core:pine_sapling", {
 	tiles = {"core_pine_sapling.png"},
 	waving = 1,
 	walkable = false,
+	paramtype2 = "meshoptions",
 	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("core:birch_sapling", {
@@ -727,8 +737,13 @@ minetest.register_node("core:birch_sapling", {
 	tiles = {"core_birch_sapling.png"},
 	waving = 1,
 	walkable = false,
+	paramtype2 = "meshoptions",
 	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("core:cherry_sapling", {
@@ -736,10 +751,15 @@ minetest.register_node("core:cherry_sapling", {
 	drawtype = "plantlike",
 	paramtype = "light",
 	tiles = {"core_cherry_sapling.png"},
+	paramtype2 = "meshoptions",
 	waving = 1,
 	walkable = false,
 	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("core:acacia_sapling", {
@@ -748,11 +768,31 @@ minetest.register_node("core:acacia_sapling", {
 	paramtype = "light",
 	tiles = {"core_cherry_sapling.png"},
 	waving = 1,
+	paramtype2 = "meshoptions",
 	walkable = false,
 	groups = {snappy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_plants,
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
+minetest.register_node("core:wimba_sapling", {
+	description = "Wimba Sapling",
+	drawtype = "plantlike",
+	paramtype = "light",
+	tiles = {"core_wimba_sapling.png"},
+	waving = 1,
+	walkable = false,
+	groups = {snappy=3, flammable=2, attached_node=1},
+	sounds = mcore.sound_plants,
+	paramtype2 = "meshoptions",
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
+})
 
 -- acacia
 
@@ -809,48 +849,109 @@ minetest.register_node("core:acacia_planks", {
 	sounds = mcore.sound_wood,
 })
 
+-- a wimba way a wimba way
+
+minetest.register_node("core:wimba_log", {
+	description = "Wimba Log",
+	tiles = {"core_wimba_log_top.png", "core_wimba_log_top.png", "core_wimba_log.png"},
+	paramtype2 = "facedir",
+	is_ground_content = false,
+	groups = {tree=1, choppy=3, flammable=2, solid=1},
+	on_place = mcore.sensible_facedir,
+	sounds = mcore.sound_wood,
+})
+
+minetest.register_node("core:wimba_log_grassy", {
+	description = "Wimba Log (Grassy)",
+	tiles = {"core_wimba_log_top.png", "core_wimba_log_top.png", "core_wimba_log.png^core_long_grass_wild_1.png"},
+	paramtype2 = "facedir",
+	is_ground_content = false,
+	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
+	on_place = mcore.sensible_facedir,
+	sounds = mcore.sound_wood,
+})
+
+minetest.register_node("core:wimba_leaves", {
+	description = "Wimba Leaves",
+	tiles = {"core_wimba_leaves.png"},
+	special_tiles = {"core_wimba_leaves.png"},
+	drawtype = "allfaces_optional",
+	waving = 1,
+	visual_scale = 1.3,
+	paramtype = "light",
+	is_ground_content = false,
+	groups = {snappy=3, leafdecay=3, flammable=2},
+	drop = {
+		max_items = 1,
+		items = {
+			{
+				items = {"core:wimba_sapling"},
+				rarity = 16,
+			},
+			{
+				items = {"core:wimba_leaves"},
+			}
+		}
+	},
+	after_place_node = default.after_place_leaves,
+	sounds = mcore.sound_plants,
+})
+
+minetest.register_node("core:wimba_planks", {
+	description = "Wimba Planks",
+	tiles = {"core_wimba_planks.png"},
+	groups = {choppy=3, flammable=2, solid=1, planks=1},
+	sounds = mcore.sound_wood,
+})
+
+minetest.register_node("core:vine", {
+	description = "Vines",
+	tiles = {"core_vine.png"},
+	groups = {snappy=3, flammable=2, attached_node=1},
+	drawtype = "plantlike",
+	paramtype = "light",
+	sunlight_propagates = true,
+	climbable = true,
+	walkable = false,
+})
+
 -- leafdecay definitions
 
 default.register_leafdecay({
-
 	trunks = {"core:oak_log"},
 	leaves = {"core:oak_leaves"},
 	radius = 3,
-
 })
 
 default.register_leafdecay({
-
 	trunks = {"core:birch_log"},
 	leaves = {"core:birch_leaves"},
 	radius = 3,
-
 })
 
 default.register_leafdecay({
-
 	trunks = {"core:pine_log"},
 	leaves = {"core:pine_needles_snowy", "core:pine_needles"},
 	radius = 5,
-
 })
 
 default.register_leafdecay({
-
 	trunks = {"core:cherry_log"},
 	leaves = {"core:cherry_leaves", "core:fallen_cherry_leaves"},
 	radius = 3,
-
 })
 
 default.register_leafdecay({
-
 	trunks = {"core:acacia_log"},
 	leaves = {"core:acacia_leaves"},
 	radius = 5,
-
 })
 
+default.register_leafdecay({
+	trunks = {"core:wimba_log"},
+	leaves = {"core:wimba_leaves"},
+	radius = 5,
+})
 
 -- cacti
 
@@ -861,7 +962,6 @@ minetest.register_node("core:cactus", {
 	drawtype = "mesh",
 	paramtype = "light",
 	mesh = "core_cactus.b3d",
-	
 	groups = {choppy=3, flammable=2, attached_node=1},
 	sounds = mcore.sound_wood,
 	damage_per_second = 1,

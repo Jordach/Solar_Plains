@@ -170,6 +170,10 @@ minetest.register_node("plants:red_rose", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 
 })
 
@@ -189,7 +193,10 @@ minetest.register_node("plants:geranium", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:poppy", {
@@ -208,7 +215,10 @@ minetest.register_node("plants:poppy", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- orange
@@ -229,7 +239,10 @@ minetest.register_node("plants:orange_tulip", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:million_bells", {
@@ -248,7 +261,10 @@ minetest.register_node("plants:million_bells", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:stellar_daisy", { -- african daisy
@@ -267,7 +283,10 @@ minetest.register_node("plants:stellar_daisy", { -- african daisy
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- yellow
@@ -288,7 +307,10 @@ minetest.register_node("plants:daffodil", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:starflower", { -- note - use custom mesh, realname sunflower
@@ -307,7 +329,10 @@ minetest.register_node("plants:starflower", { -- note - use custom mesh, realnam
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:peonie", {
@@ -326,7 +351,10 @@ minetest.register_node("plants:peonie", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- green
@@ -347,7 +375,10 @@ minetest.register_node("plants:carnation", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:bells_of_terra", { -- real name: bells of ireland
@@ -366,7 +397,10 @@ minetest.register_node("plants:bells_of_terra", { -- real name: bells of ireland
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:daylilly", {
@@ -385,7 +419,10 @@ minetest.register_node("plants:daylilly", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- blue
@@ -406,7 +443,10 @@ minetest.register_node("plants:bluebells", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:lily_of_the_dream", { --real name, lily of the nile
@@ -425,7 +465,10 @@ minetest.register_node("plants:lily_of_the_dream", { --real name, lily of the ni
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:angelface", {
@@ -444,7 +487,10 @@ minetest.register_node("plants:angelface", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- violet
@@ -465,7 +511,10 @@ minetest.register_node("plants:violet", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:pansy", {
@@ -484,7 +533,10 @@ minetest.register_node("plants:pansy", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:crocus", {
@@ -503,7 +555,10 @@ minetest.register_node("plants:crocus", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- pink / cherry
@@ -524,7 +579,10 @@ minetest.register_node("plants:lilac", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:allium", {
@@ -543,7 +601,10 @@ minetest.register_node("plants:allium", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:camellia", {
@@ -562,7 +623,10 @@ minetest.register_node("plants:camellia", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- white
@@ -583,7 +647,10 @@ minetest.register_node("plants:dandelion", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:yarrow", {
@@ -602,7 +669,10 @@ minetest.register_node("plants:yarrow", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:snapdragon", {
@@ -621,7 +691,10 @@ minetest.register_node("plants:snapdragon", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- black
@@ -642,7 +715,10 @@ minetest.register_node("plants:black_rose", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:hellebore", {
@@ -661,7 +737,10 @@ minetest.register_node("plants:hellebore", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 minetest.register_node("plants:daylia", {
@@ -680,7 +759,10 @@ minetest.register_node("plants:daylia", {
 			fixed = {-0.25, -0.5, -0.25, 0.25, -5/16, 0.25},
 	},
 	sounds = mcore.sound_plants,
-
+	on_place = function(itemstack, placer, pointed_thing)
+		local ret = minetest.item_place_node(itemstack, placer, pointed_thing, mcore.options("cross", true, true, false))
+		return itemstack
+	end,
 })
 
 -- create a mapgen file to handle mapgen for these flowers;

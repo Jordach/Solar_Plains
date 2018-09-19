@@ -363,6 +363,22 @@ minetest.register_craft({
 	},
 })
 
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:wimba_planks 6",
+	recipe = {
+		"core:wimba_log",
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:wimba_planks 6",
+	recipe = {
+		"core:wimba_log_grassy",
+	},
+})
+
 -- craft some grassy versions of logs
 
 minetest.register_craft({
@@ -400,6 +416,25 @@ minetest.register_craft({
 		"core:grass_1"
 	},
 })
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:acacia_log_grassy 1",
+	recipe = {
+		"core:acacia_log",
+		"core:grass_wild_1"
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "core:wimba_log_grassy 1",
+	recipe = {
+		"core:wimba_log",
+		"core:grass_wild_1"
+	},
+})
+
 
 -- sticks
 
