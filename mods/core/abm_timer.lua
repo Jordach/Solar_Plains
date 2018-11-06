@@ -77,7 +77,7 @@ minetest.register_abm({
 })
 
 minetest.register_abm({
-	nodenames = {"core:grass"},
+	nodenames = {"core:grass", "core:dirt"},
 	interval = 30,
 	chance = 2,
 	action = function(pos)
@@ -103,7 +103,7 @@ minetest.register_abm({
 	action = function(pos, node)
 		
 		local nu =  minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
-		local is_soil = minetest.get_item_group(nu, "soil")
+		local is_soil = minetest.get_item_group(nu, "dirt")
 		
 		if is_soil == 0 then
 			return
@@ -121,7 +121,7 @@ minetest.register_abm({
 	action = function(pos, node)
 		
 		local nu =  minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
-		local is_soil = minetest.get_item_group(nu, "soil")
+		local is_soil = minetest.get_item_group(nu, "dirt")
 		
 		if is_soil == 0 then
 			return
@@ -139,7 +139,7 @@ minetest.register_abm({
 	action = function(pos, node)
 		
 		local nu =  minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
-		local is_soil = minetest.get_item_group(nu, "soil")
+		local is_soil = minetest.get_item_group(nu, "dirt")
 		
 		if is_soil == 0 then
 			return
@@ -158,7 +158,7 @@ minetest.register_abm({
 	action = function(pos, node)
 		
 		local nu =  minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
-		local is_soil = minetest.get_item_group(nu, "soil")
+		local is_soil = minetest.get_item_group(nu, "dirt")
 		
 		if is_soil == 0 then
 			return
@@ -170,13 +170,31 @@ minetest.register_abm({
 })
 
 minetest.register_abm({
+	nodenames = {"core:wimba_sapling"},
+	interval = 90, --70
+	chance = 4,
+	action = function(pos, node)
+		
+		local nu =  minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
+		local is_soil = minetest.get_item_group(nu, "dirt")
+		
+		if is_soil == 0 then
+			return
+		end
+			
+		minetest.remove_node({x=pos.x, y=pos.y, z=pos.z})
+		mcore.create_wimba_tree(pos)
+	end,
+})
+
+minetest.register_abm({
 	nodenames = {"core:pine_sapling"},
 	interval = 70, --70
 	chance = 3,
 	action = function(pos, node)
 		
 		local nu =  minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name
-		local is_soil = minetest.get_item_group(nu, "soil")
+		local is_soil = minetest.get_item_group(nu, "dirt")
 		
 		if is_soil == 0 then
 			return

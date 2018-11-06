@@ -5,7 +5,7 @@ minetest.register_node("core:dirt", {
 	description = "Dirt",
 	is_ground_content = true,
 	drop = "core:dirt",
-	groups = {crumbly=3, soil=1, solid=1},
+	groups = {crumbly=3, soil=1, solid=1, dirt=1},
 	sounds = mcore.sound_dirt,
 })
 
@@ -14,7 +14,7 @@ minetest.register_node("core:mud", {
 	description = "Mud (Doesn't grow grass!)",
 	is_ground_content = true,
 	drop = "core:dirt",
-	groups = {crumbly=3, soil=1},
+	groups = {crumbly=3, dirt=1},
 	sounds = mcore.sound_dirt,
 })
 
@@ -23,7 +23,7 @@ minetest.register_node("core:grass", {
 	description = "Dirt with Grass",
 	is_ground_content = true,
 	drop = "core:dirt",
-	groups = {crumbly=3, soil=1, solid=1},
+	groups = {crumbly=3, solid=1, dirt=1},
 	sounds = mcore.sound_grass,
 })
 
@@ -32,16 +32,7 @@ minetest.register_node("core:grass_wildland", {
 	description = "Dirt with Grass",
 	is_ground_content = true,
 	drop = "core:dirt",
-	groups = {crumbly=3, soil=1, solid=1},
-	sounds = mcore.sound_grass,
-})
-
-minetest.register_node("core:grasstest", {
-	tiles = {"core_grass.png"},
-	description = "Dirt with Grass",
-	is_ground_content = true,
-	drop = "core:dirt",
-	groups = {crumbly=3, soil=1},
+	groups = {crumbly=3, solid=1, dirt=1},
 	sounds = mcore.sound_grass,
 })
 

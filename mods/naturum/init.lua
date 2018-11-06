@@ -1,6 +1,6 @@
 -- naturum
--- replacement for farming_plus by tenplus1
--- License: WTFPL because i simply do not give a shit since this is a hobby at this point
+-- replacement for farming_plus
+-- License: what's a license
 
 -- things to alias from farming plus:
 
@@ -45,7 +45,7 @@
     compost barrel recipes:
 
     dust + water = clay
-    8 compostable foods + time = 1 dirt
+    8 compostable items + time = 1 dirt
     water + lava + iron compost barrel = obsidian
 
 ]]
@@ -89,3 +89,33 @@
     coffee machine
 
 ]]
+
+-- Init all the TINGS
+
+naturum = {}
+
+-- kickstart our ~~workbench~~ sub components
+
+dofile(minetest.get_modpath("naturum").."/grow_lib.lua")
+dofile(minetest.get_modpath("naturum").."/mapgen.lua")
+dofile(minetest.get_modpath("naturum").."/wheat.lua")
+dofile(minetest.get_modpath("naturum").."/farmland.lua")
+--dofile(minetest.get_modpath("naturum").."/potato.lua")
+--dofile(minetest.get_modpath("naturum").."/carrot.lua")
+--dofile(minetest.get_modpath("naturum").."/pumpkin.lua")
+--dofile(minetest.get_modpath("naturum").."/melon.lua")
+--dofile(minetest.get_modpath("naturum").."/cocoa.lua")
+--dofile(minetest.get_modpath("naturum").."/corn.lua")
+--dofile(minetest.get_modpath("naturum").."/cucumber.lua")
+--dofile(minetest.get_modpath("naturum").."/rhubarb.lua")
+--dofile(minetest.get_modpath("naturum").."/sugar.lua")
+--dofile(minetest.get_modpath("naturum").."/tomato.lua")
+--dofile(minetest.get_modpath("naturum").."/crammer.lua")
+--dofile(minetest.get_modpath("naturum").."/berries.lua")
+--dofile(minetest.get_modpath("naturum").."/melon.lua")
+--dofile(minetest.get_modpath("naturum").."/coffee.lua")
+--dofile(minetest.get_modpath("naturum").."/salt.lua")
+
+--dofile(minetest.get_modpath("naturum").."/utensils.lua")
+--dofile(minetest.get_modpath("naturum").."/crafting.lua")
+--dofile(minetest.get_modpath("naturum").."/food.lua")

@@ -43,9 +43,7 @@ function mcore.options(meshtype, horizontal, height, size)
 		bit3 = 32
 	end
 	
-	local retval = pshape+bit1+bit2+bit3
-	
-	return retval
+	return pshape+bit1+bit2+bit3
 end	
 
 -- mapgen specific trees and mapgen saplings - mg_saplings grow trees with vmanip at mapgen

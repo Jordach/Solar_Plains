@@ -195,7 +195,6 @@ minetest.register_globalstep(function(dtime)
 	end
 end)
 
-
 -- Stop sound and remove player handle on leaveplayer
 
 minetest.register_on_leaveplayer(function(player)
