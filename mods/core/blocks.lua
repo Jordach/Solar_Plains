@@ -193,6 +193,7 @@ minetest.register_node("core:grass_snow", {
 minetest.register_node("core:snow", {
 	tiles = {"core_snow.png"},
 	inventory_image = "core_snowball.png",
+	description = "Snow",
 	wield_image = "core_snowball.png",
 	paramtype = "light",
 	buildable_to = true,
