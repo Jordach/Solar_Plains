@@ -14,7 +14,7 @@ for i=1, 8 do
 	}
 
 	minetest.register_node("naturum:wheat_" .. i, {
-		description = "wheat_phase_" .. i,
+		description = "Wheat (Stage: " .. i .. ")",
 		tiles = {"farming_wheat_" .. i .. ".png"},
 		drawtype = "plantlike",
 		paramtype = "light",
@@ -23,7 +23,7 @@ for i=1, 8 do
 		walkable = false,
 		drop = drop,
 		waving = 1,
-		groups = {snappy=3, flammable=2, attached_node=1},
+		groups = {snappy=3, flammable=2, attached_node=1, nodec=1},
 	})
 	
 	if i < 8 then

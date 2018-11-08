@@ -2,70 +2,44 @@
 
 atmos = {}
 
-minetest.register_chatcommand("weather", {
-	
-	description = "debugs the current atmos based weather system",
-	param = "use a number to select the weather type.",
-	func = function(name, param)
-		
-		if not minetest.check_player_privs(name, "server") then
-			return false, "You are not allowed to control the weather, you scrub. \n \n This incident WILL be reported."
-		end
-		
-		atmos.current_weather = 0 + param -- somehow it performs tonumber() on it's own?
-		
-		return true, "Current weather updated."
-	end,
+atmos.wind = {}
+atmos.wind.x = 0 -- radians
+atmos.wind.z = 0 -- radians
+atmos.wind.speed = 2 -- in nodes/meters per second
 
-})
+atmos.cloud = {}
 
--- 
+atmos.cloud.density = {} -- overall cloud density
+atmos.cloud.density.min = 0
+atmos.cloud.density.max = 1
+atmos.cloud.density.now = 0
 
---atmos.weather_type = 1
+atmos.cloud.thicc = {}
+atmos.cloud.thicc.min = 1 -- thiccness in nodes
+atmos.cloud.thicc.max = 32
+
+atmos.cloud.height= {} -- height in nodes from 0
+atmos.cloud.height.min = 80
+atmos.cloud.height.max = 220
+
+atmos.cloud.colour = {} -- minetest.rgba components for colourising clouds
+atmos.cloud.colour.red = 250 -- replace these with the cloudy skybox with some brightening
+atmos.cloud.colour.grn = 250
+atmos.cloud.colour.blu = 255
+
+atmos.cloud.colour.alp = {} -- tune this when clouds get thiccer
+atmos.cloud.colour.alp.min = 5
+atmos.cloud.colour.alp.max = 229
+
+function atmos.wind_to_vector(rads, mult) -- forwards only
+	local z = math.cos(rads) * mult
+	local x = (math.sin(rads) * -1) * mult
+	return x, z
+end
+
 atmos.current_weather = 3
 
---[[
-
-atmos.fog_colour = {}
-atmos.weather_sky_type = {}
-atmos.weather_light_level = {}
-
-atmos.weather_clouds = {}
-atmos.weather_cloud_colour = {}
-atmos.weather_cloud_thicc = {}
-atmos.weather_cloud_height = {}
-
-
-
-atmos.weather_light_level[1] = nil -- default skies
-atmos.weather_light_level[5] = 0.8 -- cloudy
-atmos.weather_light_level[8] = 0.175 -- rain, night
-
--- cloud settings
-
-atmos.weather_clouds[1] = 0.275 -- light
-atmos.weather_clouds[2] = 0.4 -- default
-atmos.weather_clouds[3] = 0.5 -- large
-atmos.weather_clouds[4] = 0.65 -- rain, snow, thunder
-
-atmos.weather_cloud_colour[1] = "#f0f0f0e5" -- default
-atmos.weather_cloud_colour[2] = "#9b9b9bff" -- cloudy
-atmos.weather_cloud_colour[3] = "#797979ff" -- cloudy, night
-atmos.weather_cloud_colour[4] = "#93a2b3ff" -- rain
-atmos.weather_cloud_colour[5] = "#6b6b6bff" -- rain, night
-
-atmos.weather_cloud_thicc[1] = 8 -- thin
-atmos.weather_cloud_thicc[2] = 16 -- default
-atmos.weather_cloud_thicc[3] = 32 -- large
-atmos.weather_cloud_thicc[4] = 96/2 -- rain
-
-atmos.weather_cloud_height[1] = 120 -- default
-atmos.weather_cloud_height[2] = 110 -- rain, snow, thunder
-
-]]--
-
 -- load data into atmos2 from .atm configuration files:
-
 local atmos_clear_weather = {}
 local atmos_cloudy_weather = {}
 
@@ -73,111 +47,119 @@ local storage = minetest.get_modpath("atmos").."/skybox/"
 local val = 0
 
 for line in io.lines(storage.."skybox_clear_gradient.atm") do
-
 	atmos_clear_weather[val] = minetest.deserialize(line) 
-
 	val = val + 1
-
 end
 
 val = 0 
 
 -- load data for cloudy / rainy / hail environments:
-
 for line in io.lines(storage.."skybox_cloud_gradient.atm") do
-
-
-
+	atmos_cloudy_weather[val] = minetest.deserialize(line) 
+	val = val + 1
 end
 
 local function atmos_ratio(current, next, ctime2)
-
-	if current < next then -- check if we're darker than the next skybox frame
-
-		local ratio = (next - current) * ctime2
-		return (current + ratio)
-	
-	else -- we darken instead, this repeats for the next two if, else statements
-
-		local ratio = (current - next) * ctime2
-		return (current - ratio)
-	
-	end	
-
+	return current + (next - current) * ctime2
 end
 
-function atmos.set_skybox_clear(player, weather_fade)
+local function convert_hex(input_hex)
+	-- Convert ColorSpec strings into individual intergers
+	-- compatible with minetest.rgba().
+	local r, g, b = input_hex:match("^#(%x%x)(%x%x)(%x%x)")
+	return tonumber(r, 16), tonumber(g, 16), tonumber(b, 16)
+end
 
+
+local function make_skybox(player)
 	local ctime = minetest.get_timeofday() * 100
-
 	-- figure out our multiplier since get_timeofday returns 0->1, we can use the sig figs as a 0-100 percentage multiplier
-
 	-- contributed by @rubenwardy
-
 	local ctime2 = math.floor((ctime - math.floor(ctime)) * 100) / 100
 
 	if ctime2 == 0 then ctime2 = 0.01 end -- anti sudden skybox change syndrome
-
 	local fade_factor =  math.floor(255 * ctime2)
-	
 	ctime = math.floor(ctime) -- remove the sig figs, since we're accessing table points
 
 	-- assemble the skyboxes to fade neatly
+	local side_string_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")^" ..
+		"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")"
 
-	local side_string_clear = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")^" .. "(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")"
-	local side_string_new_clear = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")^" .. "(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime+1].top .. ")"
+	local side_string_new_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime+1].bottom .. ")^" ..
+		"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime+1].top .. ")"
 
-	local sky_top_clear = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")^(atmos_sky_top_radial.png^[multiply:".. atmos_clear_weather[ctime].top .. ")"
-	local sky_top_new_clear = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")^(atmos_sky_top_radial.png^[multiply:".. atmos_clear_weather[ctime+1].top .. ")"
+	local sky_top_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")^" ..
+		"(atmos_sky_top_radial.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")"
 
-	local sky_bottom_clear = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime].bottom .. ")"
-	local sky_bottom_new_clear = "(atmos_sky.png^[multiply:".. atmos_clear_weather[ctime+1].bottom .. ")"
+	local sky_top_new_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime+1].bottom .. ")^" ..
+		"(atmos_sky_top_radial.png^[multiply:".. atmos_clear_weather[ctime+1].top .. ")"
+
+	local sky_bottom_clear = "(atmos_sky.png^[multiply:" ..
+		atmos_clear_weather[ctime].bottom .. ")"
+	
+	local sky_bottom_new_clear = "(atmos_sky.png^[multiply:" ..
+		atmos_clear_weather[ctime+1].bottom .. ")"
+
+	-- cloud sky textures
+	local side_string_cloud = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime].bottom .. ")^" ..
+		"(atmos_sky_top.png^[multiply:" .. atmos_cloudy_weather[ctime].top .. ")"
+	
+	local side_string_cloud_new = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime+1].bottom .. ")^" ..
+		"(atmos_sky_top.png^[multiply:" .. atmos_cloudy_weather[ctime+1].top .. ")"
+	
+	local sky_top_cloud = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime].bottom .. ")^" ..
+		"(atmos_sky_top_radial.png^[multiply:" .. atmos_cloudy_weather[ctime].top .. ")"
+	
+	local sky_top_cloud_new = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime+1].bottom .. ")^" ..
+		"(atmos_sky_top_radial.png^[multiply:" .. atmos_cloudy_weather[ctime+1].top .. ")"
+	
+	local sky_bottom_cloud = "(atmos_sky.png^[multiply:" ..
+		atmos_cloudy_weather[ctime].bottom .. ")"
+	
+	local sky_bottom_cloud_new = "(atmos_sky.png^[multiply:" ..
+		atmos_cloudy_weather[ctime+1].bottom .. ")"
 
 	-- let's convert the base colour to convert it into our transitioning fog colour:
 
-	local fog = {}
+	local fog_clear = {}
+	local fog_cloud = {}
 
-	fog.current = {} -- we need two tables for comparing, as any matching pairs of hex will be skipped.
-	fog.next = {}
-	fog.result = {}
+	fog_clear.current = {} -- we need two tables for comparing, as any matching pairs of hex will be skipped.
+	fog_clear.next = {}
+	fog_clear.result = {}
 
-	fog.current.red = 0
-	fog.current.grn = 0
-	fog.current.blu = 0
-
-	fog.next.red = 0
-	fog.next.grn = 0
-	fog.next.blu = 0
-
-	fog.result.red = 0
-	fog.result.grn = 0
-	fog.result.blu = 0
+	fog_cloud.current = {}
+	fog_cloud.next = {}
+	fog_cloud.result = {}
 
 	-- convert our hex into compatible minetest.rgba components:
 	-- we need these to make our lives easier when it comes to uh, things.
 
-	fog.current.red = tonumber("0x" .. atmos_clear_weather[ctime].base:sub(2,3))
-	fog.current.grn = tonumber("0x" .. atmos_clear_weather[ctime].base:sub(4,5))
-	fog.current.blu = tonumber("0x" .. atmos_clear_weather[ctime].base:sub(6,7))
+	fog_clear.current.red, fog_clear.current.grn, fog_clear.current.blu = convert_hex(atmos_clear_weather[ctime].base)
+	fog_clear.next.red, fog_clear.next.grn, fog_clear.next.blu = convert_hex(atmos_clear_weather[ctime+1].base)
 
-	fog.next.red = tonumber("0x" .. atmos_clear_weather[ctime+1].base:sub(2,3))
-	fog.next.grn = tonumber("0x" .. atmos_clear_weather[ctime+1].base:sub(4,5))
-	fog.next.blu = tonumber("0x" .. atmos_clear_weather[ctime+1].base:sub(6,7))
+	fog_cloud.current.red, fog_cloud.current.grn, fog_cloud.current.blu = convert_hex(atmos_clear_weather[ctime].base)
+	fog_cloud.next.red, fog_cloud.next.grn, fog_cloud.next.blu = convert_hex(atmos_clear_weather[ctime+1].base)
 
 	if atmos_clear_weather[ctime].base ~= atmos_clear_weather[ctime+1].base then
-
 		-- we compare colours the same way we do it for the light level
-
-		fog.result.red = atmos_ratio(fog.current.red, fog.next.red, ctime2)
-		fog.result.grn = atmos_ratio(fog.current.grn, fog.next.grn, ctime2)
-		fog.result.blu = atmos_ratio(fog.current.blu, fog.next.blu, ctime2)
-
+		fog_clear.result.red = atmos_ratio(fog_clear.current.red, fog_clear.next.red, ctime2)
+		fog_clear.result.grn = atmos_ratio(fog_clear.current.grn, fog_clear.next.grn, ctime2)
+		fog_clear.result.blu = atmos_ratio(fog_clear.current.blu, fog_clear.next.blu, ctime2)
 	else
+		fog_clear.result.red = fog_clear.current.red
+		fog_clear.result.grn = fog_clear.current.grn
+		fog_clear.result.blu = fog_clear.current.blu
+	end
 
-		fog.result.red = fog.current.red
-		fog.result.grn = fog.current.grn
-		fog.result.blu = fog.current.blu
-
+	if atmos_cloudy_weather[ctime].base ~= atmos_cloudy_weather[ctime+1].base then
+		fog_cloud.result.red = atmos_ratio(fog_cloud.current.red, fog_cloud.next.red, ctime2)
+		fog_cloud.result.grn = atmos_ratio(fog_cloud.current.grn, fog_cloud.next.grn, ctime2)
+		fog_cloud.result.blu = atmos_ratio(fog_cloud.current.blu, fog_cloud.next.blu, ctime2)
+	else
+		fog_cloud.result.red = fog_cloud.current.red
+		fog_cloud.result.grn = fog_cloud.current.grn
+		fog_cloud.result.blu = fog_cloud.current.blu
 	end
 
 	if atmos_clear_weather[ctime].bottom == atmos_clear_weather[ctime+1].bottom then -- prevent more leakage
@@ -186,17 +168,58 @@ function atmos.set_skybox_clear(player, weather_fade)
 		end
 	end
 	
-	player:set_sky(minetest.rgba(fog.result.red, fog.result.grn, fog.result.blu), "skybox", {
-		
-		sky_top_clear .. "^(" .. sky_top_new_clear .. "^[opacity:" .. fade_factor .. ")",
-		sky_bottom_clear .. "^(" .. sky_bottom_new_clear .. "^[opacity:" .. fade_factor .. ")",
+	local blend_curve = ((atmos.cloud.density.now / 0.9)^10)/2.867
 
-		side_string_clear .. "^(" .. side_string_new_clear .. "^[opacity:" .. fade_factor .. ")",
-		side_string_clear .. "^(" .. side_string_new_clear .. "^[opacity:" .. fade_factor .. ")",
-		side_string_clear .. "^(" .. side_string_new_clear .. "^[opacity:" .. fade_factor .. ")",
-		side_string_clear .. "^(" .. side_string_new_clear .. "^[opacity:" .. fade_factor .. ")"
-		
-	}, true)
+	if blend_curve < 0 then blend_curve = 0 end -- no stupid squaring here
+	if blend_curve > 1 then blend_curve = 1 end
+
+	local blend_op = math.floor(255 * blend_curve)
+
+	-- blend sky textures in colour
+	local clear_sky_top = sky_top_clear .. "^(" .. sky_top_new_clear .. "^[opacity:" .. fade_factor .. ")"
+	local cloud_sky_top = sky_top_cloud .. "^(" .. sky_top_cloud_new .. "^[opacity:" .. fade_factor .. ")"
+
+	local clear_sky_side = side_string_clear .. "^(" .. side_string_new_clear .. "^[opacity:" .. fade_factor .. ")"
+	local cloud_sky_side = side_string_cloud .. "^(" .. side_string_cloud_new .. "^[opacity:" .. fade_factor .. ")"
+
+	local clear_sky_bottom = sky_bottom_clear .. "^(" .. sky_bottom_new_clear .. "^[opacity:" .. fade_factor .. ")"
+	local cloud_sky_bottom = sky_bottom_cloud .. "^(" .. sky_bottom_cloud_new .. "^[opacity:" .. fade_factor .. ")"
+
+	-- "^[opacity:" .. blend_op
+	local result_sky_top = clear_sky_top .. "^(" .. cloud_sky_top .. "^[opacity:" .. blend_op .. ")"
+
+	local result_sky_bottom = clear_sky_bottom .. "^(" .. cloud_sky_bottom .. "^[opacity:" .. blend_op .. ")"
+
+	local result_sky_side = clear_sky_side .. "^(" .. cloud_sky_side .. "^[opacity:" .. blend_op .. ")"
+
+	local result_fog = {}
+
+	result_fog.r = atmos_ratio(fog_clear.result.red, fog_cloud.result.red, atmos.cloud.density.now)
+	result_fog.g = atmos_ratio(fog_clear.result.grn, fog_cloud.result.grn, atmos.cloud.density.now)
+	result_fog.b = atmos_ratio(fog_clear.result.blu, fog_cloud.result.blu, atmos.cloud.density.now)
+	result_fog.a = math.floor(atmos.cloud.colour.alp.max * atmos.cloud.density.now)
+
+	if result_fog.a < atmos.cloud.colour.alp.min then
+		result_fog.a = atmos.cloud.colour.alp.min
+	end
+
+	player:set_sky(
+		minetest.rgba(
+			result_fog.r,
+			result_fog.g,
+			result_fog.b
+		),
+		"skybox",
+		{
+			result_sky_top,
+			result_sky_bottom,
+			result_sky_side,
+			result_sky_side,
+			result_sky_side,
+			result_sky_side,
+		},
+		true
+	)
 	
 	local light_ratio = 0
 	local light_level = 0
@@ -213,163 +236,26 @@ function atmos.set_skybox_clear(player, weather_fade)
 
 	if light_level > 1 then light_level = 1 end -- sanity checks, going over 1 makes it dark again
 	if light_level < 0 then light_level = 0 end -- going under 0 makes it bright again
-
 	player:override_day_night_ratio(light_level)
-	
 end
 
 local atmos_crossfade = 0
 local atmos_start_fade = false
 
 function atmos.sync_skybox()
-
-
-
 	-- sync skyboxes to all players connected to the server.
-
 	for _, player in ipairs(minetest.get_connected_players()) do
-		
-		if atmos_start_fade then
-			atmos_crossfade = atmos_crossfade + 1
-		end
-
-		-- do not sync the current weather to players under -32 depth.
-	
-		if player:get_pos().y <= -32 then
-		
-			player:set_sky("#000000", "plain", false)
-
-			player:override_day_night_ratio(0)
-		
-		elseif player:get_pos().y > 10000 then
-
-			-- change to low orbit skybox here
-
-		else
-		
-			-- sync weather to players that are above -32, lightning effects (and flashes) only affects players above -16
-		
-			--atmos.set_skybox(player)
-			
-			-- move clouds here to enable realtime cloud changes
-
-		
-			player:set_clouds({
-		
-				density = 0.4,
-				color = "#fff0f0e5",
-				thickness = 16,
-				height = 210,
-			
-			})
-		
-		end
-	
+		make_skybox(player)
 	end
-
-	if atmos_crossfade == 20 then
-		atmos_crossfade = 0
-		atmos_start_fade = false
-	end
-	
 	minetest.after(0.1, atmos.sync_skybox)
 end
 
--- table of weathers; even numbers above 5 are night time version (but not this table)
-
--- 1 = cloudless (uses default dynamic skybox)
--- 2 = some clouds (uses default dynamic skybox)
--- 3 = default (uses default dynamic skybox)
--- 4 = somewhat cloudy, not overcast enough (uses default dynamic skybox)
--- 5 = cloudy, overcast?
--- 6 = raining (and snow in colder areas)
--- 7 = thunderstorm
--- 8 = snowing in all biomes exc. the desert
--- 9 = hailstorm
-
-
-
-function atmos.weatherchange()	
-
-	local rand = math.random(0, 1)
-	
-	if rand == 0 then rand = -1 end
-
-	local cw = atmos.current_weather
-
-	if atmos.current_weather == 6 or atmos.current_weather == 7 or atmos.current_weather == 8 or atmos.current_weather == 9 and math.random(1,5) < 5 then
-	
-		atmos.current_weather = 5
-	
-	elseif atmos.current_weather + rand == 6 and atmos.current_weather == 5 then
-		
-		if hudclock.month == 1 or hudclock.month == 11 or hudclock.month == 12 then --is it winter months?
-		
-			if math.random(1,8) == 1 then --hail
-			
-				atmos.current_weather = 9
-			
-			elseif math.random(1,3) == 1 then --snow in cool and cold areas
-			
-				atmos.current_weather = 8
-				
-			end
-		
-		elseif hudclock.month == 5 or hudclock.month == 6 or hudclock.month == 7 then --is it summer?
-		
-			if math.random(1,7) == 1 then -- thunder + rain
-	
-				atmos.current_weather = 7
-			
-			elseif math.random(1,3) == 1 then -- rain
-			
-				atmos.current_weather = 6
-				
-			end
-		
-		else -- other seasons just have rain.
-		
-			if math.random(1,3) == 1 then -- we rain, else if it's not the winter months, or summer thunder
-			
-				atmos.current_weather = 6
-			
-			end
-		
-		end
-	
-	elseif atmos.current_weather < 5 then
-
-		atmos.current_weather = atmos.current_weather + rand
-		
-		if atmos.current_weather == 0 then
-	
-			atmos.current_weather = 1
-
-		end
-	
-	end	
-	
-	minetest.after(60+math.random(1,59)*math.random(5,15), atmos.weatherchange)
-end
-
 function atmos.thunderstrike()
-	
-	if atmos.get_weather_skybox() == 9 or atmos.get_weather_skybox() == 10 then
-		
-		--lightning.weather_type = atmos.weather_type
-		
-		-- doing the above doesn't seem to work, so i'll ignore it for now.
-		
-		lightning.strike()
-		
-	end
-	
-	minetest.after(math.random(43, 156), atmos.thunderstrike)
-	
+	--lightning.strike()
+	--minetest.after(math.random(43, 156), atmos.thunderstrike)	
 end
 
 minetest.after(1, atmos.sync_skybox)
---minetest.after(60+math.random(1,59)*math.random(5,15), atmos.weatherchange)
 --minetest.after(math.random(43, 156), atmos.thunderstrike)
 
 lightning.light_level = atmos.weather_light_level

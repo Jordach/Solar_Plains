@@ -14,8 +14,8 @@
 	time_next is the time in seconds for the next plant stage to grow
 	next_node is the node that the plant will grow into
 	farm_dry is the node that the plant will need to be watered
-	farmland is the nodes below the plant that might be valid for it to grow,
-	farmland is the node that the plant will grow on without issues
+	farm_wet is the nodes below the plant that might be valid for it to grow,
+	farm_wet is the node that the plant will grow on without issues
 	drink is a bool whether wet soil is enough to grow the plant
 ]]--
 
@@ -39,7 +39,7 @@ local function emit_particle(p_texture, p_pos)
 	})
 end
 
-function naturum.plant_grow_stage(time, chance, current_node, time_next, next_node, farm_dry, farmland, drink)
+function naturum.plant_grow_stage(time, chance, current_node, time_next, next_node, farm_dry, farm_wet, drink)
 	-- override nodes here:
 	minetest.override_item(current_node, {
 		on_timer = function(pos, elapsed)
@@ -60,7 +60,12 @@ function naturum.plant_grow_stage(time, chance, current_node, time_next, next_no
 				if farm.name == farm_dry then
 					emit_particle("bucket_water.png^naturum_question.png", pos)
 					return true
-				elseif farm.name == farmland then
+				elseif farm.name == farm_dry and drink then
+					can_grow = true
+					minetest.set_node({x = pos.x, y = pos.y-1, z = pos.z}, {name = farm_dry})
+					local timer = minetest.get_node_timer({x = pos.x, y = pos.y-1, z = pos.z})
+					timer:start(55+math.random(-20, 20))
+				elseif farm.name == farm_wet then
 					can_grow = true
 					minetest.set_node({x = pos.x, y = pos.y-1, z = pos.z}, {name = farm_dry})
 					local timer = minetest.get_node_timer({x = pos.x, y = pos.y-1, z = pos.z})

@@ -2,45 +2,123 @@
 -- replacement for farming_plus
 -- License: MIT
 
---timer:start(55+math.random(-20, 20))
 local function drink_water(pos)
-	for x=-4, 4 do
-		for y=-2, -1 do
-			for z=-4, 4 do
-				local node = minetest.get_node({x=pos.x + x, y = pos.y + y, z = pos.z + z})
-				if node.name == "core:water_flowing" then
-					return true
-				elseif node.name == "core:water_source" then
-					return true
-				end
-			end
-		end
-	end
 
-	return false
+	local nodep, nodex = minetest.find_nodes_in_area(
+		{x=pos.x-4, y=pos.y-2, z=pos.z-4},
+		{x=pos.x+4, y=pos.y+1, z=pos.z+4},
+		{"core:water_flowing", "core:water_source"})
+
+	if nodex["core:water_source"] > 0 then
+		return true
+	elseif nodex["core:water_flowing"] > 0 then
+		return true
+	else
+		return false
+	end
 end
 
-minetest.register_node("naturum:soil", {
-	description = "well played, you shouldn't have this",
-	tiles = {"core_dirt.png^farming_soil.png", "core_dirt.png"},
-	sounds = mcore.sound_dirt,
-	groups = {crumbly=3, soil=1, solid=1, dirt=1},
-	drop = "core:dirt",
+-- water farmland
 
-	on_timer = function(pos, elapsed)
+minetest.register_abm({
+	nodenames = {"naturum:soil", "naturum:soil_wet"},
+	interval = 5,
+	chance = 4,
+	action = function(pos)
 		if drink_water(pos) then
-			minetest.set_node(pos, {name = "naturum:soil_wet"})
-			return false
+			if minetest.get_node(pos).name == "naturum:soil_wet" then
+				return
+			else
+				minetest.set_node(pos, {name = "naturum:soil_wet"})
+			end
 		else
-			return true
+			if minetest.get_node(pos).name == "naturum:soil_wet" then
+				minetest.set_node(pos, {name = "naturum:soil"})
+			else
+				minetest.set_node(pos, {name = "core:dirt"})
+			end
 		end
 	end,
 })
 
-minetest.register_node("naturum:soil_wet", {
-	description = "well played, you shouldn't have this",
-	tiles = {"core_dirt.png^farming_soil_wet.png", "core_dirt.png"},
+minetest.register_abm({
+	nodenames = {"naturum:soil", "naturum:soil_wet"},
+	interval = 120,
+	chance = 2,
+	action = function(pos)
+		pos.y = pos.y + 1
+		if not minetest.get_node_light(pos) then
+			return
+		end
+		
+		if minetest.get_node_light(pos) < 1 and minetest.get_item_group(minetest.get_node(pos).name, "nodec") ~= 1  then
+			pos.y = pos.y - 1
+			minetest.add_node(pos,{name="core:dirt"})
+		end
+	end,
+})
+
+minetest.register_node("naturum:soil", {
+	description = "Farmland",
+	tiles = {"core_dirt.png^farming_soil.png", "core_dirt.png"},
 	sounds = mcore.sound_dirt,
-	groups = {crumbly=3, soil=1, solid=1, dirt=1},
+	groups = {crumbly=3, soil=1, solid=1},
 	drop = "core:dirt",
+	_waila_texture = minetest.inventorycube(
+		"core_dirt.png^farming_soil.png",
+		"core_dirt.png",
+		"core_dirt.png"
+	),
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+		}
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+		}
+	},
+})
+
+minetest.register_node("naturum:soil_wet", {
+	description = "Wet Farmland",
+	tiles = {"core_dirt.png^farming_soil_wet.png", "core_dirt.png^farming_soil_wet_side.png"},
+	sounds = mcore.sound_dirt,
+	groups = {crumbly=3, soil=1, solid=1},
+	drop = "core:dirt",
+	_waila_texture= minetest.inventorycube(
+		"core_dirt.png^farming_soil_wet.png",
+		"core_dirt.png^farming_soil_wet_side.png",
+		"core_dirt.png^farming_soil_wet_side.png"
+	),
+	drawtype = "nodebox",
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+		}
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.5, 0.5, 0.4375, 0.5},
+		}
+	},
 })

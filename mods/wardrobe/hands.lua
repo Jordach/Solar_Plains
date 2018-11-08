@@ -113,15 +113,12 @@ end
 	
 minetest.register_node(":newhand:_default_", {
 	description = "",
-	
 	tiles = {
-	
 			"(wardrobe_skin.png^[multiply:#e3c0a3)^"..
 			"(wardrobe_under_shirt_2.png^[multiply:#dddddd)^"..
 			"(wardrobe_under_shirt_1.png^[multiply:#ffffff)^"..
 			"(wardrobe_shirt_2.png^[multiply:#39881c)^"..
 			"(wardrobe_shirt_1.png^[multiply:#ffffff)",
-
 	},
 	on_place = function(itemstack, placer, pointed_thing)
 		local stack = ItemStack(":")

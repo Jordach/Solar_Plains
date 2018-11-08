@@ -169,7 +169,7 @@ function mcore.diamonds_are_not_forever(itemstack, user, node, digparams)
 
 		return itemstack
 	else
-		itemstack:add_wear(65535/8192)	
+		itemstack:add_wear(65535/8192)
 		return itemstack
 	end
 end
