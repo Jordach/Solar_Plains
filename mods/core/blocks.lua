@@ -27,14 +27,7 @@ minetest.register_node("core:grass", {
 	sounds = mcore.sound_grass,
 })
 
-minetest.register_node("core:grass_wildland", {
-	tiles = {"core_grass_wild.png", "core_dirt.png", "core_dirt.png^core_grass_wild_side.png"},
-	description = "Dirt with Grass",
-	is_ground_content = true,
-	drop = "core:dirt",
-	groups = {crumbly=3, solid=1, dirt=1},
-	sounds = mcore.sound_grass,
-})
+minetest.register_alias("core:grass_wildland", "core:grass")
 
 minetest.register_node("core:stone", {
 	tiles = {"core_stone.png"},
@@ -250,7 +243,7 @@ minetest.register_node("core:water_source", {
 				type = "vertical_frames",
 				aspect_w = 16,
 				aspect_h = 16,
-				length = 2,
+				length = 1.5,
 			},
 		},
 	},
@@ -261,7 +254,7 @@ minetest.register_node("core:water_source", {
 				type = "vertical_frames",
 				aspect_w = 16,
 				aspect_h = 16,
-				length = 2,
+				length = 1.5,
 			},
 			backface_culling = true,
 		},
@@ -617,7 +610,7 @@ minetest.register_node("core:cherry_planks", {
 
 minetest.register_node("core:fallen_cherry_leaves", {
 	description = "Fallen Cherry Leaves",
-	tiles = {"core_cherry_leaves.png"},
+	tiles = {"core_cherry_leaves_floor.png"},
 	drawtype = "mesh",
 	mesh = "planar_flower.b3d",
 	groups = {snappy=3, attached_node=1},
@@ -800,7 +793,7 @@ minetest.register_node("core:acacia_log", {
 
 minetest.register_node("core:acacia_log_grassy", {
 	description = "Acacia Log (Grassy)",
-	tiles = {"core_acacia_log_top.png", "core_acacia_log_top.png", "core_acacia_log.png^core_long_grass_wild_1.png"},
+	tiles = {"core_acacia_log_top.png", "core_acacia_log_top.png", "core_acacia_log.png^core_long_grass_2.png"},
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
@@ -855,7 +848,7 @@ minetest.register_node("core:wimba_log", {
 
 minetest.register_node("core:wimba_log_grassy", {
 	description = "Wimba Log (Grassy)",
-	tiles = {"core_wimba_log_top.png", "core_wimba_log_top.png", "core_wimba_log.png^core_long_grass_wild_1.png"},
+	tiles = {"core_wimba_log_top.png", "core_wimba_log_top.png", "core_wimba_log.png^core_long_grass_3.png"},
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {tree=1, choppy=3, flammable=2, solid=1, nodec=1},
@@ -986,32 +979,7 @@ minetest.register_node("core:grass_1", {
 	
 })
 
-minetest.register_node("core:grass_wild_1", {
-	description = "Wildlands Long Grass",
-	tiles = {"core_long_grass_wild_1.png"},
-	waving = 1,
-	drawtype = "plantlike",
-	paramtype = "light",
-	paramtype2 = "meshoptions",
-	visual_scale = 1.0,
-	walkable = false,
-	buildable_to = true,
-	sunlight_propagates = true,
-	groups = {attached_node=1, snappy=3},
-	selection_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
-	},
-	sounds = mcore.sound_plants,
-	on_place = function(itemstack, placer, pointed_thing)
-		local nname = "core:grass_wild_" .. math.random(1,3)
-		local stack = ItemStack(nname)
-		local ret = minetest.item_place_node(stack, placer, pointed_thing, mcore.options("cross", true, true, false))
-		return ItemStack("core:grass_wild_1 "..itemstack:get_count() - (1 - ret:get_count()))
-	end,
-	
-})
-
+minetest.register_alias("core:grass_wild_1", "core:grass_1")
 
 for i=2, 3 do
 	
@@ -1033,28 +1001,11 @@ for i=2, 3 do
 			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
 		},
 		sounds = mcore.sound_plants,
+
+		
 	})
 	
-	minetest.register_node("core:grass_wild_"..i, {
-		description = "Wildlands Long Grass",
-		tiles = {"core_long_grass_wild_"..i..".png"},
-		waving = 1,
-		drawtype = "plantlike",
-		paramtype = "light",
-		paramtype2 = "meshoptions",
-		visual_scale = 1.0,
-		walkable = false,
-		buildable_to = true,
-		drop = "core:grass_wild_1",
-		sunlight_propagates = true,
-		groups = {not_in_creative_inventory=1, attached_node=1, snappy=3},
-		selection_box = {
-			type = "fixed",
-			fixed = {-0.5, -0.5, -0.5, 0.5, -5/16, 0.5},
-		},
-		sounds = mcore.sound_plants,
-	})
-	
+	minetest.register_alias("core:grass_wild_" .. i, "core:grass_" .. i)
 end
 
 -- plants

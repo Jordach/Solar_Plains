@@ -147,8 +147,6 @@ minetest.register_on_joinplayer(function(player)
 	default.player_set_model(player, "character.x")
 	player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
 	-- anim: stand, sit, lay, walk, mine, walk and mine
-	player:hud_set_hotbar_image("hud_hotbar.png")
-	player:hud_set_hotbar_selected_image("hud_hotbar_selected.png")
 	player:set_properties({
 		visual_size = {x=1, y=1},
 		collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},

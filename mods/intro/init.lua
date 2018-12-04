@@ -167,9 +167,12 @@ function intro.spawn_title(player)
 end
 
 function intro.reset_hud(player)
-
 	--intro.hud_bg(player)
 	--hud.custom_hud(player)
+
+	player:hud_set_hotbar_image("hud_hotbar.png")
+	player:hud_set_hotbar_selected_image("hud_hotbar_selected.png")
+
 	hb.custom_hud(player)
 	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
 	player:set_attribute("core_display_hud", "true")

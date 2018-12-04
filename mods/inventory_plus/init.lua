@@ -98,7 +98,6 @@ inventory_plus.get_formspec = function(player, page)
 
 		formspec = formspec
 			.. "button[0,0;2.15,1;cguide;Crafting Guide]"
-			.. "button[0,1;2.15,1;quickslots;QuickSlots]"
 			.. "list[current_player;craftpreview;7,1;1,1;]"
 			.. "list[current_player;craft;3,0;3,3;]"
 			.. "listring[current_name;craft]"
@@ -108,33 +107,6 @@ inventory_plus.get_formspec = function(player, page)
 			.. "image[6,1;1,1;core_crafting_arrow.png]"
 			.. "background[-0.45,-0.5;8.9,10;core_inv_plus_craft.png]"
 			--.. "image[1.1,2.1;0.8,0.8;trash_icon.png]"
-	end
-
-	if page == "quickslots" then
-
-		formspec = formspec ..
-		"button[0,0;3,1;main;Return to Inventory]" ..
-		"button[0,1;3,1;main;Save Slot Modes]" ..
-		"label[0,2;Punch = item acts as if punched]"..
-		"label[0,2.3;Use = item acts as if used]" ..
-		"label[0,2.6;Place = item acts as if placed]" ..
-		"label[0,2.9;Note, Place will be used automatically for blocks]" ..
-	
-		"dropdown[3.95,0.15;1;slot1;Use,Punch,Place;1]" ..
-		"dropdown[3.95,1.15;1;slot1;Use,Punch,Place;1]" ..
-		"dropdown[3.95,2.15;1;slot1;Use,Punch,Place;1]" ..
-		"dropdown[5.95,0.15;1;slot1;Use,Punch,Place;1]" ..
-		"dropdown[5.95,1.15;1;slot1;Use,Punch,Place;1]" ..
-		"dropdown[5.95,2.15;1;slot1;Use,Punch,Place;1]" ..
-
-		"list[current_player;quickslots;3,0;1,1;0]" ..
-		"list[current_player;quickslots;3,1;1,1;1]" ..
-		"list[current_player;quickslots;3,2;1,1;2]" ..
-		"list[current_player;quickslots;7,0;1,1;3]" ..
-		"list[current_player;quickslots;7,1;1,1;4]" ..
-		"list[current_player;quickslots;7,2;1,1;5]" ..
-		"background[-0.45,-0.5;8.9,10;core_inv_plus_guide.png]"
-
 	end
 
 	return formspec
@@ -165,15 +137,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		inventory_plus.set_inventory_formspec(player, zcg.formspec(player:get_player_name()))
 
 		return
-		
-	end
-
-	-- quickslots
-
-	if fields.quickslots then
-
-		inventory_plus.set_inventory_formspec(player,
-			inventory_plus.get_formspec(player, "quickslots"))
 		
 	end
 

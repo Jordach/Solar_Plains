@@ -1,32 +1,32 @@
 Welcome to this Minetest 0.5-dev server, running Solar Plains.
 
-This server is operated by Jordach, which can be reached at:
+This server is operated by <YOU>, which can be reached at:
 
 EMAIL@EMAIL.COM
 
 If you wish to read this formspec again, use the command: /privacy
 
-Here's what I'll store temporarily until an eventual world reset:
+Here's what I'll store temporarily until server closing, or server reset:
 
 IP Address - this is stored as part of the ban system. Please be aware using multiple accounts from the same location will ban all of them.
 
 IP adresses and usernames are only linked when a ban command is ran.
 
-Username - used to identify you ingame, and can be renamed to your choice or deleted along with any data, except changes to the world.
+Username - used to identify you ingame, and can be renamed to your choice or deleted along with any data, except changes to the world. Changes to the world are considered non private information.
 
-Custom Appearances - if requested, I can give you a copy of the skin, remove it or simply replace it with another one of your choosing.
+Custom Appearances - if requested, I can give you a copy of the skin, remove it, or simply replace it with another one of your choosing.
 
 Email Address - used explicitly to recover your in game username in case you ever forget your password or username.
 
-Please be aware that using an email for username recovery is entirely optional to use this service.
+Please be aware that using an email for username recovery is entirely optional and not required to use this service.
 
-The email address will be hashed by SHA256 and salted by your already encrypted password.
+The email address will be hashed by SHA256 and salted by your password's hash.
 
 Downloading your data will contain the world file and only contain the server world (of export time) and your player file with it's current password. The encrypted password can be removed by request.
 
-Chat - can be logged by other clients connected to the server, however, this is not logged by the server itself.
+Chat - is potentially logged by other clients, but not the server. It is considered to be non private information.
 
-Private messages - can be sent to other users are private and not logged whatsoever, unless, like the above, the other user is logging it.
+Private messages - can be sent to other users are considered private and are not logged whatsoever, unless, like the above, the other user is logging it.
 
 If you agree to this - click the agree button.
 

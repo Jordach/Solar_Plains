@@ -1054,7 +1054,7 @@ minetest.register_biome({
 
 	name = "jungle",
 	
-	node_top = "core:grass_wildland",
+	node_top = "core:grass",
 	depth_top = 1,
 	
 	node_filler = "core:dirt",
@@ -1075,7 +1075,7 @@ minetest.register_biome({
 
 	name = "wildlands",
 	
-	node_top = "core:grass_wildland",
+	node_top = "core:grass",
 	depth_top = 1,
 	
 	node_filler = "core:dirt",
@@ -1150,8 +1150,8 @@ minetest.register_decoration({
 	place_on = "core:grass",
 	decoration = {"core:mg_birch_sapling"},
 	sidelen = 16,
-	fill_ratio = 0.008,
-	biomes = {"plains_forest"},
+	fill_ratio = 0.006,
+	biomes = {"highlands"},
 	height = 1,
 })
 
@@ -1168,7 +1168,7 @@ minetest.register_decoration({
 minetest.register_decoration({
 	deco_type = "simple",
 	place_on = {"core:grass"},
-	decoration = {"core:mg_oak_sapling", "core:mg_cherry_sapling", "core:mg_birch_sapling"},
+	decoration = {"core:mg_oak_sapling"},
 	sidelen = 80,
 	fill_ratio = 0.0001,
 	biomes = {"plains"},
@@ -1188,7 +1188,7 @@ minetest.register_decoration({
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass_wildland",
+	place_on = "core:grass",
 	decoration = {"core:mg_acacia_sapling"},
 	sidelen = 40,
 	fill_ratio = 0.0002,
@@ -1198,8 +1198,8 @@ minetest.register_decoration({
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass_wildland",
-	decoration = {"core:grass_wild_1", "core:grass_wild_2", "core:grass_wild_3"},
+	place_on = "core:grass",
+	decoration = {"core:grass_1", "core:grass_2", "core:grass_3"},
 	sidelen = 20,
 	fill_ratio = 0.02,
 	biomes = {"wildlands"},
@@ -1209,8 +1209,8 @@ minetest.register_decoration({
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass_wildland",
-	decoration = {"core:grass_wild_1", "core:grass_wild_2", "core:grass_wild_3"},
+	place_on = "core:grass",
+	decoration = {"core:grass_1", "core:grass_2", "core:grass_3"},
 	sidelen = 20,
 	fill_ratio = 0.3,
 	biomes = {"jungle"},
@@ -1220,7 +1220,7 @@ minetest.register_decoration({
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass_wildland",
+	place_on = "core:grass",
 	decoration = {"core:bamboo"},
 	sidelen = 20,
 	fill_ratio = 0.02,
@@ -1231,7 +1231,7 @@ minetest.register_decoration({
 
 minetest.register_decoration({
 	deco_type = "simple",
-	place_on = "core:grass_wildland",
+	place_on = "core:grass",
 	decoration = {"core:mg_wimba_sapling"},
 	sidelen = 16,
 	fill_ratio = 0.08,

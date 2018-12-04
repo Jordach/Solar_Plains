@@ -3,8 +3,9 @@
 atmos = {}
 
 atmos.wind = {}
-atmos.wind.x = 0 -- radians
-atmos.wind.z = 0 -- radians
+atmos.wind.rads = 0.5
+atmos.wind.x = 0 -- result
+atmos.wind.z = 0 -- result
 atmos.wind.speed = 2 -- in nodes/meters per second
 
 atmos.cloud = {}
@@ -12,29 +13,31 @@ atmos.cloud = {}
 atmos.cloud.density = {} -- overall cloud density
 atmos.cloud.density.min = 0
 atmos.cloud.density.max = 1
-atmos.cloud.density.now = 0
+atmos.cloud.density.now = 0.6
 
 atmos.cloud.thicc = {}
 atmos.cloud.thicc.min = 1 -- thiccness in nodes
-atmos.cloud.thicc.max = 32
+atmos.cloud.thicc.max = 64
+atmos.cloud.thicc.now = 16
 
 atmos.cloud.height= {} -- height in nodes from 0
-atmos.cloud.height.min = 80
-atmos.cloud.height.max = 220
+atmos.cloud.height.min = 120
+atmos.cloud.height.max = 320
+atmos.cloud.height.now = 120
 
 atmos.cloud.colour = {} -- minetest.rgba components for colourising clouds
-atmos.cloud.colour.red = 250 -- replace these with the cloudy skybox with some brightening
+atmos.cloud.colour.red = 250 -- these are the default colours, blend with the cloudy skybox colours
 atmos.cloud.colour.grn = 250
 atmos.cloud.colour.blu = 255
 
 atmos.cloud.colour.alp = {} -- tune this when clouds get thiccer
-atmos.cloud.colour.alp.min = 5
+atmos.cloud.colour.alp.min = 25
 atmos.cloud.colour.alp.max = 229
 
 function atmos.wind_to_vector(rads, mult) -- forwards only
-	local z = math.cos(rads) * mult
-	local x = (math.sin(rads) * -1) * mult
-	return x, z
+	local z2 = math.cos(rads) * mult
+	local x2 = (math.sin(rads) * -1) * mult
+	return {x=x2, z=z2}
 end
 
 atmos.current_weather = 3
@@ -60,7 +63,7 @@ for line in io.lines(storage.."skybox_cloud_gradient.atm") do
 end
 
 local function atmos_ratio(current, next, ctime2)
-	return current + (next - current) * ctime2
+	return (current + (next - current) * ctime2)
 end
 
 local function convert_hex(input_hex)
@@ -82,42 +85,7 @@ local function make_skybox(player)
 	ctime = math.floor(ctime) -- remove the sig figs, since we're accessing table points
 
 	-- assemble the skyboxes to fade neatly
-	local side_string_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")^" ..
-		"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")"
-
-	local side_string_new_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime+1].bottom .. ")^" ..
-		"(atmos_sky_top.png^[multiply:" .. atmos_clear_weather[ctime+1].top .. ")"
-
-	local sky_top_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime].bottom .. ")^" ..
-		"(atmos_sky_top_radial.png^[multiply:" .. atmos_clear_weather[ctime].top .. ")"
-
-	local sky_top_new_clear = "(atmos_sky.png^[multiply:" .. atmos_clear_weather[ctime+1].bottom .. ")^" ..
-		"(atmos_sky_top_radial.png^[multiply:".. atmos_clear_weather[ctime+1].top .. ")"
-
-	local sky_bottom_clear = "(atmos_sky.png^[multiply:" ..
-		atmos_clear_weather[ctime].bottom .. ")"
 	
-	local sky_bottom_new_clear = "(atmos_sky.png^[multiply:" ..
-		atmos_clear_weather[ctime+1].bottom .. ")"
-
-	-- cloud sky textures
-	local side_string_cloud = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime].bottom .. ")^" ..
-		"(atmos_sky_top.png^[multiply:" .. atmos_cloudy_weather[ctime].top .. ")"
-	
-	local side_string_cloud_new = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime+1].bottom .. ")^" ..
-		"(atmos_sky_top.png^[multiply:" .. atmos_cloudy_weather[ctime+1].top .. ")"
-	
-	local sky_top_cloud = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime].bottom .. ")^" ..
-		"(atmos_sky_top_radial.png^[multiply:" .. atmos_cloudy_weather[ctime].top .. ")"
-	
-	local sky_top_cloud_new = "(atmos_sky.png^[multiply:" .. atmos_cloudy_weather[ctime+1].bottom .. ")^" ..
-		"(atmos_sky_top_radial.png^[multiply:" .. atmos_cloudy_weather[ctime+1].top .. ")"
-	
-	local sky_bottom_cloud = "(atmos_sky.png^[multiply:" ..
-		atmos_cloudy_weather[ctime].bottom .. ")"
-	
-	local sky_bottom_cloud_new = "(atmos_sky.png^[multiply:" ..
-		atmos_cloudy_weather[ctime+1].bottom .. ")"
 
 	-- let's convert the base colour to convert it into our transitioning fog colour:
 
@@ -138,8 +106,8 @@ local function make_skybox(player)
 	fog_clear.current.red, fog_clear.current.grn, fog_clear.current.blu = convert_hex(atmos_clear_weather[ctime].base)
 	fog_clear.next.red, fog_clear.next.grn, fog_clear.next.blu = convert_hex(atmos_clear_weather[ctime+1].base)
 
-	fog_cloud.current.red, fog_cloud.current.grn, fog_cloud.current.blu = convert_hex(atmos_clear_weather[ctime].base)
-	fog_cloud.next.red, fog_cloud.next.grn, fog_cloud.next.blu = convert_hex(atmos_clear_weather[ctime+1].base)
+	fog_cloud.current.red, fog_cloud.current.grn, fog_cloud.current.blu = convert_hex(atmos_cloudy_weather[ctime].base)
+	fog_cloud.next.red, fog_cloud.next.grn, fog_cloud.next.blu = convert_hex(atmos_cloudy_weather[ctime+1].base)
 
 	if atmos_clear_weather[ctime].base ~= atmos_clear_weather[ctime+1].base then
 		-- we compare colours the same way we do it for the light level
@@ -162,46 +130,123 @@ local function make_skybox(player)
 		fog_cloud.result.blu = fog_cloud.current.blu
 	end
 
-	if atmos_clear_weather[ctime].bottom == atmos_clear_weather[ctime+1].bottom then -- prevent more leakage
-		if atmos_clear_weather[ctime].top == atmos_clear_weather[ctime+1].top then
-			fade_factor = 0
-		end
-	end
+	-- blend sky textures in colour
+
+	local sky_clear = {}
+	sky_clear.now = {}
+	sky_clear.now.top = {}
+	sky_clear.now.bot = {}
+
+	sky_clear.next = {}
+	sky_clear.next.top = {}
+	sky_clear.next.bot = {}
+
+	sky_clear.result = {}
+	sky_clear.result.top = {}
+	sky_clear.result.bot = {}
+
+	--load colours into memory
+	sky_clear.now.top.r, sky_clear.now.top.g, sky_clear.now.top.b = convert_hex(atmos_clear_weather[ctime].top)
+	sky_clear.now.bot.r, sky_clear.now.bot.g, sky_clear.now.bot.b = convert_hex(atmos_clear_weather[ctime].bottom)
 	
-	local blend_curve = ((atmos.cloud.density.now / 0.9)^10)/2.867
+	sky_clear.next.top.r, sky_clear.next.top.g, sky_clear.next.top.b = convert_hex(atmos_clear_weather[ctime+1].top)
+	sky_clear.next.bot.r, sky_clear.next.bot.g, sky_clear.next.bot.b = convert_hex(atmos_clear_weather[ctime+1].bottom)
+
+	local clear_result = {}
+	clear_result.top = {}
+	clear_result.bot = {}
+
+	clear_result.top.r = atmos_ratio(sky_clear.now.top.r, sky_clear.next.top.r, ctime2)
+	clear_result.top.g = atmos_ratio(sky_clear.now.top.g, sky_clear.next.top.g, ctime2)
+	clear_result.top.b = atmos_ratio(sky_clear.now.top.b, sky_clear.next.top.b, ctime2)
+	
+	clear_result.bot.r = atmos_ratio(sky_clear.now.bot.r, sky_clear.next.bot.r, ctime2)
+	clear_result.bot.g = atmos_ratio(sky_clear.now.bot.g, sky_clear.next.bot.g, ctime2)
+	clear_result.bot.b = atmos_ratio(sky_clear.now.bot.b, sky_clear.next.bot.b, ctime2)
+
+	-- handle cloud data
+	local sky_cloud = {}
+	sky_cloud.now = {}
+	sky_cloud.now.top = {}
+	sky_cloud.now.bot = {}
+	
+	sky_cloud.next = {}
+	sky_cloud.next.top = {}
+	sky_cloud.next.bot = {}
+
+	sky_cloud.now.top.r, sky_cloud.now.top.g, sky_cloud.now.top.b = convert_hex(atmos_cloudy_weather[ctime].top)
+	sky_cloud.now.bot.r, sky_cloud.now.bot.g, sky_cloud.now.bot.b = convert_hex(atmos_cloudy_weather[ctime].bottom)
+	
+	sky_cloud.next.top.r, sky_cloud.next.top.g, sky_cloud.next.top.b = convert_hex(atmos_cloudy_weather[ctime+1].top)
+	sky_cloud.next.bot.r, sky_cloud.next.bot.g, sky_cloud.next.bot.b = convert_hex(atmos_cloudy_weather[ctime+1].bottom)
+
+	local cloud_result = {}
+	cloud_result.top = {}
+	cloud_result.bot = {}
+
+	cloud_result.top.r = atmos_ratio(sky_cloud.now.top.r, sky_cloud.next.top.r, ctime2)
+	cloud_result.top.g = atmos_ratio(sky_cloud.now.top.g, sky_cloud.next.top.g, ctime2)
+	cloud_result.top.b = atmos_ratio(sky_cloud.now.top.b, sky_cloud.next.top.b, ctime2)
+	
+	cloud_result.bot.r = atmos_ratio(sky_cloud.now.bot.r, sky_cloud.next.bot.r, ctime2)
+	cloud_result.bot.g = atmos_ratio(sky_cloud.now.bot.g, sky_cloud.next.bot.g, ctime2)
+	cloud_result.bot.b = atmos_ratio(sky_cloud.now.bot.b, sky_cloud.next.bot.b, ctime2)
+
+	-- mix and merge colours
+
+	-- atmos.cloud.density.now
+	local blend_curve = ((atmos.cloud.density.now/0.9)^10)/0.125
 
 	if blend_curve < 0 then blend_curve = 0 end -- no stupid squaring here
 	if blend_curve > 1 then blend_curve = 1 end
 
 	local blend_op = math.floor(255 * blend_curve)
 
-	-- blend sky textures in colour
-	local clear_sky_top = sky_top_clear .. "^(" .. sky_top_new_clear .. "^[opacity:" .. fade_factor .. ")"
-	local cloud_sky_top = sky_top_cloud .. "^(" .. sky_top_cloud_new .. "^[opacity:" .. fade_factor .. ")"
+	local merge_result = {}
+	merge_result.top = {}
+	merge_result.bot = {}
 
-	local clear_sky_side = side_string_clear .. "^(" .. side_string_new_clear .. "^[opacity:" .. fade_factor .. ")"
-	local cloud_sky_side = side_string_cloud .. "^(" .. side_string_cloud_new .. "^[opacity:" .. fade_factor .. ")"
+	merge_result.top.r = atmos_ratio(clear_result.top.r, cloud_result.top.r, blend_curve)
+	merge_result.top.g = atmos_ratio(clear_result.top.g, cloud_result.top.g, blend_curve)
+	merge_result.top.b = atmos_ratio(clear_result.top.b, cloud_result.top.b, blend_curve)
+	
+	merge_result.bot.r = atmos_ratio(clear_result.bot.r, cloud_result.bot.r, blend_curve)
+	merge_result.bot.g = atmos_ratio(clear_result.bot.g, cloud_result.bot.g, blend_curve)
+	merge_result.bot.b = atmos_ratio(clear_result.bot.b, cloud_result.bot.b, blend_curve)
 
-	local clear_sky_bottom = sky_bottom_clear .. "^(" .. sky_bottom_new_clear .. "^[opacity:" .. fade_factor .. ")"
-	local cloud_sky_bottom = sky_bottom_cloud .. "^(" .. sky_bottom_cloud_new .. "^[opacity:" .. fade_factor .. ")"
+	local sky_tex_top = "atmos_sky.png^[multiply:" .. minetest.rgba(
+		merge_result.bot.r,
+		merge_result.bot.g,
+		merge_result.bot.b
+		) .. "^(atmos_sky_top_radial.png^[multiply:" .. minetest.rgba(
+		merge_result.top.r,
+		merge_result.top.g,
+		merge_result.top.b
+		) .. ")"
 
-	-- "^[opacity:" .. blend_op
-	local result_sky_top = clear_sky_top .. "^(" .. cloud_sky_top .. "^[opacity:" .. blend_op .. ")"
+	local sky_tex_side = "atmos_sky.png^[multiply:" .. minetest.rgba(
+		merge_result.bot.r,
+		merge_result.bot.g,
+		merge_result.bot.b
+		) .. "^(atmos_sky_top.png^[multiply:" .. minetest.rgba(
+		merge_result.top.r,
+		merge_result.top.g,
+		merge_result.top.b
+		) .. ")"
 
-	local result_sky_bottom = clear_sky_bottom .. "^(" .. cloud_sky_bottom .. "^[opacity:" .. blend_op .. ")"
+	local sky_tex_bottom = "atmos_sky.png^[multiply:" .. minetest.rgba(
+		merge_result.bot.r,
+		merge_result.bot.g,
+		merge_result.bot.b
+		)
 
-	local result_sky_side = clear_sky_side .. "^(" .. cloud_sky_side .. "^[opacity:" .. blend_op .. ")"
+	-- merge fog colours;
 
 	local result_fog = {}
 
-	result_fog.r = atmos_ratio(fog_clear.result.red, fog_cloud.result.red, atmos.cloud.density.now)
-	result_fog.g = atmos_ratio(fog_clear.result.grn, fog_cloud.result.grn, atmos.cloud.density.now)
-	result_fog.b = atmos_ratio(fog_clear.result.blu, fog_cloud.result.blu, atmos.cloud.density.now)
-	result_fog.a = math.floor(atmos.cloud.colour.alp.max * atmos.cloud.density.now)
-
-	if result_fog.a < atmos.cloud.colour.alp.min then
-		result_fog.a = atmos.cloud.colour.alp.min
-	end
+	result_fog.r = atmos_ratio(fog_clear.result.red, fog_cloud.result.red, blend_curve)
+	result_fog.g = atmos_ratio(fog_clear.result.grn, fog_cloud.result.grn, blend_curve)
+	result_fog.b = atmos_ratio(fog_clear.result.blu, fog_cloud.result.blu, blend_curve)
 
 	player:set_sky(
 		minetest.rgba(
@@ -211,15 +256,34 @@ local function make_skybox(player)
 		),
 		"skybox",
 		{
-			result_sky_top,
-			result_sky_bottom,
-			result_sky_side,
-			result_sky_side,
-			result_sky_side,
-			result_sky_side,
+			sky_tex_top,
+			sky_tex_bottom,
+			sky_tex_side,
+			sky_tex_side,
+			sky_tex_side,
+			sky_tex_side
 		},
 		true
 	)
+	local cloud_curve = atmos.cloud.density.now^2
+	local cloud_curve2 = ((((atmos.cloud.density.now-0.46)/1.2)^3)/0.1) + 0.56
+
+	result_fog.a = atmos_ratio(atmos.cloud.colour.alp.min, atmos.cloud.colour.alp.max, cloud_curve2)
+	local height = atmos_ratio(atmos.cloud.height.min, atmos.cloud.height.max, cloud_curve)
+	local thicc = atmos_ratio(atmos.cloud.thicc.min, atmos.cloud.thicc.max, cloud_curve)
+
+	player:set_clouds({
+		density = atmos.cloud.density.now,
+		height = height,
+		thickness = thicc,
+		color = minetest.rgba(
+			atmos_ratio(atmos.cloud.colour.red, fog_cloud.result.red, blend_curve),
+			atmos_ratio(atmos.cloud.colour.grn, fog_cloud.result.grn, blend_curve),
+			atmos_ratio(atmos.cloud.colour.blu, fog_cloud.result.blu, blend_curve),
+			result_fog.a
+		),
+		speed = atmos.wind_to_vector(atmos.wind.rads, atmos.wind.speed)
+	})
 	
 	local light_ratio = 0
 	local light_level = 0
@@ -239,9 +303,6 @@ local function make_skybox(player)
 	player:override_day_night_ratio(light_level)
 end
 
-local atmos_crossfade = 0
-local atmos_start_fade = false
-
 function atmos.sync_skybox()
 	-- sync skyboxes to all players connected to the server.
 	for _, player in ipairs(minetest.get_connected_players()) do
@@ -257,8 +318,6 @@ end
 
 minetest.after(1, atmos.sync_skybox)
 --minetest.after(math.random(43, 156), atmos.thunderstrike)
-
-lightning.light_level = atmos.weather_light_level
 
 -- abm to remove fires when it's raining, snowing or hailing?
 
@@ -437,6 +496,23 @@ minetest.register_chatcommand("frosty", { -- admin commands to debug the values 
 		hb.change_hudbar(player, "frostbite", tonumber(param))
 		
 		return true, "Current frostbite levels updated."
+	end,
+
+})
+
+minetest.register_chatcommand("thicc", { -- admin commands to debug the values for testing
+	
+	description = "debugs the current cloud level",
+	param = "use 0-1 (float) to set cloud level.",
+	func = function(name, param)
+		
+		if not minetest.check_player_privs(name, "server") then
+			return false, "You are not allowed to be changing the clouds."
+		end
+
+		atmos.cloud.density.now = tonumber(param)
+		
+		return true, "Current cloud density levels updated."
 	end,
 
 })

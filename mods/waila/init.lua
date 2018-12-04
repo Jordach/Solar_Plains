@@ -173,7 +173,7 @@ local function render_node(player, node)
 			if length == 1 then
 				tstring = minetest.inventorycube(node.tiles[1], node.tiles[1], node.tiles[1])
 			elseif length == 2 then
-				tstring = minetest.inventorycube(node.tiles[1], node.tiles[2], node.tiles[2])
+				tstring = minetest.inventorycube(node.tiles[1], node.tiles[1], node.tiles[1])
 			elseif length == 3 then
 				tstring = minetest.inventorycube(node.tiles[1], node.tiles[3], node.tiles[3])
 			elseif length == 4 then
