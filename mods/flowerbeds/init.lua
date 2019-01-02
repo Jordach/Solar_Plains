@@ -48,5 +48,5 @@ function flowerbeds.register_flower(texture, desc, node_name, sound_table, dye_c
 	
 end
 
-flowerbeds.register_flower("flowerbeds_lilac.png", "Lilac", "lilac", {}, "pink")
+--flowerbeds.register_flower("flowerbeds_lilac.png", "Lilac", "lilac", {}, "pink")
 
