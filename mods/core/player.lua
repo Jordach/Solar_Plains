@@ -76,9 +76,9 @@ default.player_register_model("character.x", {
 		-- Utility animations (not currently used by the game; but still usable by mods).
 		sit       = { x= 81, y=160, },
 		lay_bed   = { x= 226, y=228, },
-		collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},
-		stepheight = 0.6,
 	},
+	collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},
+	stepheight = 0.6,
 })
 
 -- Player stats and animations

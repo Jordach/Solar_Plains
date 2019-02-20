@@ -272,14 +272,19 @@ local function make_skybox(player)
 	local height = atmos_ratio(atmos.cloud.height.min, atmos.cloud.height.max, cloud_curve)
 	local thicc = atmos_ratio(atmos.cloud.thicc.min, atmos.cloud.thicc.max, cloud_curve)
 
+	local sun_
+
 	player:set_clouds({
 		density = atmos.cloud.density.now,
 		height = height,
 		thickness = thicc,
 		color = minetest.rgba(
-			atmos_ratio(atmos.cloud.colour.red, fog_cloud.result.red, blend_curve),
-			atmos_ratio(atmos.cloud.colour.grn, fog_cloud.result.grn, blend_curve),
-			atmos_ratio(atmos.cloud.colour.blu, fog_cloud.result.blu, blend_curve),
+			atmos_ratio(atmos_ratio(atmos.cloud.colour.red, merge_result.bot.r, 0.65),
+				fog_cloud.result.red, blend_curve),
+			atmos_ratio(atmos_ratio(atmos.cloud.colour.grn, merge_result.bot.g, 0.65),
+				fog_cloud.result.grn, blend_curve),
+			atmos_ratio(atmos_ratio(atmos.cloud.colour.blu, merge_result.bot.b, 0.65),
+				fog_cloud.result.blu, blend_curve),
 			result_fog.a
 		),
 		speed = atmos.wind_to_vector(atmos.wind.rads, atmos.wind.speed)
