@@ -1,4 +1,4 @@
--- VHS, or, Visual Hud Styles:
+-- VHS, or, Visual Hud Styles, or no, it's not for displaying a analog video signal:
 -- License, MIT
 
 --[[

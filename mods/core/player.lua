@@ -76,9 +76,30 @@ default.player_register_model("character.x", {
 		-- Utility animations (not currently used by the game; but still usable by mods).
 		sit       = { x= 81, y=160, },
 		lay_bed   = { x= 226, y=228, },
-		collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},
-		stepheight = 0.6,
 	},
+	collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},
+	stepheight = 0.6,
+})
+
+default.player_register_model("character.b3d", {
+	animation_speed = 60,
+	textures = {
+				"(wardrobe_skin.png^[multiply:#ffffff)"
+	},
+	animations = {
+		-- Standard animations.
+		stand     = { x=  0, y= 239, },
+		lay       = { x=162, y=166, },
+		walk      = { x=168, y=187, },
+		mine      = { x=189, y=198, },
+		walk_mine = { x=200, y=219, },
+		dead      = { x= 221, y=225, },
+		-- Utility animations (not currently used by the game; but still usable by mods).
+		sit       = { x= 81, y=160, },
+		lay_bed   = { x= 226, y=228, },
+	},
+	collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.77, 0.3},
+	stepheight = 0.6,
 })
 
 -- Player stats and animations
@@ -144,8 +165,8 @@ end
 -- Update appearance when the player joins
 minetest.register_on_joinplayer(function(player)
 	default.player_attached[player:get_player_name()] = false
-	default.player_set_model(player, "character.x")
-	player:set_local_animation({x=0, y=79}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
+	default.player_set_model(player, "character.b3d")
+	player:set_local_animation({x=0, y=239}, {x=168, y=187}, {x=189, y=198}, {x=200, y=219}, 30)
 	-- anim: stand, sit, lay, walk, mine, walk and mine
 	player:set_properties({
 		visual_size = {x=1, y=1},

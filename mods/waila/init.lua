@@ -269,12 +269,12 @@ local function core_loop()
 	minetest.after(0.25, core_loop)
 end
 
-core_loop()
+--core_loop()
 
 function waila.init_hud(player)
 	player_huds[player:get_player_name()] = {}
 		
-	local bg = player:hud_add({
+	player_huds[player:get_player_name()].bg = player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=0},
 		offset = {x=0, y=-8},
@@ -282,7 +282,7 @@ function waila.init_hud(player)
 		text = "ptextures_transparent.png",
 	})
 
-	local itemimage = player:hud_add({
+	player_huds[player:get_player_name()].itemimg = player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=0},
 		scale = {x=1, y=1},
@@ -291,7 +291,7 @@ function waila.init_hud(player)
 		alignment = {x=1, y=0},
 	})
 
-	local desc = player:hud_add({
+	player_huds[player:get_player_name()].desc = player:hud_add({
 		hud_elem_type = "text",
 		position = {x=0.5, y=0},
 		text = "",
@@ -299,7 +299,8 @@ function waila.init_hud(player)
 		alignment = {x=1, y=0},
 		offset = {x=-74, y=10},
 	})
-	local harvestimg = player:hud_add({
+
+	player_huds[player:get_player_name()].harvestimg = player:hud_add({
 		hud_elem_type = "image",
 		position = {x=0.5, y=0},
 		text = "ptextures_transparent.png",
@@ -308,7 +309,7 @@ function waila.init_hud(player)
 		scale = {x=1, y=1},
 	})
 
-	local harvestable = player:hud_add({
+	player_huds[player:get_player_name()].harvestable = player:hud_add({
 		hud_elem_type = "text",
 		position = {x=0.5, y=0},
 		text = "",
@@ -317,7 +318,7 @@ function waila.init_hud(player)
 		offset = {x=-74, y=30},
 	})
 
-	local modname = player:hud_add({
+	player_huds[player:get_player_name()].modname = player:hud_add({
 		hud_elem_type = "text",
 		position = {x=0.5, y=0},
 		text = "",
@@ -326,7 +327,7 @@ function waila.init_hud(player)
 		offset = {x=-74, y=70}
 	})
 
-	local facing = player:hud_add({
+	player_huds[player:get_player_name()].facedir = player:hud_add({
 		hud_elem_type = "text",
 		offset = {x=-74, y=50},
 		position = {x=0.5, y=0},

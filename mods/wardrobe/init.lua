@@ -949,12 +949,6 @@ function wardrobe.apply_to_player(player, fields)
 			
 				textures = {
 					"wardrobe_player_" .. pname .. ".png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
 				},
 			})
 		
@@ -963,13 +957,7 @@ function wardrobe.apply_to_player(player, fields)
 			player:set_properties({
 			
 				textures = {
-					"ptextures_transparent.png",
 					"wardrobe_player_" .. pname .. ".png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
 				},
 			})
 		
@@ -985,7 +973,6 @@ function wardrobe.apply_to_player(player, fields)
 	
 		player:set_properties({
 				textures = {
-					"ptextures_transparent.png",
 						"(wardrobe_skin"..                                                   ".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][1]..  ")^"..
 						"(wardrobe_eyes_white_"..  wardrobe.formspec_selections[pname][1]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][2]..  ")^"..
 						"(wardrobe_eyes_pupil_"..  wardrobe.formspec_selections[pname][2]  ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][3]..  ")^"..
@@ -1008,12 +995,7 @@ function wardrobe.apply_to_player(player, fields)
 						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][19] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][19].. ")^"..
 						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][20] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][20].. ")^"..
 						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][21] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][21].. ")^"..
-						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][22] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][22].. ")",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
-					"ptextures_transparent.png",
+						"(wardrobe_acc_"..         wardrobe.formspec_selections[pname][22] ..".png^[multiply:#".. wardrobe.formspec_selections_rgb[pname][22].. ")"
 				}
 			})
 		
