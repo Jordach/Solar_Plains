@@ -172,13 +172,13 @@ function intro.reset_hud(player)
 
 	player:hud_set_hotbar_image("hud_hotbar.png")
 	player:hud_set_hotbar_selected_image("hud_hotbar_selected.png")
+	waila.init_hud(player)
 
 	hb.custom_hud(player)
 	player:hud_set_flags({crosshair = true, hotbar = true, healthbar = false, wielditem = true, breathbar = false})
 	player:set_attribute("core_display_hud", "true")
 	hudclock.display_bg(player)
 	hudinfo.display_hud_text(player)
-	waila.init_hud(player)
 end
 
 minetest.register_on_newplayer(function(player)
