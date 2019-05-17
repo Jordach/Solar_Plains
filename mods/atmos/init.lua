@@ -13,7 +13,7 @@ atmos.cloud = {}
 atmos.cloud.density = {} -- overall cloud density
 atmos.cloud.density.min = 0
 atmos.cloud.density.max = 1
-atmos.cloud.density.now = 0.6
+atmos.cloud.density.now = 0.59
 
 atmos.cloud.thicc = {}
 atmos.cloud.thicc.min = 1 -- thiccness in nodes
@@ -34,13 +34,40 @@ atmos.cloud.colour.alp = {} -- tune this when clouds get thiccer
 atmos.cloud.colour.alp.min = 25
 atmos.cloud.colour.alp.max = 229
 
-function atmos.wind_to_vector(rads, mult) -- forwards only
+function atmos.wind_to_vector(rads, mult)
 	local z2 = math.cos(rads) * mult
 	local x2 = (math.sin(rads) * -1) * mult
 	return {x=x2, z=z2}
 end
 
-atmos.current_weather = 3
+function atmos.get_weather(pos)
+	local temp = mcore.get_heat_humidity_pos(pos)
+	local result
+	if atmos.cloud.density.now < 0.11 then
+		result = "clear"
+	elseif atmos.cloud.density.now >= 0.11 and atmos.cloud.density.now < 0.21 then
+		result = "light_cloud"
+	elseif atmos.cloud.density.now >= 0.21 and atmos.cloud.density.now < 0.36 then
+		result = "medium_cloud"
+	elseif atmos.cloud.density.now >= 0.36 and atmos.cloud.density.now < 0.61 then
+		result = "large_cloud"
+	elseif atmos.cloud.density.now >= 0.61 and atmos.cloud.density.now < 0.71 then
+		result = "cloudy"
+	elseif atmos.cloud.density.now >= 0.71 and atmos.cloud.density.now < 0.86 then
+		if temp < 3.3 then
+			result = "snow"
+		else
+			result = "rain"
+		end
+	else
+		if temp < 2 then
+			result = "hail"
+		else
+			result = "storm"
+		end
+	end
+	return result
+end
 
 -- load data into atmos2 from .atm configuration files:
 local atmos_clear_weather = {}

@@ -25,66 +25,33 @@ minetest.register_globalstep(function(dtime)
 	for _, player in ipairs(minetest.get_connected_players()) do
 
 		local player_name = player:get_player_name()
-		local heat, humid, latch = mcore.get_heat_humidity(player)
 		local ppos = player:get_pos()
 		local pposy = math.floor(ppos.y) + 2 -- Precipitation when swimming
 		
 		if pposy >= YLIMIT then
-			
-			local precip = false
-			
-			local freeze = false
-			
-			local hail = false
-			
-			if atmos.current_weather == 6 and heat <= 4 then
-			
+			local weather = atmos.get_weather(ppos)
+			local precip, freeze, hail
+
+			if weather == "snow" then
 				precip = true
-				
 				freeze = true
-			
 				hail = false
-			
-			elseif atmos.current_weather == 6 or atmos.current_weather == 7 then
-				
-				if humid > 5 and heat < 35 then
-				
-					precip = true
-				
-					freeze = false
-				
-					hail = false
-				
-				end
-				
-			elseif atmos.current_weather == 9 and humid > 5 and heat < 1 then
-			
+			elseif weather == "rain" then
 				precip = true
-				
 				freeze = false
-				
+				hail = false
+			elseif weather == "storm" then
+				precip = true
+				freeze = false
+				hail = false
+			elseif weather == "hail" then
+				precip = true
+				freeze = false
 				hail = true
-			
-			elseif atmos.current_weather == 8 and humid > 5 and heat < 4 then
-				
-				precip = true
-				
-				freeze = true
-				
-				hail = false
-				
-			else
-			
-				precip = false
-				
-				freeze = false
-				
-				hail = false
-			
 			end
-			
+
 			-- Check if player is outside
-			local outside = minetest.get_node_light(ppos, 0.5) == 15
+			local outside = minetest.get_node_light({x=ppos.x, y=ppos.y + 1, z=ppos.z}, 0.5) == 15
 
 			if not precip or not outside or freeze then
 				if handles[player_name] then
@@ -102,7 +69,7 @@ minetest.register_globalstep(function(dtime)
 						minetest.add_particle({
 							pos = {
 								x = ppos.x - 24 + math.random(0, 47),
-								y = ppos.y + 8 + math.random(0, 1),
+								y = ppos.y + 8 + math.random(0, 8),
 								z = ppos.z - 20 + math.random(0, 47)
 							},
 							vel = {
@@ -122,12 +89,11 @@ minetest.register_globalstep(function(dtime)
 					end
 				
 				elseif hail then
-				
 					for flake = 1, DROPS-48 do
 						minetest.add_particle({
 							pos = {
 								x = ppos.x - 8 + math.random(0, 16),
-								y = ppos.y + 8 + math.random(0, 5),
+								y = ppos.y + 8 + math.random(0, 8),
 								z = ppos.z - 8 + math.random(0, 16)
 							},
 							vel = {
@@ -152,7 +118,7 @@ minetest.register_globalstep(function(dtime)
 						minetest.add_particle({
 							pos = {
 								x = ppos.x - 8 + math.random(0, 16),
-								y = ppos.y + 8 + math.random(0, 5),
+								y = ppos.y + 8 + math.random(0, 8),
 								z = ppos.z - 8 + math.random(0, 16)
 							},
 							vel = {

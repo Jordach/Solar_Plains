@@ -219,7 +219,7 @@ local function draw_hud(player)
 		-- if we're not use the origin mods name, capitalise it, but doesn't convert underscores
 		if found_name ~= true then
 			local stringy = node.mod_origin
-			player:hud_change(player_huds[pname].modname, "text", stringy:sub(1,1):upper()..s:sub(2))
+			player:hud_change(player_huds[pname].modname, "text", stringy:sub(1,1):upper()..stringy:sub(2))
 		end
 
 		-- dependancy-less waila aliases override the dependancy method

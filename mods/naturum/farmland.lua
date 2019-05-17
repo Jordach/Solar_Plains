@@ -62,7 +62,7 @@ minetest.register_node("naturum:soil", {
 	description = "Farmland",
 	tiles = {"core_dirt.png^farming_soil.png", "core_dirt.png"},
 	sounds = mcore.sound_dirt,
-	groups = {crumbly=3, soil=1, solid=1},
+	groups = {crumbly=3, soil=1},
 	drop = "core:dirt",
 	_waila_texture = minetest.inventorycube(
 		"core_dirt.png^farming_soil.png",
@@ -94,7 +94,7 @@ minetest.register_node("naturum:soil_wet", {
 	description = "Wet Farmland",
 	tiles = {"core_dirt.png^farming_soil_wet.png", "core_dirt.png^farming_soil_wet_side.png"},
 	sounds = mcore.sound_dirt,
-	groups = {crumbly=3, soil=1, solid=1},
+	groups = {crumbly=3, soil=1},
 	drop = "core:dirt",
 	_waila_texture= minetest.inventorycube(
 		"core_dirt.png^farming_soil_wet.png",

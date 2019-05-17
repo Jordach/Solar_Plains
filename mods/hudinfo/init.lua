@@ -48,27 +48,27 @@ function hudinfo.player_env_data(player)
 	
 	local weather_str = ""
 	
-	local atmw = atmos.current_weather
+	local atmw = atmos.get_weather(pos)
 	
-	if atmw == 1 then
+	if atmw == "clear" then
 		weather_str = "Clear,"
-	elseif atmw == 2 then
+	elseif atmw == "light_cloud" then
 		weather_str = "Light Clouds,"
-	elseif atmw == 3 then
+	elseif atmw == "medium_cloud" then
 		weather_str = "Minor Clouds,"
-	elseif atmw == 4 then
+	elseif atmw == "large_cloud" then
 		weather_str = "Medium Clouds,"
-	elseif atmw == 5 then
+	elseif atmw == "cloudy" then
 		weather_str = "Cloudy,"
-	elseif latch and atmw == 6 then
+	elseif atmw == "snow" then
 		weather_str = "Snowfall,"
-	elseif atmw == 6 then
+	elseif atmw == "rain" then
 		weather_str = "Downpour,"
-	elseif atmw == 7 then
+	elseif atmw == "storm" then
 		weather_str = "Thunderstorm,"
-	elseif atmw == 8 then
+	elseif atmw == "snow" then
 		weather_str = "Snowfall,"
-	elseif atmw == 9 then
+	elseif atmw == "hail" then
 		weather_str = "Hailstorm,"
 	end
 

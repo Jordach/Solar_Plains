@@ -72,6 +72,12 @@ minetest.register_abm({
 		if minetest.get_node_or_nil(pos).name ~= "core:snow" then
 			pos.y = pos.y - 1
 			minetest.add_node(pos,{name="core:grass"})
+		elseif minetest.get_node_or_nil(pos).name ~= "core:snow_medium" then
+			pos.y = pos.y - 1
+			minetest.add_node(pos,{name="core:grass"})
+		elseif minetest.get_node_or_nil(pos).name ~= "core:snowblock" then
+			pos.y = pos.y - 1
+			minetest.add_node(pos,{name="core:grass"})
 		end
 	end,
 })

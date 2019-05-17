@@ -1,0 +1,79 @@
+-- Incomplete prototype LVM version of snow accumulation and puddle forming;
+--[[
+
+local environ_air = minetest.get_content_id("air")
+local environ_snow_accum_nodes = {}
+local environ_puddle_nodes = {}
+
+local function get_snow_nodes()
+	for node, tab in pairs(minetest.registered_nodes) do
+		if tab.groups.snow_accum ~= nil then
+			environ_snow_accum_nodes[node] = {}
+			environ_snow_accum_nodes[node].node = minetest.get_content_id(node)
+			
+			-- set default snow nodes here:
+			environ_snow_accum_nodes[node].light = minetest.get_content_id("core:snow")
+			environ_snow_accum_nodes[node].med = minetest.get_content_id("core:snow_medium")
+			environ_snow_accum_nodes[node].full = minetest.get_content_id("core:snowblock")
+
+			-- update with node specific nodes
+			if tab._snow_layer_light ~= nil then
+				environ_snow_accum_nodes[node].light = minetest.get_content_id(tab._snow_layer_light)
+			end
+			if tab._snow_layer_med ~= nil then
+				environ_snow_accum_nodes[node].med = minetest.get_content_id(tab._snow_layer_med)
+			end
+			if tab._snow_layer_full ~= nil then
+				environ_snow_accum_nodes[node].full = minetest.get_content_id(tab._snow_layer_full)
+			end
+
+			--soonTM: add whitelisted facedir support
+		elseif tab.groups.solid ~= nil then
+			environ_snow_accum_nodes[node] = {}
+			environ_snow_accum_nodes[node].node = minetest.get_content_id(node)
+			
+			-- set default snow nodes here:
+			environ_snow_accum_nodes[node].light = minetest.get_content_id("core:snow")
+			environ_snow_accum_nodes[node].med = minetest.get_content_id("core:snow_medium")
+			environ_snow_accum_nodes[node].full = minetest.get_content_id("core:snowblock")
+
+			-- update with node specific nodes
+			if tab._snow_layer_light ~= nil then
+				environ_snow_accum_nodes[node].light = minetest.get_content_id(tab._snow_layer_light)
+			end
+			if tab._snow_layer_med ~= nil then
+				environ_snow_accum_nodes[node].med = minetest.get_content_id(tab._snow_layer_med)
+			end
+			if tab._snow_layer_full ~= nil then
+				environ_snow_accum_nodes[node].full = minetest.get_content_id(tab._snow_layer_full)
+			end
+		end
+	end
+end
+
+minetest.after(1, get_snow_nodes)
+local function weather_event()
+	for _, player in ipairs(minetest.get_connected_players()) do
+		local pos = player:get_pos()
+
+		local vm = minetest.get_voxel_manip()
+		local minp, maxp = vm:read_from_map(
+			{x = pos.x - 16, y = pos.y - 16, z = pos.z - 16},
+			{x = pos.x + 16, y = pos.y + 16, z = pos.z + 16}
+		)
+		local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+		local data = vm:get_data()
+		local param2 = vm:get_param2_data()
+		local light = vm:get_light_data()
+
+		for z=-16, 16 do
+			for y=-16, 16 do
+				for x=-16, 16 do
+					local vi = area:index(x, y, z)
+				end
+			end
+		end
+		
+	end
+end
+--]]
